@@ -14,14 +14,13 @@ function App() {
   }[]>([])
 
   useEffect(() => {
-    fetch(`${apiUrl}/books`).then((res) => res.json())
-      .then((data) => {
-        console.log(data)
-        setBooks(data.books)
-      })
+   async function fetchBooks() {
+      const res = await fetch(`${apiUrl}/books`)
+      const data = await res.json()
+      setBooks(data.books)
+    }
+    fetchBooks()
   }, [books])
-
-  // TODO: fetch books from an API
 
 
   return (
