@@ -1,5 +1,4 @@
 import { useEffect, useState } from 'react';
-import Header from '../components/header/Header';
 import BooksList from '../components/books/BooksList';
 
 
@@ -24,10 +23,9 @@ function HomePage() {
 
   return (
     <>
-      <Header />
       <BooksList books={books} />
     </>
-  );
+  )
 }
 
 export default HomePage;
