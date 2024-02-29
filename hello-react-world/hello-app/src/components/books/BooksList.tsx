@@ -4,7 +4,7 @@ import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import Container from 'react-bootstrap/Container';
 
-export function BooksList({ books }: { books: Array<{ author: string, id: string, rating: number, title: string }> }) {
+function BooksList({ books }: { books: Array<{ author: string, id: string, rating: number, title: string }> }) {
     return (
         <Container style={{marginTop: 20, marginBottom: 20,}}>
             <Row xs={1} md={2} className="g-4">
@@ -26,3 +26,5 @@ export function BooksList({ books }: { books: Array<{ author: string, id: string
         </Container>
     );
 }
+
+export default BooksList;

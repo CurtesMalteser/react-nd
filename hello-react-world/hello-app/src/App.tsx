@@ -1,34 +1,14 @@
+import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import './App.css';
-import { useEffect, useState } from 'react';
-import { Header } from './components/header/Header';
-import { BooksList } from './components/books/BooksList';
+import HomePage from './pages/Home';
 
-const apiUrl = 'http://127.0.0.1:5000'
+
+const router = createBrowserRouter([
+  { path: '/', element: <HomePage /> },
+])
 
 function App() {
-
-  const [books, setBooks] = useState<{
-    author: string; id: string;
-    rating: number;
-    title: string;
-  }[]>([])
-
-  useEffect(() => {
-   async function fetchBooks() {
-      const res = await fetch(`${apiUrl}/books`)
-      const data = await res.json()
-      setBooks(data.books)
-    }
-    fetchBooks()
-  }, [books])
-
-
-  return (
-    <div className="App">
-      <Header />
-      <BooksList books={books} />
-    </div>
-  );
+  return <RouterProvider router={router} />
 }
 
 export default App;
