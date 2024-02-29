@@ -4,23 +4,25 @@ import HomePage from './pages/Home';
 import AddBooks from './pages/AddBooks';
 import RouteLayout from './pages/RootLayout';
 import ErrorPage from './pages/ErrorPage';
+import BookDetails from './pages/BookDetails';
 
 
 const router = createBrowserRouter([
-  { 
+  {
     path: '/',
     element: <RouteLayout />,
-    errorElement: <ErrorPage/>,
+    errorElement: <ErrorPage />,
     children: [
       { path: '/', element: <HomePage /> },
       { path: '/add-books', element: <AddBooks /> },
+      { path: '/book/:id', element: <BookDetails /> },
     ]
   },
 ])
 
 function App() {
   return (
-      <RouterProvider router={router} />
+    <RouterProvider router={router} />
   )
 }
 
