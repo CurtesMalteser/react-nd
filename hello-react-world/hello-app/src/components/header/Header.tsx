@@ -4,12 +4,12 @@ import { Link } from 'react-router-dom';
 
 function NavMenu() {
   return (
-    <Nav>
+    <Nav variant="pills" defaultActiveKey="home" className='justify-content-center'>
       <Nav.Item>
-        <Nav.Link as={Link} to="/">Home</Nav.Link>
+        <Nav.Link as={Link} to="/" eventKey="home">Home</Nav.Link>
       </Nav.Item>
       <Nav.Item>
-        <Nav.Link as={Link} to="/add-books">Add Books</Nav.Link>
+        <Nav.Link as={Link} to="/add-books" eventKey="add-books">Add Books</Nav.Link>
       </Nav.Item>
     </Nav>
   )

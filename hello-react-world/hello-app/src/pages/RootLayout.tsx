@@ -3,12 +3,14 @@ import Header from '../components/header/Header';
 
 
 function RouteLayout() {
-  return (
-    <>
-      <Header />
-      <Outlet />
-    </>
-  )
+    return (
+        <>
+            <Header />
+            <main className='App'>
+                <Outlet />
+            </main>
+        </>
+    )
 }
 
 export default RouteLayout;
