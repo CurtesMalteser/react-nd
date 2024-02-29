@@ -25,7 +25,7 @@ function AddBooks() {
     };
 
     return (
-        <Container style={{ marginTop: 20, marginBottom: 20, }}>
+        <Container style={{ marginTop: '20px', marginBottom: '20', }}>
             <input type="text" value={bookTitle} onChange={handleTitleChange} placeholder="Enter book title" />
             <input type="text" value={author} onChange={handleAuthorChange} placeholder="Enter author" />
             <button onClick={handleAddBook}>Add Book</button>

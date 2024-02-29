@@ -17,7 +17,7 @@ function NavMenu() {
 
 function Header() {
   return (
-    <header className="App-Header">
+    <header>
       <h1>Book Management App</h1>
       <NavMenu />
     </header>
