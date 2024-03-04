@@ -27,15 +27,20 @@ function AddBooks() {
             })
             if(data.success)   {
                 console.log('Book added successfully:\n' + data.book);
+                form.formTitle.value = ''
+                form.formAuthor.value = ''
+                form.formISBN.value = ''
+                setRating(0)
             }
         }
 
         const form = event.currentTarget;
         if (form.checkValidity() === false) {
-            event.preventDefault();
-            event.stopPropagation();
+            event.preventDefault()
+            event.stopPropagation()
         } else {
-            postBook();
+            event.preventDefault()
+            postBook()
         }
         setValidated(true);
     };
