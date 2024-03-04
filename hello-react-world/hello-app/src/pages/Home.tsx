@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import BooksList from '../components/books/BooksList';
+import { getAll } from '../utils/BooksAPI';
 
 
 const apiUrl = 'http://127.0.0.1:5000'
@@ -13,8 +14,7 @@ function HomePage() {
 
   useEffect(() => {
     async function fetchBooks() {
-      const res = await fetch(`${apiUrl}/books`)
-      const data = await res.json()
+      const data = await getAll()
       setBooks(data.books)
     }
     fetchBooks()
