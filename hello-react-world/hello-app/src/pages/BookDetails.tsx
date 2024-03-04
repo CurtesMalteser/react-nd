@@ -1,17 +1,23 @@
-import { useParams } from "react-router-dom";
+import { useLoaderData } from "react-router-dom";
+import { getBook } from "../utils/BooksAPI";
+import Container from 'react-bootstrap/Container';
 
 
 function BookDetails() {
 
-    const params = useParams();
+    const book = useLoaderData() as { author: string, id: string, rating: number, title: string };
 
     return (
-        <div>
-            <h2>book title for id {params.id}</h2>
-            <p>Author: book author</p>
-            <p>Genre: book genre</p>
-        </div>
+        <Container style={{marginTop: 20, marginBottom: 20, }}>
+            <h2>{book.title}</h2>
+            <p>{book.author}</p>
+        </Container>
     );
 };
 
 export default BookDetails;
+
+export async function loader({ request, params }: { request: any, params: any }) {
+    const book = await getBook(params.id)
+    return book
+}

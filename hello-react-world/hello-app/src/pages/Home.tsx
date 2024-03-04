@@ -18,7 +18,7 @@ function HomePage() {
       setBooks(data.books)
     }
     fetchBooks()
-  }, [books])
+  }, [setBooks])
 
 
   return (

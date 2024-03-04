@@ -9,10 +9,16 @@ const headers = {
   //Authorization: token,
 };
 
+// TODO: handle errors and return proper json response to be used in the UI for all the requests
 export const getAll = () =>
   fetch(`${api}/books`, { headers })
     .then((res) => res.json())
     .then((data) => data);
+
+export const getBook = (id: string) =>
+  fetch(`${api}/book/${id}`, { headers })
+    .then((res) => res.json())
+    .then((data) => data.book);
 
 export const deleteBook = (book: { author: string, id: string, rating: number, title: string }) =>
   fetch(`${api}/book/${book.id}`, { method: "DELETE", headers })

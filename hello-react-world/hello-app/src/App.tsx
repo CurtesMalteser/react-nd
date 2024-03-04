@@ -5,6 +5,7 @@ import AddBooks from './pages/AddBooks';
 import RouteLayout from './pages/RootLayout';
 import ErrorPage from './pages/ErrorPage';
 import BookDetails from './pages/BookDetails';
+import { loader as bookLoader } from './pages/BookDetails';
 
 
 const router = createBrowserRouter([
@@ -15,7 +16,11 @@ const router = createBrowserRouter([
     children: [
       { path: '/', element: <HomePage /> },
       { path: '/add-books', element: <AddBooks /> },
-      { path: '/book/:id', element: <BookDetails /> },
+      {
+        path: '/book/:id',
+        element: <BookDetails />,
+        loader: bookLoader
+      },
     ]
   },
 ])
