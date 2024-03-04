@@ -5,6 +5,7 @@ import Button from 'react-bootstrap/Button';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import FormSelect from 'react-bootstrap/FormSelect'
+import { addBook } from '../utils/BooksAPI';
 
 
 function AddBooks() {
@@ -17,12 +18,25 @@ function AddBooks() {
     };
 
     const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
+        async function postBook() {
+            const data = await addBook({
+                title: form.formTitle.value,
+                author: form.formAuthor.value,
+                id: form.formISBN.value,
+                rating: rating
+            })
+            if(data.success)   {
+                console.log('Book added successfully:\n' + data.book);
+            }
+        }
+
         const form = event.currentTarget;
         if (form.checkValidity() === false) {
             event.preventDefault();
             event.stopPropagation();
+        } else {
+            postBook();
         }
-
         setValidated(true);
     };
 
@@ -46,8 +60,8 @@ function AddBooks() {
                     </Form.Group>
                     <Form.Group as={Col} controlId="formRating">
                         <Form.Label>Rating</Form.Label>
-                        <FormSelect value={rating} aria-label="Default select example" isValid={rating > 0 && rating <= 5} isInvalid={rating == 0 || rating >5} onChange={handleSelectChange}>
-                            <option value="0">---</option>
+                        <FormSelect value={rating} required aria-label="Default select example" onChange={handleSelectChange}>
+                            <option value="">---</option>
                             <option value="1">One out of Five</option>
                             <option value="2">Two out of Five</option>
                             <option value="3">Three out of Five</option>

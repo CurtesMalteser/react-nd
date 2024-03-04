@@ -26,7 +26,7 @@ export const deleteBook = (book: { author: string, id: string, rating: number, t
     .then((data) => data);
 
 export const addBook = (book: { author: string, id: string, rating: number, title: string }) =>
-  fetch(`${api}/books`, {
+  fetch(`${api}/book`, {
     method: "POST",
     headers: {
       ...headers,
