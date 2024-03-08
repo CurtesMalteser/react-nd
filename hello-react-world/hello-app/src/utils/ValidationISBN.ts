@@ -13,23 +13,34 @@ function splitListByIndex(list: Array<number>) {
     return { evenList, oddList }
 }
 
-function validateISBN13(isbn: Array<number>) {
+function validateISBN13(isbn: any[]): boolean {
+    let validationDigit = isbn.pop()
+
     const { evenList, oddList } = splitListByIndex(isbn)
 
-    const z = oddList.map((x: number) => x * 3).reduce((sum, current) => sum + current, 0)
-    const y = evenList.reduce((sum, current) => sum + current, 0) + z
-
-    return 10 - (y % 10)
+    const evenResult = evenList.reduce((acc, current) => acc + current, 0)
+    const oddResult = oddList.reduce((acc, current) => acc + (current * 3), 0)
+    const sum = evenResult + oddResult
+    return (10 - (sum % 10)) === validationDigit
 }
 
-export function validateISBN(isbn: Array<number>){
+function validateISBN10(isbn: any[]): boolean {
+    let validationDigit = isbn.pop()
+
+    const sum = isbn.map((item, index) => (index + 1) * item)
+        .reduce((sum, current) => sum + current, 0)
+
+    const remainder = sum % 11
+    let checkDigit = remainder === 10 ? 'X' : remainder
+    return checkDigit === validationDigit
+}
+
+export function validateISBN(isbn: any[]) {
     switch (isbn.length) {
         case 13:
-            let validationDigit = isbn.pop()
-            return validateISBN13(isbn) === validationDigit
+            return validateISBN13(isbn)
         case 10:
-            // Add code to validate ISBN-10
-            throw new Error('Not implemented')
+            return validateISBN10(isbn)
         default:
             return false
     }

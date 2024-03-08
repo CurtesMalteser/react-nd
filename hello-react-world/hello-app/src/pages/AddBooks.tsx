@@ -18,8 +18,12 @@ function AddBooks() {
 
         // Fear No Evil by James Patterson ISNB
         // 978 - 1 - 5387 - 5290 - 6
-        const x = [9, 7, 8, 1, 5, 3, 8, 7, 5, 2, 9, 0, 6]
-        console.log(`ISBN-13: ${validateISBN(x)}`)
+        // 0316499145
+        const isbn13 = [9, 7, 8, 1, 5, 3, 8, 7, 5, 2, 9, 0, 6]
+        console.log(`ISBN-13: ${validateISBN(isbn13)}`)
+
+        const isbn10 = [0, 3, 1, 6, 4, 9, 9, 1, 4, 5];
+        console.log(`ISBN-10: ${validateISBN(isbn10)}`);
 
         async function postBook() {
             const data = await addBook({
