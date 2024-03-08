@@ -33,7 +33,6 @@ function AddBooks() {
                 rating: form.formRating.value
             })
             if(data.success)   {
-                console.log('Book added successfully:\n' + data.book);
                 setValidated(false);
                 form.reset()
             }
