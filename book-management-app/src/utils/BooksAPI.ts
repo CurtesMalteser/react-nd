@@ -15,21 +15,28 @@ export const getAll = () =>
     .then((data) => data);
 
 export const getBook = (id: string) =>
-  fetch(`${api}/book/${id}`, { headers })
+  fetch(`${api}/books/${id}`, { headers })
     .then((res) => res.json())
     .then((data) => data.book);
 
-export const deleteBook = (id: string) =>
-  fetch(`${api}/book/${id}`, { method: "DELETE", headers })
-    .then((res) => res.json())
-    .then((data) => data);
+export const update = (id: number, shelf: string) =>
+  fetch(`${api}/books/${id}`, {
+    method: "PUT",
+    headers: {
+      ...headers,
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({ shelf }),
+  }).then((res) => res.json());
 
-export const addBook = (book: { author: string, id: string, rating: number, title: string }) =>
-  fetch(`${api}/book`, {
+export const search = (query: string, maxResults: number) =>
+  fetch(`${api}/search`, {
     method: "POST",
     headers: {
       ...headers,
       "Content-Type": "application/json",
     },
-    body: JSON.stringify(book),
-  }).then((res) => res.json());
+    body: JSON.stringify({ query, maxResults }),
+  })
+    .then((res) => res.json())
+    .then((data) => data.books);
