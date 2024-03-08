@@ -10,39 +10,35 @@ import { addBook } from '../utils/BooksAPI';
 
 function AddBooks() {
 
-    const [rating, setRating] = useState(0);
     const [validated, setValidated] = useState(false);
 
-    const handleSelectChange = (event: FormEvent<HTMLSelectElement>) => {
-        setRating(event.currentTarget.value as unknown as number);
-    };
 
     const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
+        const form = event.currentTarget;
+
+        console.log(`Form submitted! Rating: > ${form.formRating.value}`);
         async function postBook() {
             const data = await addBook({
                 title: form.formTitle.value,
                 author: form.formAuthor.value,
                 id: form.formISBN.value,
-                rating: rating
+                rating: form.formRating.value
             })
             if(data.success)   {
                 console.log('Book added successfully:\n' + data.book);
-                form.formTitle.value = ''
-                form.formAuthor.value = ''
-                form.formISBN.value = ''
-                setRating(0)
+                setValidated(false);
+                form.reset()
             }
         }
+        
+        event.preventDefault()
 
-        const form = event.currentTarget;
         if (form.checkValidity() === false) {
-            event.preventDefault()
             event.stopPropagation()
+            setValidated(true);
         } else {
-            event.preventDefault()
             postBook()
         }
-        setValidated(true);
     };
 
     return (
@@ -65,7 +61,7 @@ function AddBooks() {
                     </Form.Group>
                     <Form.Group as={Col} controlId="formRating">
                         <Form.Label>Rating</Form.Label>
-                        <FormSelect value={rating} required aria-label="Default select example" onChange={handleSelectChange}>
+                        <FormSelect required aria-label="Default select example">
                             <option value="">---</option>
                             <option value="1">One out of Five</option>
                             <option value="2">Two out of Five</option>

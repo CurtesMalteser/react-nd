@@ -20,8 +20,8 @@ export const getBook = (id: string) =>
     .then((res) => res.json())
     .then((data) => data.book);
 
-export const deleteBook = (book: { author: string, id: string, rating: number, title: string }) =>
-  fetch(`${api}/book/${book.id}`, { method: "DELETE", headers })
+export const deleteBook = (id: string) =>
+  fetch(`${api}/book/${id}`, { method: "DELETE", headers })
     .then((res) => res.json())
     .then((data) => data);
 
