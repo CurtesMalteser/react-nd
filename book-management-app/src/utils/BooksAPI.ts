@@ -1,15 +1,14 @@
-const api = process.env.BOOKS_API_URL || 'http://127.0.0.1:5000'
+const api = "https://reactnd-books-api.udacity.com" //process.env.BOOKS_API_URL || 'http://127.0.0.1:5000'
 
-//let token = localStorage.token;
+let token = localStorage.token;
 
-//if (!token) token = localStorage.token = Math.random().toString(36).substr(-8);
+if (!token) token = localStorage.token = Math.random().toString(36).substring(-8);
 
 const headers = {
   Accept: "application/json",
-  //Authorization: token,
+  Authorization: token,
 };
 
-// TODO: handle errors and return proper json response to be used in the UI for all the requests
 export const getAll = () =>
   fetch(`${api}/books`, { headers })
     .then((res) => res.json())
