@@ -6,17 +6,21 @@ import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import FormSelect from 'react-bootstrap/FormSelect'
 import { addBook } from '../utils/BooksAPI';
+import { validateISBN } from '../utils/ValidationISBN';
 
 
 function AddBooks() {
 
     const [validated, setValidated] = useState(false);
 
-
     const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
         const form = event.currentTarget;
 
-        console.log(`Form submitted! Rating: > ${form.formRating.value}`);
+        // Fear No Evil by James Patterson ISNB
+        // 978 - 1 - 5387 - 5290 - 6
+        const x = [9, 7, 8, 1, 5, 3, 8, 7, 5, 2, 9, 0, 6]
+        console.log(`ISBN-13: ${validateISBN(x)}`)
+
         async function postBook() {
             const data = await addBook({
                 title: form.formTitle.value,
