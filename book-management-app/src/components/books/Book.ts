@@ -23,6 +23,12 @@ interface Book {
     imageLinks: ImageLinks;
     industryIdentifiers: [IndustryIdentifier];
     shelf: string;
+    publisher: string;
+    description: string;
+    pageCount: number;
+    averageRating: number;
+    ratingsCount: number;
+    language: string;
 }
 
 export default Book;
