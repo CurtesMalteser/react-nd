@@ -2,15 +2,13 @@ import { useLoaderData } from "react-router-dom";
 import { getBook } from "../utils/BooksAPI";
 import Container from 'react-bootstrap/Container';
 import Book from "../components/books/Book";
-import { IdentifierType } from "../components/books/Book";
+import BookIdentifierType from "../components/books/BookIdentifierType";
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
+import BookRating from "../components/books/BookRating";
 
 
-function BookIdentifierType(isbn: { type: string, identifier: string }) {
-    const type = IdentifierType[`${isbn.type}` as keyof typeof IdentifierType]
-    return <div><b>{type}:</b> {isbn.identifier}</div>
-}
+
 
 function BookDetails() {
 
@@ -28,6 +26,7 @@ function BookDetails() {
                     <h2>{book.title}</h2>
                     <h3>{book.subtitle}</h3>
                     <p><b>{authorLabel()}:</b> {book.authors.join(", ")}</p>
+                    <BookRating rating={book.averageRating} ratingsCount={book.ratingsCount} />
                     <hr />
                     <p>
                         {book.description}
