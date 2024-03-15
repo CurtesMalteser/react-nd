@@ -1,5 +1,6 @@
 import "./Book.css";
 
+
 function Ratings(rating: number) {
     switch (true) {
         case (rating < 0.3): return <span className="fullStyled">☆☆☆☆☆</span>

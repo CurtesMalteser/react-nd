@@ -28,16 +28,14 @@ function BookDetails() {
                     <p><b>{authorLabel()}:</b> {book.authors.join(", ")}</p>
                     <BookRating rating={book.averageRating} ratingsCount={book.ratingsCount} />
                     <hr />
-                    <p>
-                        {book.description}
-                    </p>
+                    <p>{book.description}</p>
                     <hr />
                     <p>
-                        {book.categories && <div><b>{categoryLabel()}:</b> {book.categories.join(", ")}</div>}
+                        {book.categories && <><b>{categoryLabel()}:</b> {book.categories.join(", ")}<br /></>}
                         {book.publisher && <><b>Publisher:</b> {book.publisher} <br /></>}
                         <b>Published Date:</b> {book.publishedDate} <br />
-                        <b>Page Count:</b> {book.pageCount}
-                        {book.industryIdentifiers.map((isbn) => BookIdentifierType(isbn))}
+                        <b>Page Count:</b> {book.pageCount} <br />
+                        {book.industryIdentifiers.map((isbn) => <BookIdentifierType key={isbn.type} isbn={isbn}/>)}
                     </p>
                 </Col>
             </Row>

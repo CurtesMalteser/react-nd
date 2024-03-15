@@ -1,8 +1,9 @@
-import { IdentifierType } from './Book';
+import { IdentifierType, IndustryIdentifier } from './Book';
 
-function BookIdentifierType(isbn: { type: string, identifier: string }) {
+
+function BookIdentifierType({isbn}: { isbn: IndustryIdentifier }) {
     const type = IdentifierType[`${isbn.type}` as keyof typeof IdentifierType]
-    return <div><b>{type}:</b> {isbn.identifier}</div>
+    return (<><b>{type}:</b> {isbn.identifier}<br /></>)
 }
 
 export default BookIdentifierType;
