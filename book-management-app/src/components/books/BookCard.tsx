@@ -10,8 +10,8 @@ function BookCard(book: Book) {
         <Card border="primary" style={{ padding: '20px' }}>
             <Card.Img variant="top" src={bookCover} style={{ objectFit: 'contain', height: 380 }} />
             <Card.Body>
-                <Card.Title>{book.title}</Card.Title>
-                <Card.Text>{book.authors.join(', ')}</Card.Text>
+                <Card.Title className='oneLine'>{book.title}</Card.Title>
+                <Card.Text className='oneLine'>{book.authors.join(', ')}</Card.Text>
                 <Link to={`/book/${book.id}`}>
                     <Button variant="primary">Details</Button>
                 </Link>
