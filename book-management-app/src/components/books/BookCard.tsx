@@ -5,9 +5,10 @@ import Book from './Book';
 
 
 function BookCard(book: Book) {
+    const bookCover = book.imageLinks ? book.imageLinks.thumbnail : '/book-placeholder.svg';
     return (
         <Card border="primary" style={{ padding: '20px' }}>
-            <Card.Img variant="top" src='/book-placeholder.svg' style={{ width: '18rem' }} />
+            <Card.Img variant="top" src={bookCover} style={{ objectFit: 'contain', height: 380 }} />
             <Card.Body>
                 <Card.Title>{book.title}</Card.Title>
                 <Card.Text>{book.authors.join(', ')}</Card.Text>

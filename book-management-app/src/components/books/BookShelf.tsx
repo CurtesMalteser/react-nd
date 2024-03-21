@@ -9,7 +9,7 @@ function BookShelf({ title, books }: { title: string, books: Array<Book> }) {
     return (
         <div>
             <h3 style={{ paddingBottom: '20px' }}>{title}</h3>
-            <Row xs={1} md={2} className="g-4" style={{ paddingBottom: '20px' }}>
+            <Row xs={1} md={2} lg={3} className="g-4" style={{ paddingBottom: '20px' }}>
                 {books.map((book) => <Col key={book.id}>{BookCard(book)}</Col>)}
             </Row>
             <hr />
