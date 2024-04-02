@@ -1,11 +1,30 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
+import { search } from '../utils/BooksAPI';
+import BookShelf from '../components/books/BookShelf';
+import Book from '../components/books/Book';
 
-function BookSearch(){
+
+function BookSearch() {
     const [searchTerm, setSearchTerm] = useState('');
-    // Add results state here
+    const [searchResults, setSearchResults] = useState<Book[]>([]);
 
-    const searchHandler = () => {
-        console.log(searchTerm);
+    const searchHandler = async (searchTerm: string) => {
+        setSearchTerm(searchTerm)
+        try {
+            const response = await search(searchTerm, 100);
+
+            if (response?.error || response?.items === 0) {
+                console.error(response.books?.error);
+                setSearchResults([]);
+            } else {
+                console.log("maybe " + response.books?.error);
+                console.log("response " + response);
+                setSearchResults(response);
+            }
+        } catch (error) {
+            console.error(error);
+            setSearchResults([]);
+        }
     };
 
     return (
@@ -13,10 +32,10 @@ function BookSearch(){
             <input
                 type="text"
                 value={searchTerm}
-                onChange={(e) => setSearchTerm(e.target.value)}
+                onChange={(e) => searchHandler(e.target.value)}
             />
-            <button onClick={searchHandler}>Search</button>
-            {/* Add books list here */}
+            <button onClick={() => searchHandler(searchTerm)}>Search</button>
+           {(searchResults.length > 0) && <BookShelf title={`Search Results: ${searchResults.length}`} books={searchResults} />}
         </div>
     );
 };

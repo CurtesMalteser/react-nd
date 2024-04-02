@@ -11,8 +11,9 @@ import BookRating from "../components/books/BookRating";
 function BookDetails() {
 
     const book = useLoaderData() as Book;
-    const authorLabel = () => book.authors.length > 1 ? "Authors" : "Author";
-    const categoryLabel = () => book.categories!.length > 1 ? "Categories" : "Category";
+    const authorLabel = (book.authors?.length ?? 1) > 1 ? "Authors" : "Author";
+    const authors = book.authors ? book.authors.join(', ') : 'N/A';
+    const categoryLabel = book.categories!.length > 1 ? "Categories" : "Category";
 
     return (
         <Container className="md-6" style={{ marginTop: 20, marginBottom: 20, marginLeft: "auto", marginRight: "auto" }} >
@@ -23,13 +24,13 @@ function BookDetails() {
                 <Col>
                     <h2>{book.title}</h2>
                     <h3>{book.subtitle}</h3>
-                    <p><b>{authorLabel()}:</b> {book.authors.join(", ")}</p>
+                    <p><b>{authorLabel}:</b> {authors}</p>
                     <BookRating rating={book.averageRating} ratingsCount={book.ratingsCount} />
                     <hr />
                     <p>{book.description}</p>
                     <hr />
                     <p>
-                        {book.categories && <><b>{categoryLabel()}:</b> {book.categories.join(", ")}<br /></>}
+                        {book.categories && <><b>{categoryLabel}:</b> {book.categories.join(", ")}<br /></>}
                         {book.publisher && <><b>Publisher:</b> {book.publisher} <br /></>}
                         <b>Published Date:</b> {book.publishedDate} <br />
                         <b>Page Count:</b> {book.pageCount} <br />

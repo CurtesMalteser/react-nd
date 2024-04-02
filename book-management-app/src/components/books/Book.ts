@@ -17,7 +17,7 @@ interface Book {
     id: string;
     title: string;
     subtitle: string;
-    authors: [string];
+    authors?: [string];
     publishedDate: number;
     categories?: [string];
     imageLinks: ImageLinks;
