@@ -8,8 +8,6 @@ import Col from 'react-bootstrap/Col';
 import BookRating from "../components/books/BookRating";
 
 
-
-
 function BookDetails() {
 
     const book = useLoaderData() as Book;

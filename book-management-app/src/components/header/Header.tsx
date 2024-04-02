@@ -8,6 +8,9 @@ function NavMenu() {
       <Nav.Item>
         <Nav.Link as={Link} to="/" eventKey="home">Home</Nav.Link>
       </Nav.Item>
+      <Nav.Item>
+        <Nav.Link as={Link} to="/search" eventKey="search">Search</Nav.Link>
+      </Nav.Item>
     </Nav>
   )
 }

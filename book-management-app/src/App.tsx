@@ -5,6 +5,7 @@ import RouteLayout from './pages/RootLayout';
 import ErrorPage from './pages/ErrorPage';
 import BookDetails from './pages/BookDetails';
 import { loader as bookLoader } from './pages/BookDetails';
+import BookSearch from './pages/BookSearch';
 
 
 const router = createBrowserRouter([
@@ -19,6 +20,10 @@ const router = createBrowserRouter([
         element: <BookDetails />,
         loader: bookLoader
       },
+      {
+        path: '/search',
+        element: <BookSearch />
+      }
     ]
   },
 ])
