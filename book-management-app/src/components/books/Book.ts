@@ -1,9 +1,9 @@
-export enum IdentifierType{
+export enum IdentifierType {
     ISBN_10 = "ISBN-10",
     ISBN_13 = "ISBN-13"
 }
 
-export interface ImageLinks { 
+export interface ImageLinks {
     smallThumbnail: string;
     thumbnail: string;
 }
@@ -11,6 +11,12 @@ export interface ImageLinks {
 export interface IndustryIdentifier {
     type: IdentifierType;
     identifier: string;
+}
+
+export enum Shelf {
+    READ = "read",
+    WANT_TO_READ = "wantToRead",
+    CURRENTLY_READING = "currentlyReading"
 }
 
 interface Book {
@@ -22,7 +28,7 @@ interface Book {
     categories?: [string];
     imageLinks: ImageLinks;
     industryIdentifiers: [IndustryIdentifier];
-    shelf: string;
+    shelf?: Shelf;
     publisher: string;
     description: string;
     pageCount: number;

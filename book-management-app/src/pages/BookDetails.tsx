@@ -13,7 +13,7 @@ function BookDetails() {
     const book = useLoaderData() as Book;
     const authorLabel = (book.authors?.length ?? 1) > 1 ? "Authors" : "Author";
     const authors = book.authors ? book.authors.join(', ') : 'N/A';
-    const categoryLabel = book.categories!.length > 1 ? "Categories" : "Category";
+    const categoryLabel = (book.categories?.length ?? 1) > 1 ? "Categories" : "Category";
 
     return (
         <Container className="md-6" style={{ marginTop: 20, marginBottom: 20, marginLeft: "auto", marginRight: "auto" }} >
