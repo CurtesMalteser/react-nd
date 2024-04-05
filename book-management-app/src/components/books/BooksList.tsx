@@ -7,7 +7,6 @@ import { BookShelfContext } from '../../store/BookShelfContext';
 
 function BooksList() {
 
-
     const { books } = useContext(BookShelfContext)
 
     const [readBooks, setReadBooks] = useState<Book[]>([])
