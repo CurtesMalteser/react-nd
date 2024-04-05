@@ -1,11 +1,14 @@
-import { useEffect, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import Container from 'react-bootstrap/Container';
 import BookShelf from './BookShelf';
 import splitBooksByShelf from '../../utils/BooksSorter';
 import Book from './Book';
+import { BookShelfContext } from '../../store/BookShelfContext';
+
+function BooksList() {
 
 
-function BooksList({ books }: { books: Array<Book> }) {
+    const { books } = useContext(BookShelfContext)
 
     const [readBooks, setReadBooks] = useState<Book[]>([])
     const [wantToRead, setWantToRead] = useState<Book[]>([])
@@ -19,9 +22,8 @@ function BooksList({ books }: { books: Array<Book> }) {
             setCurrentlyReading(currentlyReading)
             setWantToRead(wantToRead)
         }
-
         addBooksToShelf()
-    }, [setReadBooks])
+    }, [books])
 
 
 

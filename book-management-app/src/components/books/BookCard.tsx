@@ -7,12 +7,26 @@ import DropdownButton from 'react-bootstrap/DropdownButton';
 import { Shelf } from './Book';
 import { mapToLabel } from '../../utils/ShelfMapper';
 
-function BookCard(book: Book) {
+function DropdownBookItems({ book, addToShelf }: { book: Book, addToShelf: (book: Book) => void }) {
+    return (
+        <>
+            {Object.values(Shelf).map((shelf) => (
+                shelf !== book.shelf && <Dropdown.Item key={shelf} onClick={() => {
+                    book.shelf = shelf
+                    addToShelf(book)
+                }} > {mapToLabel(shelf)} </Dropdown.Item>
+            )
+            )}
+        </>
+    )
+}
+
+function BookCard(book: Book, addToShelf: (book: Book) => void) {
 
     const bookCover = book.imageLinks ? book.imageLinks.thumbnail : '/book-placeholder.svg'
     const authors = book.authors ? book.authors.join(', ') : 'N/A'
 
-    const shelfLabel =  mapToLabel(book.shelf)
+    const shelfLabel = mapToLabel(book.shelf)
 
     return (
         <Card border="primary" style={{ padding: '20px' }}>
@@ -23,9 +37,7 @@ function BookCard(book: Book) {
                 <div className="d-flex">
                     <Link to={`/book/${book.id}`}><Button variant="primary">Details</Button></Link>
                     <DropdownButton id="dropdown-basic-button" title={shelfLabel}>
-                        {Object.values(Shelf).map((shelf) => (
-                            shelf !== book.shelf && <Dropdown.Item key={shelf} > {mapToLabel(shelf)} </Dropdown.Item>
-                        ))}
+                        <DropdownBookItems book={book} addToShelf={() => addToShelf(book)} />
                     </DropdownButton>
                 </div>
             </Card.Body>

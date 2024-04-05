@@ -15,15 +15,11 @@ function BookSearch() {
             const response = await search(searchTerm, 100);
 
             if (response?.error || response?.items === 0) {
-                console.error(response.books?.error);
                 setSearchResults([]);
             } else {
-                console.log("maybe " + response.books?.error);
-                console.log("response " + response);
                 setSearchResults(response);
             }
         } catch (error) {
-            console.error(error);
             setSearchResults([]);
         }
     };

@@ -20,7 +20,7 @@ export enum Shelf {
 }
 
 interface Book {
-    id: string;
+    id: number;
     title: string;
     subtitle: string;
     authors?: [string];

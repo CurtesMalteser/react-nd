@@ -1,13 +1,13 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useContext } from 'react';
 import BooksList from '../components/books/BooksList';
 import { getAll } from '../utils/BooksAPI';
-import Book from '../components/books/Book';
+import { BookShelfContext } from '../store/BookShelfContext';
 
 function HomePage() {
   const [isLoading, setIsLoading] = useState<boolean>(true)
-  const [books, setBooks] = useState<Book[]>([])
-  
-  useEffect(() => {
+  const { setBooks } = useContext(BookShelfContext)
+
+   useEffect(() => {
     async function fetchBooks() {
       const data = await getAll()
       setBooks(data.books)
@@ -20,7 +20,7 @@ function HomePage() {
   return (
     <>
       {isLoading && <h1>Loading...</h1>}
-      {!isLoading && <BooksList books={books} />}
+      {!isLoading && <BooksList />}
     </>
   );
 
