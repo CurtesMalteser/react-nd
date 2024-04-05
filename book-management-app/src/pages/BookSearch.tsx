@@ -1,13 +1,17 @@
-import { useState } from 'react';
+import { useState, useContext } from 'react';
 import { search } from '../utils/BooksAPI';
 import BookShelf from '../components/books/BookShelf';
 import Book from '../components/books/Book';
 import Container from 'react-bootstrap/Container';
+import { BookShelfContext } from '../store/BookShelfContext';
 
 
 function BookSearch() {
-    const [searchTerm, setSearchTerm] = useState('');
-    const [searchResults, setSearchResults] = useState<Book[]>([]);
+
+    const { books } = useContext(BookShelfContext)
+
+    const [searchTerm, setSearchTerm] = useState('')
+    const [searchResults, setSearchResults] = useState<Book[]>([])
 
     const searchHandler = async (searchTerm: string) => {
         setSearchTerm(searchTerm)
@@ -15,14 +19,20 @@ function BookSearch() {
             const response = await search(searchTerm, 100);
 
             if (response?.error || response?.items === 0) {
-                setSearchResults([]);
+                setSearchResults([])
             } else {
-                setSearchResults(response);
+                const sortedBooks = response.map((book: Book) => {
+                    const found = books.find((shelvedBook: Book) => shelvedBook.id === book.id)
+                    if (found) {book.shelf = found.shelf}
+                    return book
+                })
+
+                setSearchResults(sortedBooks)
             }
         } catch (error) {
-            setSearchResults([]);
+            setSearchResults([])
         }
-    };
+    }
 
     return (
         <Container style={{ marginTop: 20, marginBottom: 20, }}>
