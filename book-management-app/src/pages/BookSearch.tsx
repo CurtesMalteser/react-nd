@@ -32,7 +32,7 @@ function BookSearch() {
                 onChange={(e) => searchHandler(e.target.value)}
             />
             <button onClick={() => searchHandler(searchTerm)}>Search</button>
-           {(searchResults.length > 0) && <BookShelf title={`Search Results: ${searchResults.length}`} books={searchResults} />}
+           {(searchResults?.length > 0) && <BookShelf title={`Search Results: ${searchResults.length}`} books={searchResults} />}
         </Container>
     );
 };
