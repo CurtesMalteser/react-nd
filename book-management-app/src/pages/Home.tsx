@@ -5,16 +5,22 @@ import { BookShelfContext } from '../store/BookShelfContext';
 
 function HomePage() {
   const [isLoading, setIsLoading] = useState<boolean>(true)
-  const { setBooks } = useContext(BookShelfContext)
+  const { books, setBooks } = useContext(BookShelfContext)
 
-   useEffect(() => {
+  useEffect(() => {
     async function fetchBooks() {
       const data = await getAll()
       setBooks(data.books)
       setIsLoading(false)
     }
-    fetchBooks()
-  }, [setBooks])
+
+    if (books.length > 0) {
+      setIsLoading(false)
+    } else {
+
+      fetchBooks()
+    }
+  }, [books, setBooks])
 
 
   return (
