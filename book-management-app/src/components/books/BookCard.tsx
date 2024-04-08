@@ -36,7 +36,7 @@ function BookCard(book: Book, addToShelf: (book: Book) => void) {
                 <Card.Text className='oneLine'>{authors}</Card.Text>
                 <div className="d-flex">
                     <Link to={`/book/${book.id}`}><Button variant="primary">Details</Button></Link>
-                    <DropdownButton id="dropdown-basic-button" title={shelfLabel}>
+                    <DropdownButton id="dropdown-basic-button" title={shelfLabel} style={{ paddingInlineStart: '10px' }}>
                         <DropdownBookItems book={book} addToShelf={() => addToShelf(book)} />
                     </DropdownButton>
                 </div>
