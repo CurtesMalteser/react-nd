@@ -6,6 +6,10 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
 
 In the project directory, you can run:
 
+### `npm install`
+
+Installs all the dependencies required to run the project.
+
 ### `npm start`
 
 Runs the app in the development mode.\
@@ -14,33 +18,33 @@ Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
 The page will reload if you make edits.\
 You will also see any lint errors in the console.
 
-### `npm test`
+# Book Management APp
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+### Home `/`
 
-### `npm run build`
+Displays three shelves:
+- Currently Reading
+- Want to Read
+- Read
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+Each shelf displays the books that belong to that category.
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+Each book displays the title, author(s), and a thumbnail of the book, a details button that links to the book details page, and a dropdown menu that allows the user to move the book to a different shelf.
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+### Search `/search`
 
-### `npm run eject`
+Displays a search bar that allows the user to search for books.
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+The search results are displayed in a grid format, each book displays the title, author(s), and a thumbnail of the book, a details button that links to the book details page, and a dropdown menu that allows the user to move the book to a different shelf.
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+If the book is already on a shelf, the dropdown menu will display the shelf it belongs to.
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+When the user navigates back to the home page, the books that were added to a shelf will be displayed in the corresponding shelf.
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+### Book Details `/book/:id`
 
-## Learn More
+Displays the book details, including the title, author(s), description, rating, category, publisher, puplished date, pages count, ISBN-13 and ISBN-10.
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+If some of the details, such as the rating, category, publisher, published date, pages count, ISBN-13, or ISBN-10 are not available, the page is correctly displayed.
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+The user can search for terms like "poetry" and "biography". It is possible to search for multiple words, such as “artificial intelligence.”
