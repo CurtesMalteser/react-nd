@@ -1,5 +1,6 @@
 import { useAppSelector, useAppDispatch } from '../app/hooks';
 import { allUsers, fetchUsers } from '../features/users/usersSlice';
+import { logIn } from '../features/authedUser/authedUserSlice';
 import React, { useState, useEffect, ChangeEvent } from 'react';
 import User from '../utils/user';
 import Form from 'react-bootstrap/Form';
@@ -33,8 +34,7 @@ function Login() {
 
     const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
-        // Dispatch login action here, for now just log the username and password
-        console.log(`Logging in with username: ${username} and password: ${password}`);
+        dispatch(logIn(username));
     };
 
     return (
