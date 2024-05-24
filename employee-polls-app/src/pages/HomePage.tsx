@@ -1,6 +1,5 @@
-import { useEffect } from "react";
-import { fetchUser, isAuthed, status } from "../features/authedUser/authedUserSlice";
-import { useAppDispatch, useAppSelector } from "../app/hooks";
+import { isAuthed } from "../features/authedUser/authedUserSlice";
+import { useAppSelector } from "../app/hooks";
 import { Navigate } from "react-router-dom";
 
 

@@ -8,6 +8,7 @@ import Form from 'react-bootstrap/Form';
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
+import ROUTES from '../constants/routes';
 
 const userOptions = (users: { [key: string]: User }) => Object.values(users)
     .map(user => { return <option key={user.id} value={user.id}>{user.name}</option> });
@@ -39,7 +40,7 @@ function LoginPage() {
         dispatch(logIn(username));
     };
 
-    if (isLoggedIn) { return <Navigate to={'/'} /> }
+    if (isLoggedIn) { return <Navigate to={ROUTES.HOME} /> }
 
     return (
         <>

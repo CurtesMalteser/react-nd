@@ -9,19 +9,23 @@ import HomeOutlet from '../pages/HomeOutlet';
 import { useEffect } from "react";
 import { fetchUser, isAuthed, status } from "../features/authedUser/authedUserSlice";
 import { useAppDispatch, useAppSelector } from "../app/hooks";
-import { Navigate } from "react-router-dom";
+import LeaderboardPage from '../pages/LeaderboardPage';
+import ROUTES from '../constants/routes';
+import NewQuestionPage from '../pages/NewQuestionPage';
 
 const router = createBrowserRouter([
   {
-    path: '/',
+    path: ROUTES.HOME,
     element: <Outlet />,
     children: [
       {
-        path: '/', element: <HomeOutlet />, children:[
-          { path: '/', element: <HomePage /> },
+        path: ROUTES.HOME, element: <HomeOutlet />, children:[
+          { path: ROUTES.HOME, element: <HomePage /> },
+          { path: ROUTES.LEADERBOARD, element: <LeaderboardPage /> },
+          { path: ROUTES.NEW_QUESTION, element: <NewQuestionPage /> },
         ],
       },
-      { path: '/login', element: <LoginPage /> },
+      { path: ROUTES.LOGIN, element: <LoginPage /> },
     ]
   }
 ]);
@@ -46,10 +50,6 @@ function App() {
   if (authedUserStatus === 'failed') {
       return <div>Error loading user</div> // Maybe add global error handling page on App router
   }
-
-  // if (!isLoggedIn) {
-  //     return <Navigate to={'login'} />
-  // }
 
   return (
     <RouterProvider router={router} />
