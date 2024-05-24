@@ -1,16 +1,32 @@
+import { Link } from 'react-router-dom';
 import Container from 'react-bootstrap/Container';
 import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
-import { Link } from 'react-router-dom';
-import ROUTES from '../constants/routes';
+import Image from 'react-bootstrap/Image';
 import { Button } from 'react-bootstrap';
-import { useAppDispatch } from '../app/hooks';
+import ROUTES from '../constants/routes';
+import { useAppDispatch, useAppSelector } from '../app/hooks';
+import { userAvatarURL } from "../features/authedUser/authedUserSlice";
 import { logOut } from '../features/authedUser/authedUserSlice';
+
+function getAvatarImage(avatarName: string | undefined | null) {
+    switch (avatarName) {
+        case 'sarah.jpg':
+            return require('../assets/img/sarah.jpg');
+        case 'john.jpg':
+            return require('../assets/img/john.jpg');
+        case 'tyler.jpg':
+            return require('../assets/img/tyler.jpg');
+        default:
+            return require('../assets/img/employees_pool_logo.jpg');
+    }
+}
+
 
 function AppNavBar() {
 
+    const avatarURL = useAppSelector(userAvatarURL);
     const dispatch = useAppDispatch();
-
     const handleLogOut = () => dispatch(logOut());
 
     return (
@@ -25,7 +41,11 @@ function AppNavBar() {
                         <Nav.Link as={Link} to={ROUTES.NEW_QUESTION}>New</Nav.Link>
                     </Nav>
                     <div className="d-flex">
-                        <Button variant="outline-success" onClick={ handleLogOut }>Logout</Button>
+                        <Image style={{ width: '50px', height: '50px', marginRight: '10px' }}
+                            src={getAvatarImage(avatarURL)}
+                            alt={'Profile Picture'}
+                            roundedCircle />
+                        <Button variant="outline-success" onClick={handleLogOut}>Logout</Button>
                     </div>
                 </Navbar.Collapse>
             </Container>
