@@ -1,7 +1,8 @@
+import React, { useState, useEffect, ChangeEvent } from 'react';
+import { Navigate } from "react-router-dom";
 import { useAppSelector, useAppDispatch } from '../app/hooks';
 import { allUsers, fetchUsers } from '../features/users/usersSlice';
-import { logIn } from '../features/authedUser/authedUserSlice';
-import React, { useState, useEffect, ChangeEvent } from 'react';
+import { isAuthed, logIn } from '../features/authedUser/authedUserSlice';
 import User from '../utils/user';
 import Form from 'react-bootstrap/Form';
 import Container from 'react-bootstrap/Container';
@@ -11,10 +12,11 @@ import Col from 'react-bootstrap/Col';
 const userOptions = (users: { [key: string]: User }) => Object.values(users)
     .map(user => { return <option key={user.id} value={user.id}>{user.name}</option> });
 
-function Login() {
+function LoginPage() {
 
     const users = useAppSelector(allUsers);
     const dispatch = useAppDispatch();
+    const isLoggedIn = useAppSelector(isAuthed);
 
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
@@ -36,6 +38,8 @@ function Login() {
         event.preventDefault();
         dispatch(logIn(username));
     };
+
+    if (isLoggedIn) { return <Navigate to={'/'} /> }
 
     return (
         <>
@@ -66,4 +70,4 @@ function Login() {
     );
 }
 
-export default Login;
+export default LoginPage;
