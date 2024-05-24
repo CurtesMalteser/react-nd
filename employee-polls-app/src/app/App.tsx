@@ -1,10 +1,12 @@
 import { useEffect } from "react";
-import { fetchUser, isAuthed, authedUser } from "../features/authedUser/authedUserSlice";
+import { fetchUser, isAuthed, status } from "../features/authedUser/authedUserSlice";
 import Login from "../pages/Login";
+import HomePage from "../pages/HomePage";
 import { useAppDispatch, useAppSelector } from "./hooks";
 
 function App() {
 
+  const authedUserStatus = useAppSelector(status);
   const isLoggedIn = useAppSelector(isAuthed);
   const dispatch = useAppDispatch();
 
@@ -14,8 +16,9 @@ function App() {
 
   return (
     <div>
-    <Login />
-    <h6>isLoggedIn: { isLoggedIn ? 'true' : 'false' }</h6>
+    { authedUserStatus === 'loading' && <h1>Loading...</h1> }
+    { authedUserStatus === 'idle' && isLoggedIn && <HomePage /> }
+    { authedUserStatus === 'idle' && !isLoggedIn && <Login /> }
     </div>
   );
 }

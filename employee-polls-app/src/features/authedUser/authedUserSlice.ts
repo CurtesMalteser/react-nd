@@ -61,6 +61,7 @@ export const authedUserSlice = createSlice({
 
 export const authedUser = (state: RootState) => state.authedUser.user;
 export const isAuthed = (state: RootState) => state.authedUser.loggedIn;
+export const status = (state: RootState) => state.authedUser.status;
 
 export default authedUserSlice.reducer;
 // #endregion Reducers
