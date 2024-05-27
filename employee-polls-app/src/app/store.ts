@@ -1,13 +1,16 @@
 import { configureStore, ThunkAction, Action } from '@reduxjs/toolkit';
 import counterReducer from '../features/counter/counterSlice';
-import userReducer from '../features/users/usersSlice';
+import usersReducer from '../features/users/usersSlice';
 import authedUserReducer from '../features/authedUser/authedUserSlice';
+import questionsReducer from '../features/questions/questionsSlice';
+
 
 export const store = configureStore({
   reducer: {
-    counter: counterReducer,
-    users: userReducer,
+    counter: counterReducer, // todo: remove and associated files
+    users: usersReducer,
     authedUser: authedUserReducer,
+    questions: questionsReducer,
   },
 });
 

@@ -130,8 +130,8 @@ export function _getUsers() {
 }
 
 export function _getQuestions() {
-  return new Promise((res, rej) => {
-    setTimeout(() => res({ ...questions }), 1000)
+  return new Promise<{questions: {[key: string]: Question}}>((resolve) => {
+    setTimeout(() => resolve({ questions: { ...questions } }), 1000)
   })
 }
 

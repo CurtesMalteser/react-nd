@@ -15,8 +15,9 @@ const userOptions = (users: { [key: string]: User }) => Object.values(users)
 
 function LoginPage() {
 
-    const users = useAppSelector(allUsers);
     const dispatch = useAppDispatch();
+
+    const users = useAppSelector(allUsers);
     const isLoggedIn = useAppSelector(isAuthed);
 
     const [username, setUsername] = useState('');
