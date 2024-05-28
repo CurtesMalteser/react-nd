@@ -1,9 +1,10 @@
+import { useEffect } from "react";
 import { isAuthed } from "../features/authedUser/authedUserSlice";
 import { useAppDispatch, useAppSelector } from "../app/hooks";
 import { Navigate } from "react-router-dom";
 import { fetchQuestions, newQuestions as newQuestionsReducer, answeredQuestions } from "../features/questions/questionsSlice";
-import { useEffect } from "react";
-
+import QuestionsBoard from "../components/QestionsBoard";
+import { Container } from "react-bootstrap";
 
 export default function HomePage() {
 
@@ -22,22 +23,10 @@ export default function HomePage() {
     }
 
     return (
-        <>
-            <h1>Home Page</h1>
+        <Container>
+            <QuestionsBoard title="New Questions" questions={newQuestions} />
             <br />
-            <h2>New Questions</h2>
-            {newQuestions.map((question) => (
-                <div key={question.id}>
-                    <h3>{question.author}</h3>
-                </div>
-            ))}
-            <br />
-            <h2>Done</h2>
-            {doneQuestions.map((question) => (
-                <div key={question.id}>
-                    <h3>{question.author}</h3>
-                </div>
-            ))}
-        </>
+            <QuestionsBoard title="Done" questions={doneQuestions} />
+        </Container>
     );
 }
