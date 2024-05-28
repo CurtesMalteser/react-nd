@@ -17,17 +17,14 @@ function LeaderboardTable({ users }: { users: User[] }) {
                 {users.map((user) => (
                     <tr key={user.id}>
                         <td style={{ display: 'flex', alignItems: 'center' }}>
-                            <>
-                                <Image style={{ width: '50px', height: '50px', marginRight: '10px' }}
-                                    src={getAvatarImage(user.avatarURL)}
-                                    alt={'Profile Picture'}
-                                    roundedCircle />
-
-                                <div>
-                                    <strong>{user.name}</strong>
-                                    <p>{user.id}</p>
-                                </div>
-                            </>
+                            <Image style={{ width: '50px', height: '50px', marginRight: '10px' }}
+                                src={getAvatarImage(user.avatarURL)}
+                                alt={'Profile Picture'}
+                                roundedCircle />
+                            <div>
+                                <strong>{user.name}</strong>
+                                <p>{user.id}</p>
+                            </div>
                         </td>
                         <td>{Object.keys(user.answers).length}</td>
                         <td>{user.questions.length}</td>

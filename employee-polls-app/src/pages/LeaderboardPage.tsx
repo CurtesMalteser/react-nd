@@ -2,6 +2,7 @@ import { fetchUsers, sortedUsersForLeadearboad } from '../features/users/usersSl
 import { useAppDispatch, useAppSelector } from '../app/hooks';
 import LeaderboardTable from '../components/LeaderboardTable';
 import { useEffect } from 'react';
+import Container from 'react-bootstrap/esm/Container';
 
 function LeaderboardPage() {
     const dispatch = useAppDispatch();
@@ -10,7 +11,9 @@ function LeaderboardPage() {
     useEffect(() => { dispatch(fetchUsers()) }, []);
 
     return (
-        <LeaderboardTable users={users} />
+        <Container>
+            <LeaderboardTable users={users} />
+        </Container>
     );
 }
 

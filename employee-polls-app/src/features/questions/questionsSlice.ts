@@ -1,4 +1,4 @@
-import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { createAsyncThunk, createSelector, createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { RootState } from '../../app/store';
 import { _getQuestions } from '../../utils/_DATA';
 import Question from '../../utils/question';
@@ -59,8 +59,16 @@ export const questionsSlice = createSlice({
 
 export const status = (state: RootState) => state.questionsState.status;
 export const allQuestions = (state: RootState) => state.questionsState.questions;
-export const newQuestions = (state: RootState) => state.questionsState.questions.filter((question) => !didAuthedUserVoted(question, state.authedUser.user?.id));
-export const answeredQuestions = (state: RootState) => state.questionsState.questions.filter((question) => didAuthedUserVoted(question, state.authedUser.user?.id));
+export const newQuestions = createSelector(
+    (state: RootState) => state.questionsState.questions,
+    (state: RootState) => state.authedUser.user,
+    (questions, user) => questions?.filter((question) => !didAuthedUserVoted(question, user?.id)),
+);
+export const answeredQuestions  = createSelector(
+    (state: RootState) => state.questionsState.questions,
+    (state: RootState) => state.authedUser.user,
+    (questions, user) => questions?.filter((question) => didAuthedUserVoted(question, user?.id)),
+);
 
 export default questionsSlice.reducer;
 

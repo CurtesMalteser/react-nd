@@ -18,7 +18,7 @@ function AppNavBar() {
     const handleLogOut = () => dispatch(logOut());
 
     return (
-        <Navbar expand="lg" className="bg-body-tertiary">
+        <Navbar expand="lg" className="bg-body-tertiary" style={{marginBottom: "48px"}}>
             <Container>
                 <Navbar.Brand as={Link} to={ROUTES.HOME}>React-Bootstrap</Navbar.Brand>
                 <Navbar.Toggle aria-controls="basic-navbar-nav" />

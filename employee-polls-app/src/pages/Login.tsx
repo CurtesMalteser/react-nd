@@ -61,6 +61,7 @@ function LoginPage() {
                                 placeholder="Random password"
                                 value={password}
                                 onChange={handlePasswordChange}
+                                autoComplete='off'
                             />
                             <br />
                             <button type="submit">Login</button>
