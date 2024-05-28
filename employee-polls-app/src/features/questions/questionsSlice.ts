@@ -57,10 +57,10 @@ export const questionsSlice = createSlice({
     },
 });
 
-export const status = (state: RootState) => state.questions.status;
-export const allQuestions = (state: RootState) => state.questions.questions;
-export const newQuestions = (state: RootState) => state.questions.questions.filter((question) => !didAuthedUserVoted(question, state.authedUser.user?.id));
-export const answeredQuestions = (state: RootState) => state.questions.questions.filter((question) => didAuthedUserVoted(question, state.authedUser.user?.id));
+export const status = (state: RootState) => state.questionsState.status;
+export const allQuestions = (state: RootState) => state.questionsState.questions;
+export const newQuestions = (state: RootState) => state.questionsState.questions.filter((question) => !didAuthedUserVoted(question, state.authedUser.user?.id));
+export const answeredQuestions = (state: RootState) => state.questionsState.questions.filter((question) => didAuthedUserVoted(question, state.authedUser.user?.id));
 
 export default questionsSlice.reducer;
 

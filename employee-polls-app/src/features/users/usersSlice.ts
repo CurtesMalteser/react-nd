@@ -1,4 +1,4 @@
-import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { createAsyncThunk, createSelector, createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { RootState } from '../../app/store';
 import { _getUsers } from '../../utils/_DATA';
 import User from '../../utils/user';
@@ -38,7 +38,7 @@ export const usersSlice = createSlice({
             .addCase(fetchUsers.pending, (state) => {
                 state.status = 'loading';
             })
-            .addCase(fetchUsers.fulfilled, (state, action: PayloadAction<{[key: string]: User}>) => {
+            .addCase(fetchUsers.fulfilled, (state, action: PayloadAction<{ [key: string]: User }>) => {
                 state.status = 'idle';
                 Object.values(action.payload).forEach((user) => {
                     console.log(`User: ${user.name}`);
@@ -55,5 +55,13 @@ export const usersSlice = createSlice({
 // the state. Selectors can also be defined inline where they're used instead of
 // in the slice file. For example: `useSelector((state: RootState) => state.counter.value)`
 export const allUsers = (state: RootState) => state.users.users;
+
+export const sortedUsersForLeadearboad = createSelector(
+    (state: RootState) => [...Object.values(state.users.users)],
+    (users: User[]) => users.sort((a: User, b: User) => {
+            const aTotal = Object.keys(a.answers).length;
+            const bTotal = Object.keys(b.answers).length;
+            return bTotal - aTotal;
+        }));
 
 export default usersSlice.reducer;
