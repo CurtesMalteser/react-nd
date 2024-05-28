@@ -25,7 +25,6 @@ export default function HomePage() {
     return (
         <Container>
             <QuestionsBoard title="New Questions" questions={newQuestions} />
-            <br />
             <QuestionsBoard title="Done" questions={doneQuestions} />
         </Container>
     );
