@@ -40,16 +40,8 @@ export const questionsSlice = createSlice({
             })
             .addCase(fetchQuestions.fulfilled, (state, action: PayloadAction<{ [key: string]: Question }>) => {
                 state.status = 'idle';
-                const questionsArray = Object.values(action.payload).map((question) => question);
-
-                questionsArray.forEach((question) => {
-                    console.group(`Question: ${question.id}`);
-                    console.log(`Otion one: ${question.optionOne.text}`);
-                    console.log(`Otion two: ${question.optionTwo.text}`);
-                    console.groupEnd();
-                });
-
-                state.questions = questionsArray;
+                const questions: Question[] = Object.values(action.payload).map((question) => question);
+                state.questions = questions;
             })
             .addCase(fetchQuestions.rejected, (state) => {
                 state.status = 'failed';

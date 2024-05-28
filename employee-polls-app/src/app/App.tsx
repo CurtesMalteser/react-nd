@@ -36,7 +36,10 @@ function App() {
   const isLoggedIn = useAppSelector(isAuthed);
   const dispatch = useAppDispatch();
 
-  console.log('isLoggedIn', isLoggedIn);
+  // it will be handled the login status in the future in App component
+  // to logout from other pagers other than HomePage
+  // printing console.log to avoid unused variable warning
+  console.log('isLoggedIn', isLoggedIn); 
 
   useEffect(() => {
       dispatch(fetchUser());
