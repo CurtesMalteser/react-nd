@@ -10,7 +10,7 @@ export const store = configureStore({
     counter: counterReducer, // todo: remove and associated files
     users: usersReducer,
     authedUser: authedUserReducer,
-    questions: questionsReducer,
+    questionsState: questionsReducer,
   },
 });
 

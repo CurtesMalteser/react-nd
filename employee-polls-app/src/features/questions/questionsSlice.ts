@@ -59,11 +59,15 @@ export const questionsSlice = createSlice({
 
 export const status = (state: RootState) => state.questions.status;
 export const allQuestions = (state: RootState) => state.questions.questions;
-
-export const newQuestions = (state: RootState) => state.questions.questions.filter((question) => [...question.optionOne.votes, ...question.optionTwo.votes]
-    .filter((vote) => vote !== (state.authedUser.user?.id ?? "")));
-
-    export const answeredQuestions = (state: RootState) => state.questions.questions.filter((question) => [...question.optionOne.votes, ...question.optionTwo.votes]
-    .filter((vote) => vote === (state.authedUser.user?.id ?? "")));
+export const newQuestions = (state: RootState) => state.questions.questions.filter((question) => !didAuthedUserVoted(question, state.authedUser.user?.id));
+export const answeredQuestions = (state: RootState) => state.questions.questions.filter((question) => didAuthedUserVoted(question, state.authedUser.user?.id));
 
 export default questionsSlice.reducer;
+
+
+// #region Utils
+function didAuthedUserVoted(question: Question, userId: string | undefined): boolean {
+    const mergedVotes = [...question.optionOne.votes, ...question.optionTwo.votes]
+    return mergedVotes.includes(userId ?? "")
+}
+// #endregion Utils
