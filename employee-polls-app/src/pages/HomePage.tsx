@@ -2,7 +2,12 @@ import { useEffect } from "react";
 import { isAuthed } from "../features/authedUser/authedUserSlice";
 import { useAppDispatch, useAppSelector } from "../app/hooks";
 import { Navigate } from "react-router-dom";
-import { fetchQuestions, newQuestions as newQuestionsReducer, answeredQuestions } from "../features/questions/questionsSlice";
+import {
+    fetchQuestions,
+    newQuestions as newQuestionsReducer,
+    answeredQuestions,
+    status as fetchQuestionsStatus,
+} from "../features/questions/questionsSlice";
 import QuestionsBoard from "../components/QestionsBoard";
 import { Container } from "react-bootstrap";
 
@@ -13,6 +18,7 @@ export default function HomePage() {
     const isLoggedIn = useAppSelector(isAuthed);
     const newQuestions = useAppSelector(newQuestionsReducer);
     const doneQuestions = useAppSelector(answeredQuestions);
+    const questionStatus = useAppSelector(fetchQuestionsStatus);
 
     useEffect(() => {
         dispatch(fetchQuestions());
@@ -20,6 +26,10 @@ export default function HomePage() {
 
     if (!isLoggedIn) {
         return <Navigate to={'login'} />
+    }
+
+    if (questionStatus === 'loading') {
+        return <div>Loading...</div>
     }
 
     return (
