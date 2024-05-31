@@ -1,7 +1,7 @@
 import Container from "react-bootstrap/Container";
 import Col from "react-bootstrap/Col";
 import Image from "react-bootstrap/Image";
-import Loader from "../Loader";
+import Loader from "./Loader";
 import Logo from '../../assets/img/employees_pool_logo.jpg';
 
 function HomeLoader() {

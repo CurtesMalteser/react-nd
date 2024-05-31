@@ -1,6 +1,6 @@
 import { Col, Row } from "react-bootstrap";
 import Lottie from "lottie-react";
-import animationData from '../assets/lotties/loader.json';
+import animationData from '../../assets/lotties/loader.json';
 
 function Loader() {
     return (

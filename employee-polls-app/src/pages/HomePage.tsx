@@ -10,7 +10,7 @@ import {
 } from "../features/questions/questionsSlice";
 import QuestionsBoard from "../components/QestionsBoard";
 import { Container } from "react-bootstrap";
-import Loader from "../components/Loader";
+import Loader from "../components/loader/Loader";
 
 export default function HomePage() {
 
