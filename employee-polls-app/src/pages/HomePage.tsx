@@ -9,7 +9,33 @@ import {
     status as fetchQuestionsStatus,
 } from "../features/questions/questionsSlice";
 import QuestionsBoard from "../components/QestionsBoard";
-import { Container } from "react-bootstrap";
+import { Col, Container, Row } from "react-bootstrap";
+import Lottie from "lottie-react";
+import animationData from '../assets/lotties/loader.json';
+
+function Loader() {
+    return (
+        <Container className="d-flex align-items-center" style={{ width: '100vw', height: '100vh' }}>
+            <Col>
+                <Row><h2 className="d-flex justify-content-center ">Loading...</h2></Row>
+                <Row className="d-flex justify-content-center ">
+                    <Lottie
+
+                        style={{ height: '180px', width: '180px' }}
+                        animationData={animationData}
+                        loop={true}
+                        autoplay={true}
+                        rendererSettings={
+                            {
+                                preserveAspectRatio: "xMidYMid slice"
+                            }
+                        }
+                    />
+                </Row>
+            </Col>
+        </Container>
+    );
+}
 
 export default function HomePage() {
 
@@ -22,14 +48,12 @@ export default function HomePage() {
 
     useEffect(() => {
         dispatch(fetchQuestions());
-    }, []);
+    }, [dispatch]);
 
-    if (!isLoggedIn) {
-        return <Navigate to={'login'} />
-    }
+    if (!isLoggedIn) { return <Navigate to={'login'} /> }
 
     if (questionStatus === 'loading') {
-        return <div>Loading...</div>
+        return <Loader />
     }
 
     return (

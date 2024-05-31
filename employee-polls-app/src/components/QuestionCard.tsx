@@ -9,7 +9,7 @@ function QuestionCard({ questionId, author, timestamp }: { questionId: string, a
             <Card.Body>
                 <Card.Title>{author}</Card.Title>
                 <Card.Text>{timestamp}</Card.Text>
-                <Button className="align-self-end" variant="success" onClick={() => console.log(`🚀 clicked: ${questionId}`)}>Show</Button>
+                <Button className="w-100" variant="success" onClick={() => console.log(`🚀 clicked: ${questionId}`)}>Show</Button>
             </Card.Body>
         </Card>
     );
