@@ -6,7 +6,7 @@ import Image from 'react-bootstrap/Image';
 import { Button } from 'react-bootstrap';
 import ROUTES from '../constants/routes';
 import { useAppDispatch, useAppSelector } from '../app/hooks';
-import { userAvatarURL } from "../features/authedUser/authedUserSlice";
+import { userAvatarURL, userID as authedUserID } from "../features/authedUser/authedUserSlice";
 import { logOut } from '../features/authedUser/authedUserSlice';
 import getAvatarImage from '../utils/avatar';
 
@@ -14,6 +14,7 @@ import getAvatarImage from '../utils/avatar';
 function AppNavBar() {
 
     const avatarURL = useAppSelector(userAvatarURL);
+    const userID = useAppSelector(authedUserID);
     const dispatch = useAppDispatch();
     const handleLogOut = () => dispatch(logOut());
 
@@ -31,7 +32,7 @@ function AppNavBar() {
                     <div className="d-flex">
                         <Image style={{ width: '50px', height: '50px', marginRight: '10px' }}
                             src={getAvatarImage(avatarURL)}
-                            alt={'Profile Picture'}
+                            alt={`Profile Picture ${userID}`}
                             roundedCircle />
                         <Button variant="outline-success" onClick={handleLogOut}>Logout</Button>
                     </div>

@@ -13,6 +13,7 @@ import LeaderboardPage from '../pages/LeaderboardPage';
 import ROUTES from '../constants/routes';
 import NewQuestionPage from '../pages/NewQuestionPage';
 import HomeLoader from '../components/loader/HomeLoader';
+import PollPage from '../pages/PollPage';
 
 const router = createBrowserRouter([
   {
@@ -24,6 +25,7 @@ const router = createBrowserRouter([
           { path: ROUTES.HOME, element: <HomePage /> },
           { path: ROUTES.LEADERBOARD, element: <LeaderboardPage /> },
           { path: ROUTES.NEW_QUESTION, element: <NewQuestionPage /> },
+          { path: ROUTES.ANSWER_POOL, element: <PollPage /> },
         ],
       },
       { path: ROUTES.LOGIN, element: <LoginPage /> },
