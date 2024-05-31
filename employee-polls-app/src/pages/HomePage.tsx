@@ -27,7 +27,13 @@ export default function HomePage() {
 
     if (!isLoggedIn) { return <Navigate to={'login'} /> }
 
-    if (questionStatus === 'loading') { return <Loader /> }
+    if (questionStatus === 'loading') {
+        return (
+            <Container className="d-flex align-items-center" style={{ width: '100vw', height: '100vh' }}>
+                <Loader />
+            </Container>
+        )
+    }
 
     return (
         <Container>

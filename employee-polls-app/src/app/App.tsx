@@ -12,6 +12,7 @@ import { useAppDispatch, useAppSelector } from "../app/hooks";
 import LeaderboardPage from '../pages/LeaderboardPage';
 import ROUTES from '../constants/routes';
 import NewQuestionPage from '../pages/NewQuestionPage';
+import HomeLoader from '../components/loader/HomeLoader';
 
 const router = createBrowserRouter([
   {
@@ -19,7 +20,7 @@ const router = createBrowserRouter([
     element: <Outlet />,
     children: [
       {
-        path: ROUTES.HOME, element: <HomeOutlet />, children:[
+        path: ROUTES.HOME, element: <HomeOutlet />, children: [
           { path: ROUTES.HOME, element: <HomePage /> },
           { path: ROUTES.LEADERBOARD, element: <LeaderboardPage /> },
           { path: ROUTES.NEW_QUESTION, element: <NewQuestionPage /> },
@@ -39,19 +40,16 @@ function App() {
   // it will be handled the login status in the future in App component
   // to logout from other pagers other than HomePage
   // printing console.log to avoid unused variable warning
-  console.log('isLoggedIn', isLoggedIn); 
+  console.log('isLoggedIn', isLoggedIn);
 
   useEffect(() => {
-      dispatch(fetchUser());
+    dispatch(fetchUser());
   }, []);
 
-
-  if (authedUserStatus === 'loading') {
-      return <div>Loading...</div>
-  }
+  if (authedUserStatus === 'loading') { return <HomeLoader /> }
 
   if (authedUserStatus === 'failed') {
-      return <div>Error loading user</div> // Maybe add global error handling page on App router
+    return <div>Error loading user</div> // Maybe add global error handling page on App router
   }
 
   return (
