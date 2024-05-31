@@ -51,16 +51,21 @@ export const questionsSlice = createSlice({
 
 export const status = (state: RootState) => state.questionsState.status;
 export const allQuestions = (state: RootState) => state.questionsState.questions;
+
 export const newQuestions = createSelector(
     (state: RootState) => state.questionsState.questions,
     (state: RootState) => state.authedUser.user,
     (questions, user) => questions?.filter((question) => !didAuthedUserVoted(question, user?.id)),
 );
-export const answeredQuestions  = createSelector(
+
+export const answeredQuestions = createSelector(
     (state: RootState) => state.questionsState.questions,
     (state: RootState) => state.authedUser.user,
     (questions, user) => questions?.filter((question) => didAuthedUserVoted(question, user?.id)),
 );
+
+export const getQuestionByID = (state: RootState, questionID: string) => state.questionsState.questions
+    .find((question) => question.id === questionID);
 
 export default questionsSlice.reducer;
 
