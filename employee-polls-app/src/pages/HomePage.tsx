@@ -10,7 +10,7 @@ import {
 } from "../features/questions/questionsSlice";
 import QuestionsBoard from "../components/QestionsBoard";
 import { Container } from "react-bootstrap";
-import Loader from "../components/loader/Loader";
+import ComponentLoader from "../components/loader/ComponentLoader";
 
 export default function HomePage() {
 
@@ -27,13 +27,7 @@ export default function HomePage() {
 
     if (!isLoggedIn) { return <Navigate to={'login'} /> }
 
-    if (questionStatus === 'loading') {
-        return (
-            <Container className="d-flex align-items-center" style={{ width: '100vw', height: '100vh' }}>
-                <Loader />
-            </Container>
-        )
-    }
+    if (questionStatus === 'loading') { return <ComponentLoader /> }
 
     return (
         <Container>
