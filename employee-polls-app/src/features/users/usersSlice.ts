@@ -56,6 +56,8 @@ export const usersSlice = createSlice({
 // in the slice file. For example: `useSelector((state: RootState) => state.counter.value)`
 export const allUsers = (state: RootState) => state.users.users;
 
+export const status = (state: RootState) => state.users.status;
+
 export const sortedUsersForLeadearboad = createSelector(
     (state: RootState) => [...Object.values(state.users.users)],
     (users: User[]) => users.sort((a: User, b: User) => {

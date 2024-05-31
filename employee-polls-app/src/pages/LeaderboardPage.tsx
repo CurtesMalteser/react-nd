@@ -1,14 +1,18 @@
-import { fetchUsers, sortedUsersForLeadearboad } from '../features/users/usersSlice';
+import { fetchUsers, sortedUsersForLeadearboad, status as fetchUsersStatus } from '../features/users/usersSlice';
 import { useAppDispatch, useAppSelector } from '../app/hooks';
 import LeaderboardTable from '../components/LeaderboardTable';
 import { useEffect } from 'react';
 import Container from 'react-bootstrap/esm/Container';
+import ComponentLoader from '../components/loader/ComponentLoader';
 
 function LeaderboardPage() {
     const dispatch = useAppDispatch();
     const users = useAppSelector(sortedUsersForLeadearboad);
+    const status = useAppSelector(fetchUsersStatus);
 
     useEffect(() => { dispatch(fetchUsers()) }, []);
+
+    if (status === 'loading') { return <ComponentLoader /> }
 
     return (
         <Container>
