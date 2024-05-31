@@ -44,7 +44,7 @@ function App() {
 
   useEffect(() => {
     dispatch(fetchUser());
-  }, []);
+  }, [dispatch]);
 
   if (authedUserStatus === 'loading') { return <HomeLoader /> }
 

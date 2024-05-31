@@ -10,7 +10,7 @@ function LeaderboardPage() {
     const users = useAppSelector(sortedUsersForLeadearboad);
     const status = useAppSelector(fetchUsersStatus);
 
-    useEffect(() => { dispatch(fetchUsers()) }, []);
+    useEffect(() => { dispatch(fetchUsers()) }, [dispatch]);
 
     if (status === 'loading') { return <ComponentLoader /> }
 
