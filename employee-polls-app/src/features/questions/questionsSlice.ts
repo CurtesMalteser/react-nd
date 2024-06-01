@@ -1,4 +1,9 @@
-import { createAsyncThunk, createSelector, createSlice, PayloadAction } from '@reduxjs/toolkit';
+import {
+    createAsyncThunk,
+    createSelector,
+    createSlice,
+    PayloadAction,
+} from '@reduxjs/toolkit';
 import { RootState } from '../../app/store';
 import { _getQuestions } from '../../utils/_DATA';
 import Question from '../../utils/question';

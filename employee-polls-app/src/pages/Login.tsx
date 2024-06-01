@@ -25,7 +25,7 @@ function LoginPage() {
 
     useEffect(() => {
         dispatch(fetchUsers())
-    }, []);
+    }, [dispatch]);
 
     const handleUsernameChange = (event: ChangeEvent<HTMLSelectElement>) => {
         setUsername(event.target.value);

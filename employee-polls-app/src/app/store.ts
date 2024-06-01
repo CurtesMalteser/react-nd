@@ -3,6 +3,7 @@ import counterReducer from '../features/counter/counterSlice';
 import usersReducer from '../features/users/usersSlice';
 import authedUserReducer from '../features/authedUser/authedUserSlice';
 import questionsReducer from '../features/questions/questionsSlice';
+import answerQuestionReducer from '../features/questions/answerQuestionSlice';
 
 
 export const store = configureStore({
@@ -11,6 +12,7 @@ export const store = configureStore({
     users: usersReducer,
     authedUser: authedUserReducer,
     questionsState: questionsReducer,
+    answerState: answerQuestionReducer,
   },
 });
 

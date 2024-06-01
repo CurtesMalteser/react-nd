@@ -15,18 +15,20 @@ import {
 import { useEffect } from "react";
 import Option from "../utils/option";
 import ComponentLoader from "../components/loader/ComponentLoader";
+import { postAnswer } from "../features/questions/answerQuestionSlice";
+import { authedUser as authedUserSelector } from "../features/authedUser/authedUserSlice";
+import Answer from "../utils/answer";
+import User from "../utils/user";
 
-function PollOption({ key, option }: { key: string, option: Option }) {
+const safeOption: Option = { text: "Safe option", votes: [] };
 
-    //type OptionType = typeof option;
-    console.log(typeof option)
-
+function PollOption({ option, clickHandler }: { option: Option, clickHandler: () => void }) {
     return (
         <Col >
             <Card border="success">
                 <Card.Body>
                     <Card.Title className="d-flex justify-content-center">{option.text}</Card.Title>
-                    <Button className="w-100" variant="success">Click</Button>
+                    <Button className="w-100" variant="success" onClick={clickHandler}>Click</Button>
                 </Card.Body>
             </Card>
         </Col>
@@ -40,8 +42,13 @@ function PollPage() {
     const dispatch = useAppDispatch();
     const question = useAppSelector((state) => getQuestionByID(state, id as string));
     const questionStatus = useAppSelector(fetchQuestionsStatus);
+    const authedUser = useAppSelector(authedUserSelector);
 
     useEffect(() => { dispatch(fetchQuestions()) }, [dispatch]);
+
+    const handleOptionClick = (answer: Answer, authedUser: User | null) => {
+        authedUser && dispatch(postAnswer({ authedUser, answer,}));
+    }
 
     if (questionStatus === 'loading') { return <ComponentLoader /> }
 
@@ -63,12 +70,12 @@ function PollPage() {
                 </Row>
                 <Row >
                     <PollOption
-                        key="optionOne"
-                        option={question?.optionOne ?? { text: "Option One", votes: [] }}
+                        clickHandler={() => handleOptionClick({ [id as string]: 'optionOne' }, authedUser)}
+                        option={question?.optionOne ?? safeOption}
                     />
                     <PollOption
-                        key="optionTwo"
-                        option={question?.optionTwo ?? { text: "Option Two", votes: [] }}
+                        clickHandler={() => handleOptionClick({ [id as string]: 'optionTwo' }, authedUser)}
+                        option={question?.optionTwo ?? safeOption}
                     />
                 </Row>
             </Col>
