@@ -3,10 +3,7 @@ import {
     createSlice,
 } from '@reduxjs/toolkit';
 import { RootState } from '../../app/store';
-import {
-    _getQuestions,
-    _saveQuestionAnswer,
-} from '../../utils/_DATA';
+import { _saveQuestionAnswer } from '../../utils/_DATA';
 import User from '../../utils/user';
 import Answer from '../../utils/answer';
 

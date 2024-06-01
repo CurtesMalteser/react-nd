@@ -3,7 +3,7 @@ const ROUTES = {
     LOGIN: '/login',
     LEADERBOARD: '/leaderboard',
     NEW_QUESTION: '/new-question',
-    ANSWER_POOL: '/poll/:id',
+    ANSWER_POOL: '/questions/:id',
 }
 
 export default ROUTES;
