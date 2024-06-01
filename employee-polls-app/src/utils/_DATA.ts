@@ -130,7 +130,7 @@ export function _getUsers() {
 }
 
 export function _getQuestions() {
-  return new Promise<{questions: {[key: string]: Question}}>((resolve) => {
+  return new Promise<{ questions: { [key: string]: Question } }>((resolve) => {
     setTimeout(() => resolve({ questions: { ...questions } }), 1000)
   })
 }
@@ -177,7 +177,7 @@ export function _saveQuestion(question: Question) {
 
 export function _saveQuestionAnswer({ authedUser, answer }: { authedUser: User, answer: Answer }) {
 
- const [qid, value] = Object.entries(answer)[0];
+  const [qid, value] = Object.entries(answer)[0];
 
   return new Promise<void>((res, rej) => {
     setTimeout(() => {
@@ -196,7 +196,7 @@ export function _saveQuestionAnswer({ authedUser, answer }: { authedUser: User, 
         ...questions,
         [qid]: {
           ...questions[qid],
-          [answer.toString()]: {
+          [value]: {
             ...questions[qid][value],
             votes: questions[qid][value].votes.concat([authedUser.id])
           }
