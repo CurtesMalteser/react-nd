@@ -11,7 +11,7 @@ import { fetchUser, isAuthed, status } from "../features/authedUser/authedUserSl
 import { useAppDispatch, useAppSelector } from "../app/hooks";
 import LeaderboardPage from '../pages/LeaderboardPage';
 import ROUTES from '../constants/routes';
-import NewQuestionPage from '../pages/NewQuestionPage';
+import NewPollPage from '../pages/NewPollPage';
 import HomeLoader from '../components/loader/HomeLoader';
 import PollPage from '../pages/PollPage';
 
@@ -24,7 +24,7 @@ const router = createBrowserRouter([
         path: ROUTES.HOME, element: <HomeOutlet />, children: [
           { path: ROUTES.HOME, element: <HomePage /> },
           { path: ROUTES.LEADERBOARD, element: <LeaderboardPage /> },
-          { path: ROUTES.NEW_QUESTION, element: <NewQuestionPage /> },
+          { path: ROUTES.NEW_QUESTION, element: <NewPollPage /> },
           { path: ROUTES.ANSWER_POOL, element: <PollPage /> },
         ],
       },
