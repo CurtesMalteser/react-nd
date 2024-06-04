@@ -1,13 +1,14 @@
+import { configureStore } from '@reduxjs/toolkit';
 import newPollQuestionReducer, {
     QuestionsState,
     updateOptionOne,
     updateOptionTwo,
     updateAuthor,
     isValid,
-    status
+    postNewPoll
 } from './newPollQuestionSlice';
-
 import getDefaultState from '../testUtils';
+
 
 describe('newPollQuestionSlice', () => {
 
@@ -67,35 +68,36 @@ describe('newPollQuestionSlice', () => {
     });
     // #endregion isValid
 
-    // #region status
-    it('should handle status is idle', () => {
+    // #region postNewPoll
+     it('should handle dispatch postNewPoll loading', () => {
+        const store = configureStore({ reducer: newPollQuestionReducer });
+    
+        store.dispatch(postNewPoll.pending('requestId', initialState.question));
 
-        const actual = newPollQuestionReducer(initialState, updateOptionOne('optionOne'));
-
-        expect(actual.status).toEqual('idle');
-    });
-
-    it('should handle status is loading', () => {
-        const state =  {
-                    question: { optionOne: 'optionOne', optionTwo: 'optionTwo', author: 'author' },
-                    status: 'loading' as const,
-                };
-
-        const actual = newPollQuestionReducer(state, updateOptionOne('optionOne'));
+        const actual = store.getState();
 
         expect(actual.status).toEqual('loading');
     });
 
-    it('should handle status is failed', () => {
-        const state =  {
-                    question: { optionOne: 'optionOne', optionTwo: 'optionTwo', author: 'author' },
-                    status: 'failed' as const,
-                };
+    it('should handle dispatch postNewPoll idle', () => {
+        const store = configureStore({ reducer: newPollQuestionReducer });
+    
+        store.dispatch(postNewPoll.fulfilled({ optionOne: 'optionOne', optionTwo: 'optionTwo', author: 'author' }, 'requestId', initialState.question));
 
-        const actual = newPollQuestionReducer(state, updateOptionOne('optionOne'));
+        const actual = store.getState();
+
+        expect(actual.status).toEqual('idle');
+    });
+
+    it('should handle dispatch postNewPoll failed', () => {
+        const store = configureStore({ reducer: newPollQuestionReducer });
+    
+        store.dispatch(postNewPoll.rejected(new Error('Rejected to post new poll'), 'requestId', initialState.question));
+
+        const actual = store.getState();
 
         expect(actual.status).toEqual('failed');
     });
-    // #endregion status
+    // #endregion postNewPoll
 
 });
