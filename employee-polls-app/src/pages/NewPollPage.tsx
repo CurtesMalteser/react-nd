@@ -6,7 +6,7 @@ import Form from 'react-bootstrap/Form';
 import { useState } from "react";
 import { useAppSelector } from "../app/hooks";
 import { userID as userIDSelector } from "../features/authedUser/authedUserSlice";
-import { status as  submitPollStatus} from "../features/questions/questionsSlice";
+import { status as  submitPollStatus} from "../features/questions/newPollQuestionSlice";
 import ComponentLoader from "../components/loader/ComponentLoader";
 
 function PollForm({ label, placeholder }: { label: string, placeholder: string }) {

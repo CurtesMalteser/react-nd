@@ -4,6 +4,7 @@ import newPollQuestionReducer, {
     updateOptionTwo,
     updateAuthor,
     isValid,
+    status
 } from './newPollQuestionSlice';
 
 import getDefaultState from '../testUtils';
@@ -24,6 +25,7 @@ describe('newPollQuestionSlice', () => {
         );
     });
 
+    // #endregion update functions
     it('should handle updateOptionOne', () => {
         const actual = newPollQuestionReducer(initialState, updateOptionOne('optionOne'));
         expect(actual.question.optionOne).toEqual('optionOne');
@@ -38,11 +40,13 @@ describe('newPollQuestionSlice', () => {
         const actual = newPollQuestionReducer(initialState, updateAuthor('author'));
         expect(actual.question.author).toEqual('author');
     });
+    // #endregion update functions
 
+    // #region isValid
     it('should handle isValid is false', () => {
         const state = getDefaultState();
 
-        const actual = newPollQuestionReducer(initialState, updateOptionOne('optionOne'));
+        newPollQuestionReducer(initialState, updateOptionOne('optionOne'));
 
         expect(isValid(state)).toEqual(false);
     });
@@ -57,9 +61,41 @@ describe('newPollQuestionSlice', () => {
             }
         );
 
-        const actual = newPollQuestionReducer(initialState, updateOptionOne('optionOne'));
+        newPollQuestionReducer(initialState, updateOptionOne('optionOne'));
 
         expect(isValid(state)).toEqual(true);
     });
+    // #endregion isValid
+
+    // #region status
+    it('should handle status is idle', () => {
+
+        const actual = newPollQuestionReducer(initialState, updateOptionOne('optionOne'));
+
+        expect(actual.status).toEqual('idle');
+    });
+
+    it('should handle status is loading', () => {
+        const state =  {
+                    question: { optionOne: 'optionOne', optionTwo: 'optionTwo', author: 'author' },
+                    status: 'loading' as const,
+                };
+
+        const actual = newPollQuestionReducer(state, updateOptionOne('optionOne'));
+
+        expect(actual.status).toEqual('loading');
+    });
+
+    it('should handle status is failed', () => {
+        const state =  {
+                    question: { optionOne: 'optionOne', optionTwo: 'optionTwo', author: 'author' },
+                    status: 'failed' as const,
+                };
+
+        const actual = newPollQuestionReducer(state, updateOptionOne('optionOne'));
+
+        expect(actual.status).toEqual('failed');
+    });
+    // #endregion status
 
 });

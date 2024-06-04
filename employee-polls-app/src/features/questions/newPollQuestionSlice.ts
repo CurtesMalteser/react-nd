@@ -56,6 +56,6 @@ export const isValid = createSelector(
     (question) => { return question.optionOne.length > 0 && question.optionTwo.length > 0 && question.author.length > 0 }
 );
 
-export const pollStatus = (state: RootState) => state.newPollState.status;
+export const status = (state: RootState) => state.newPollState.status;
 
 export default newPollQuestionSlice.reducer;
