@@ -135,23 +135,24 @@ export function _getQuestions() {
   })
 }
 
-function formatQuestion({ optionOne, optionTwo, author }: Question) {
+function formatQuestion({ optionOne, optionTwo, author }: { optionOne:string, optionTwo:string, author:string }) : Question{
   return {
     id: generateUID(),
     timestamp: Date.now(),
     author,
     optionOne: {
       votes: [],
-      text: optionOne.text,
+      text: optionOne,
     },
     optionTwo: {
       votes: [],
-      text: optionTwo.text,
+       text: optionTwo,
     }
   }
 }
 
-export function _saveQuestion(question: Question) {
+export function _saveQuestion(question: { optionOne:string, optionTwo:string, author:string }) {
+  // todo: has to align with file providade by Udacity, so that can test reject case with invalid parameters
   return new Promise((res, rej) => {
     const authedUser = question.author;
     const formattedQuestion = formatQuestion(question)

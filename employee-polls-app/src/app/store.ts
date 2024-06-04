@@ -4,6 +4,7 @@ import usersReducer from '../features/users/usersSlice';
 import authedUserReducer from '../features/authedUser/authedUserSlice';
 import questionsReducer from '../features/questions/questionsSlice';
 import answerQuestionReducer from '../features/questions/answerQuestionSlice';
+import newPollQuestionSlice from '../features/questions/newPollQuestionSlice';
 
 
 export const store = configureStore({
@@ -13,6 +14,7 @@ export const store = configureStore({
     authedUser: authedUserReducer,
     questionsState: questionsReducer,
     answerState: answerQuestionReducer,
+    newPollState: newPollQuestionSlice,
   },
 });
 
