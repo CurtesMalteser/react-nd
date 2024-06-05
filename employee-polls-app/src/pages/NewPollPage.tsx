@@ -3,13 +3,17 @@ import Col from "react-bootstrap/Col";
 import Row from "react-bootstrap/Row";
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
-import { useState } from "react";
-import { useAppSelector } from "../app/hooks";
+import { RefObject, useRef, useState } from "react";
+import { useAppDispatch, useAppSelector } from "../app/hooks";
 import { userID as userIDSelector } from "../features/authedUser/authedUserSlice";
-import { status as  submitPollStatus} from "../features/questions/newPollQuestionSlice";
+import { postNewPoll, status as submitPollStatus } from "../features/questions/newPollQuestionSlice";
 import ComponentLoader from "../components/loader/ComponentLoader";
 
-function PollForm({ label, placeholder }: { label: string, placeholder: string }) {
+function PollForm({ label, placeholder, optionRef }: {
+    label: string,
+    placeholder: string,
+    optionRef: null | RefObject<HTMLInputElement>,
+}) {
     return (
         <Form.Group className="mb-3" controlId="exampleForm.ControlTextarea1">
             <Form.Label>{label}</Form.Label>
@@ -17,6 +21,7 @@ function PollForm({ label, placeholder }: { label: string, placeholder: string }
                 required
                 type="text"
                 placeholder={placeholder}
+                ref={optionRef}
             />
         </Form.Group>
     )
@@ -24,26 +29,41 @@ function PollForm({ label, placeholder }: { label: string, placeholder: string }
 
 function NewPollPage() {
 
+    const dispatch = useAppDispatch();
+
     const userID = useAppSelector(userIDSelector);
     const status = useAppSelector(submitPollStatus);
 
     const [validated, setValidated] = useState(false);
 
-    const handleSubmit = (event: { currentTarget: any; preventDefault: () => void; stopPropagation: () => void; }) => {
+    const optionOneRef = useRef<HTMLInputElement>(null);
+    const optionTwoRef = useRef<HTMLInputElement>(null);
+
+    const handleSubmit = (event: {
+        currentTarget: any;
+        preventDefault: () => void;
+        stopPropagation: () => void;
+    }) => {
         const form = event.currentTarget;
         event.preventDefault();
 
-        if (form.checkValidity() === false) {
-          event.stopPropagation();
-        }
-    
-        setValidated(true);
+        if (form.checkValidity() === false || typeof userID === 'undefined') {
+            event.stopPropagation();
+            setValidated(false);
+        } else {
+            setValidated(true);
+            dispatch(postNewPoll({
+                optionOne: optionOneRef?.current?.value ?? 'it is null one',
+                optionTwo: optionTwoRef?.current?.value ?? 'it is null two',
+                author: userID as string,
+            }))
+        };
     }
 
     if (status === 'loading') { return <ComponentLoader /> }
 
     return (
-        <Container className="md-6" style={{ marginTop: 20, marginBottom: 20, marginLeft: "auto", marginRight: "auto" }} >
+        <Container className="md-6" style={{ marginTop: 20, marginBottom: 20, marginLeft: "auto", marginRight: "auto" }}>
             <Col>
                 <Row style={{ marginBottom: "48px" }}>
                     <h2 className="d-flex justify-content-center">Would you rather</h2>
@@ -51,9 +71,17 @@ function NewPollPage() {
                 </Row>
                 <Row>
                     <Form validated={validated} onSubmit={handleSubmit}>
-                        <PollForm label="First Option" placeholder="Option One" />
-                        <PollForm label="Second Option" placeholder="Option Two" />
-                        <Button type="submit" variant="primary" onClick={handleSubmit}>Submit</Button>
+                        <PollForm
+                            label="First Option"
+                            placeholder="Option One"
+                            optionRef={optionOneRef}
+                        />
+                        <PollForm
+                            label="Second Option"
+                            placeholder="Option Two"
+                            optionRef={optionTwoRef}
+                        />
+                        <Button type="submit" variant="primary">Submit</Button>
                     </Form>
                 </Row>
             </Col>
@@ -61,4 +89,4 @@ function NewPollPage() {
     );
 }
 
-export default NewPollPage;
+export default NewPollPage; 

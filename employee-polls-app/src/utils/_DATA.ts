@@ -151,24 +151,29 @@ function formatQuestion({ optionOne, optionTwo, author }: { optionOne:string, op
   }
 }
 
-export function _saveQuestion(question: { optionOne:string, optionTwo:string, author:string }) {
-  // todo: has to align with file providade by Udacity, so that can test reject case with invalid parameters
-  return new Promise((res, rej) => {
-    const authedUser = question.author;
-    const formattedQuestion = formatQuestion(question)
+export function _saveQuestion(question: { optionOne:string | null, optionTwo:string | null, author:string | null}) {
+  return new Promise((res, reject) => {
+
+    if (!question.optionOne || !question.optionTwo || !question.author) {
+      reject("Please provide optionOneText, optionTwoText, and author");
+    }
+  
+    if(!users[question.author!!]){
+      reject(`Author not found: ${question.author}`)
+    }
+
+    const questionSave:  { optionOne:string, optionTwo:string, author:string} = {
+      author: question.author!!,
+      optionOne: question.optionOne!!,
+      optionTwo: question.optionTwo!!
+    }
+
+    const formattedQuestion = formatQuestion(questionSave)
 
     setTimeout(() => {
       questions = {
         ...questions,
         [formattedQuestion.id]: formattedQuestion
-      }
-
-      users = {
-        ...users,
-        [authedUser]: {
-          ...users[authedUser],
-          questions: users[authedUser].questions.concat([formattedQuestion.id])
-        }
       }
 
       res(formattedQuestion)
