@@ -61,6 +61,7 @@ export const authedUserSlice = createSlice({
 
 export const authedUser = (state: RootState) => state.authedUser.user;
 export const userID = (state: RootState) => state.authedUser.user?.id;
+export const userName = (state: RootState) => state.authedUser.user?.name;
 export const userAvatarURL = (state: RootState) => state.authedUser.user?.avatarURL;
 export const isAuthed = (state: RootState) => state.authedUser.loggedIn;
 export const status = (state: RootState) => state.authedUser.status;
