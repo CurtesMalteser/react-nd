@@ -8,6 +8,7 @@ import { useAppDispatch, useAppSelector } from "../app/hooks";
 import { userID as userIDSelector } from "../features/authedUser/authedUserSlice";
 import { postNewPoll, status as submitPollStatus } from "../features/questions/newPollQuestionSlice";
 import ComponentLoader from "../components/loader/ComponentLoader";
+import useRequireAuth from "../hooks/useRequireAuth";
 
 function PollForm({ label, placeholder, optionRef }: {
     label: string,
@@ -28,6 +29,8 @@ function PollForm({ label, placeholder, optionRef }: {
 }
 
 function NewPollPage() {
+
+    useRequireAuth();
 
     const dispatch = useAppDispatch();
 

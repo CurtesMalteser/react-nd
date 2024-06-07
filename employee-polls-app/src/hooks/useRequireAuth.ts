@@ -12,9 +12,9 @@ function useRequireAuth() {
 
   useEffect(() => {
     if (!isLoggedIn) {
-     navigate(ROUTES.LOGIN)
+     navigate(ROUTES.LOGIN);
     }
-  }, [isLoggedIn]);
+  }, [isLoggedIn, navigate]);
 }
 
 export default useRequireAuth;
