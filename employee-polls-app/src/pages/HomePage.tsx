@@ -9,7 +9,6 @@ import {
 import QuestionsBoard from "../components/QestionsBoard";
 import { Container } from "react-bootstrap";
 import ComponentLoader from "../components/loader/ComponentLoader";
-import useRequireAuth from "../hooks/useRequireAuth";
 
 export default function HomePage() {
 
@@ -17,8 +16,6 @@ export default function HomePage() {
     const newQuestions = useAppSelector(newQuestionsReducer);
     const doneQuestions = useAppSelector(answeredQuestions);
     const questionStatus = useAppSelector(fetchQuestionsStatus);
-
-    useRequireAuth();
 
     useEffect(() => {
         dispatch(fetchQuestions());
