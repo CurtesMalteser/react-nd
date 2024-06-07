@@ -1,5 +1,5 @@
 import React, { useState, useEffect, ChangeEvent } from 'react';
-import { Navigate } from "react-router-dom";
+import { Navigate, useLocation } from "react-router-dom";
 import { useAppSelector, useAppDispatch } from '../app/hooks';
 import { allUsers, fetchUsers } from '../features/users/usersSlice';
 import { isAuthed, logIn } from '../features/authedUser/authedUserSlice';
@@ -23,6 +23,8 @@ function LoginPage() {
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
 
+    const { state } = useLocation()
+
     useEffect(() => {
         dispatch(fetchUsers())
     }, [dispatch]);
@@ -41,7 +43,11 @@ function LoginPage() {
         dispatch(logIn(username));
     };
 
-    if (isLoggedIn) { return <Navigate to={ROUTES.HOME} /> }
+
+    if (isLoggedIn) {
+        const from = state ? state.from : ROUTES.HOME
+        return <Navigate to={from} />
+    }
 
     return (
         <>
