@@ -3,12 +3,14 @@ import Col from "react-bootstrap/Col";
 import Row from "react-bootstrap/Row";
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
-import { RefObject, useRef, useState } from "react";
+import { RefObject, useEffect, useRef, useState } from "react";
 import { useAppDispatch, useAppSelector } from "../app/hooks";
 import { userID as userIDSelector } from "../features/authedUser/authedUserSlice";
 import { postNewPoll, status as submitPollStatus } from "../features/questions/newPollQuestionSlice";
 import ComponentLoader from "../components/loader/ComponentLoader";
 import useRequireAuth from "../hooks/useRequireAuth";
+import { useNavigate } from "react-router-dom";
+import ROUTES from "../constants/routes";
 
 function PollForm({ label, placeholder, optionRef }: {
     label: string,
@@ -36,11 +38,24 @@ function NewPollPage() {
 
     const userID = useAppSelector(userIDSelector);
     const status = useAppSelector(submitPollStatus);
+    const previousStatus = useRef(status);
 
     const [validated, setValidated] = useState(false);
 
     const optionOneRef = useRef<HTMLInputElement>(null);
     const optionTwoRef = useRef<HTMLInputElement>(null);
+
+    const navigate = useNavigate();
+
+    useEffect(() => {
+        if (previousStatus.current === 'loading' && status === 'idle') {
+            setValidated(false);
+            optionOneRef.current!.value = '';
+            optionTwoRef.current!.value = '';
+            navigate(ROUTES.HOME);
+        }
+        previousStatus.current = status;
+    }, [status, navigate]);
 
     const handleSubmit = (event: {
         currentTarget: any;

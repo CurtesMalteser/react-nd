@@ -23,7 +23,6 @@ function getDefaultState(overrides: Partial<RootState> = {}): RootState {
           status: 'idle' as const,
       },
       newPollState: {
-          question: { optionOne: '', optionTwo: '', author: '' },
           status: 'idle' as const,
       },
       ...overrides
