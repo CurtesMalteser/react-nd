@@ -39,6 +39,7 @@ function App() {
   const isLoggedIn = useAppSelector(isAuthed);
   const dispatch = useAppDispatch();
 
+  // todo: delete isLoggedIn from here
   // it will be handled the login status in the future in App component
   // to logout from other pagers other than HomePage
   // printing console.log to avoid unused variable warning
@@ -51,7 +52,7 @@ function App() {
   if (authedUserStatus === 'loading') { return <HomeLoader /> }
 
   if (authedUserStatus === 'failed') {
-    return <div>Error loading user</div> // Maybe add global error handling page on App router
+    return <div>Error loading user</div> // add global error handling page on App router
   }
 
   return (

@@ -1,4 +1,8 @@
-import { Container, Row, Col, Image } from 'react-bootstrap';
+
+import Container from 'react-bootstrap/esm/Container';
+import Col from 'react-bootstrap/esm/Col';
+import Row from 'react-bootstrap/esm/Row';
+import Image from 'react-bootstrap/esm/Image';
 import Logo from '../assets/img/employees_pool_logo.jpg'
 
 function NoQuestionFound404() {
@@ -6,7 +10,7 @@ function NoQuestionFound404() {
     return (
         <Container className="md-6" style={{ marginTop: 20, marginBottom: 20, marginLeft: "auto", marginRight: "auto" }} >
             <Col>
-                <div className='d-flex justify-content-center'>
+                <Row className='d-flex justify-content-center'>
                     <Image
                         src={Logo}
                         style={{
@@ -17,7 +21,7 @@ function NoQuestionFound404() {
                         roundedCircle
                         alt="logo"
                     />
-                </div>
+                </Row>
                 <Row style={{ marginBottom: "48px" }}>
                     <h1 className="d-flex justify-content-center">Oops! Somenthing went wrong...</h1>
                 </Row>
