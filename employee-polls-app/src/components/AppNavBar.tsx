@@ -1,4 +1,4 @@
-import { Link } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import Container from 'react-bootstrap/Container';
 import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
@@ -34,9 +34,11 @@ function AppNavBar() {
     const avatarURL = useAppSelector(userAvatarURL);
     const userName = useAppSelector(authedUserName);
     const isAuthed = useAppSelector(isAuthedSelector);
+    const navigate = useNavigate();
+    const location = useLocation();
     const dispatch = useAppDispatch();
     const handleLogOut = () => dispatch(logOut());
-    const handleLogIn = () => { console.log('Login button clicked') };
+    const handleLogIn = () => navigate(ROUTES.LOGIN, { state: { from: location } });
 
     return (
         <Navbar expand="lg" className="bg-body-tertiary" style={{ marginBottom: "48px" }}>
