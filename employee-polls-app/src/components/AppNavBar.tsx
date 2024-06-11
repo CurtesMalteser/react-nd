@@ -34,8 +34,8 @@ function AppNavBar() {
     const avatarURL = useAppSelector(userAvatarURL);
     const userName = useAppSelector(authedUserName);
     const isAuthed = useAppSelector(isAuthedSelector);
-    const navigate = useNavigate();
     const location = useLocation();
+    const navigate = useNavigate();
     const dispatch = useAppDispatch();
     const handleLogOut = () => dispatch(logOut());
     const handleLogIn = () => navigate(ROUTES.LOGIN, { state: { from: location } });

@@ -27,7 +27,24 @@ export const fetchQuestions = createAsyncThunk(
     'questions/fetchQuestions',
     async () => {
         const response = await _getQuestions();
-        return response.questions;
+        const questions: Question[] = Object.values(response.questions).map((question) => question);
+        return questions;
+    }
+);
+
+export const fetchQuestionByID = createAsyncThunk(
+    'questions/fetchByIDStatus',
+    async (questionID: string) => {
+
+        const response = await _getQuestions();
+
+        const questions: Question[] = Object.values(response.questions).map((question) => question);
+
+        const question = questions.find((question) => question.id === questionID);
+
+        if (question === undefined) { throw new Error('Question not found') }
+
+        return questions;
     }
 );
 
@@ -43,12 +60,21 @@ export const questionsSlice = createSlice({
             .addCase(fetchQuestions.pending, (state) => {
                 state.status = 'loading';
             })
-            .addCase(fetchQuestions.fulfilled, (state, action: PayloadAction<{ [key: string]: Question }>) => {
+            .addCase(fetchQuestions.fulfilled, (state, action: PayloadAction<Question[]>) => {
                 state.status = 'idle';
-                const questions: Question[] = Object.values(action.payload).map((question) => question);
-                state.questions = questions;
+                state.questions = action.payload;
             })
             .addCase(fetchQuestions.rejected, (state) => {
+                state.status = 'failed';
+            })
+            .addCase(fetchQuestionByID.pending, (state) => {
+                state.status = 'loading';
+            })
+            .addCase(fetchQuestionByID.fulfilled, (state, action: PayloadAction<Question[]>) => {
+                state.status = 'idle';
+                state.questions = action.payload;
+            })
+            .addCase(fetchQuestionByID.rejected, (state) => {
                 state.status = 'failed';
             });
     },

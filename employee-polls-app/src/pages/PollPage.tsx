@@ -8,9 +8,9 @@ import getAvatarImage from "../utils/avatar";
 import { useParams } from "react-router-dom";
 import Button from 'react-bootstrap/Button';
 import {
-    fetchQuestions,
     getQuestionByID,
     status as fetchQuestionsStatus,
+    fetchQuestionByID,
 } from "../features/questions/questionsSlice";
 import { useEffect } from "react";
 import Option from "../utils/option";
@@ -19,6 +19,8 @@ import { postAnswer } from "../features/questions/answerQuestionSlice";
 import { authedUser as authedUserSelector } from "../features/authedUser/authedUserSlice";
 import Answer from "../utils/answer";
 import User from "../utils/user";
+import useRequireAuth from "../hooks/useRequireAuth";
+import NoQuestionFound404 from "../components/NoQuestionFound404";
 
 const safeOption: Option = { text: "Safe option", votes: [] };
 
@@ -39,18 +41,23 @@ function PollPage() {
 
     const { id } = useParams<{ id: string }>();
 
+    useRequireAuth();
+
     const dispatch = useAppDispatch();
+
     const question = useAppSelector((state) => getQuestionByID(state, id as string));
     const questionStatus = useAppSelector(fetchQuestionsStatus);
     const authedUser = useAppSelector(authedUserSelector);
 
-    useEffect(() => { dispatch(fetchQuestions()) }, [dispatch]);
+    useEffect(() => { dispatch(fetchQuestionByID(id as string)) }, [dispatch, id]);
 
     const handleOptionClick = (answer: Answer, authedUser: User | null) => {
-        authedUser && dispatch(postAnswer({ authedUser, answer,}));
+        authedUser && dispatch(postAnswer({ authedUser, answer, }));
     }
 
     if (questionStatus === 'loading') { return <ComponentLoader /> }
+
+    if (questionStatus === 'failed') { return <NoQuestionFound404 /> }
 
     return (
         <Container className="md-6" style={{ marginTop: 20, marginBottom: 20, marginLeft: "auto", marginRight: "auto" }} >
