@@ -1,5 +1,5 @@
 import React, { useState, useEffect, ChangeEvent } from 'react';
-import { Navigate, useLocation } from "react-router-dom";
+import { Link, Navigate, useLocation, useNavigate } from "react-router-dom";
 import { useAppSelector, useAppDispatch } from '../app/hooks';
 import { allUsers, fetchUsers } from '../features/users/usersSlice';
 import { isAuthed, logIn } from '../features/authedUser/authedUserSlice';
@@ -11,13 +11,14 @@ import Col from 'react-bootstrap/Col';
 import ROUTES from '../constants/routes';
 import Image from 'react-bootstrap/Image';
 import Logo from '../assets/img/employees_pool_logo.jpg';
-import { Button } from 'react-bootstrap';
+import { Button, Navbar } from 'react-bootstrap';
 
 const userOptions = (users: { [key: string]: User }) => Object.values(users)
     .map(user => { return <option key={user.id} value={user.id}>{user.name}</option> });
 
 function LoginPage() {
 
+    const navigate = useNavigate();
     const dispatch = useAppDispatch();
 
     const users = useAppSelector(allUsers);
@@ -48,7 +49,6 @@ function LoginPage() {
 
     // todo: add a loader here
     // todo: handle error if user is not found
-    // todo: add home button to cancel login
 
     if (isLoggedIn) {
         const from = state ? state.from : ROUTES.HOME
@@ -57,7 +57,12 @@ function LoginPage() {
 
     return (
         <>
-            <h2>Login</h2>
+            <Navbar expand="lg" className="bg-body-tertiary" style={{ marginBottom: "48px" }}>
+                <Container>
+                    <Navbar.Brand as={Link} to={ROUTES.HOME}>Employee Polls</Navbar.Brand>
+                    <Navbar.Toggle aria-controls="basic-navbar-nav" />
+                </Container>
+            </Navbar>
             <Container className="md-8">
                 <Col>
                     <Row className='d-flex justify-content-center'>
@@ -89,7 +94,10 @@ function LoginPage() {
                                     required
                                 />
                             </Form.Group>
-                            <Button type="submit" variant='success'>Login</Button>
+                            <>
+                                <Button as="input" type="submit" variant="success" value="Login" />{' '}
+                                <Button as="input" type="button" variant='outline-success' value="Cancel" onClick={() => navigate(ROUTES.HOME)}/>
+                            </>
                         </Form>
                     </Row>
                 </Col>
