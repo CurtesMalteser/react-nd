@@ -9,12 +9,14 @@ export interface AuthedUserState {
     user: User | null;
     loggedIn: boolean;
     status: 'idle' | 'loading' | 'failed';
+    loginError: boolean;
 }
 
 const initialState: AuthedUserState = {
     user: null,
     loggedIn: false,
     status: 'idle',
+    loginError: false,
 };
 
 // Thunks
@@ -65,6 +67,7 @@ export const userName = (state: RootState) => state.authedUser.user?.name;
 export const userAvatarURL = (state: RootState) => state.authedUser.user?.avatarURL;
 export const isAuthed = (state: RootState) => state.authedUser.loggedIn;
 export const status = (state: RootState) => state.authedUser.status;
+export const loginError = (state: RootState) => state.authedUser.loginError;
 
 export default authedUserSlice.reducer;
 // #endregion Reducers
@@ -74,6 +77,7 @@ function onLoggedIn(state: AuthedUserState, action: PayloadAction<User>) {
     state.loggedIn = true;
     state.user = action.payload;
     state.status = 'idle';
+    state.loginError = false;
 }
 
 function onLoggedOut(state: AuthedUserState) {
@@ -109,6 +113,7 @@ function logInCase(builder: ActionReducerMapBuilder<AuthedUserState>) {
             onLoggedIn(state, action);
         }).addCase(logIn.rejected, (state) => {
             state.status = 'failed';
+            state.loginError = true;
         })
 }
 

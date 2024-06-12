@@ -2,7 +2,11 @@ import React, { useState, useEffect, ChangeEvent } from 'react';
 import { Link, Navigate, useLocation, useNavigate } from "react-router-dom";
 import { useAppSelector, useAppDispatch } from '../app/hooks';
 import { allUsers, fetchUsers } from '../features/users/usersSlice';
-import { isAuthed, logIn } from '../features/authedUser/authedUserSlice';
+import {
+    isAuthed,
+    logIn,
+    status as loginStatus,
+} from '../features/authedUser/authedUserSlice';
 import User from '../utils/user';
 import Form from 'react-bootstrap/Form';
 import Container from 'react-bootstrap/Container';
@@ -11,7 +15,19 @@ import Col from 'react-bootstrap/Col';
 import ROUTES from '../constants/routes';
 import Image from 'react-bootstrap/Image';
 import Logo from '../assets/img/employees_pool_logo.jpg';
-import { Button, Navbar } from 'react-bootstrap';
+import { Alert, Button, Navbar } from 'react-bootstrap';
+
+function AlertLoginError() {
+    return (
+        // todo: on close clear the loginError with new action
+        <Alert variant="danger" onClose={() => console.log('dismissed alert')} dismissible>
+            <Alert.Heading>Oops! Something went wrong.</Alert.Heading>
+            <p>
+                We couldn't log you in with the provided credentials. Please check your username and password and try again.
+            </p>
+        </Alert>
+    );
+}
 
 const userOptions = (users: { [key: string]: User }) => Object.values(users)
     .map(user => { return <option key={user.id} value={user.id}>{user.name}</option> });
@@ -23,6 +39,7 @@ function LoginPage() {
 
     const users = useAppSelector(allUsers);
     const isLoggedIn = useAppSelector(isAuthed);
+    const status = useAppSelector(loginStatus);
 
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
@@ -47,9 +64,6 @@ function LoginPage() {
         dispatch(logIn(username));
     };
 
-    // todo: add a loader here
-    // todo: handle error if user is not found
-
     if (isLoggedIn) {
         const from = state ? state.from : ROUTES.HOME
         return <Navigate to={from} />
@@ -63,6 +77,7 @@ function LoginPage() {
                     <Navbar.Toggle aria-controls="basic-navbar-nav" />
                 </Container>
             </Navbar>
+            {status === 'failed' && <AlertLoginError />}
             <Container className="md-8">
                 <Col>
                     <Row className='d-flex justify-content-center'>
@@ -96,7 +111,7 @@ function LoginPage() {
                             </Form.Group>
                             <>
                                 <Button as="input" type="submit" variant="success" value="Login" />{' '}
-                                <Button as="input" type="button" variant='outline-success' value="Cancel" onClick={() => navigate(ROUTES.HOME)}/>
+                                <Button as="input" type="button" variant='outline-success' value="Cancel" onClick={() => navigate(ROUTES.HOME)} />
                             </>
                         </Form>
                     </Row>

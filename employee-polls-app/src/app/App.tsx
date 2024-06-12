@@ -7,7 +7,11 @@ import LoginPage from "../pages/Login";
 import HomePage from "../pages/HomePage";
 import HomeOutlet from '../pages/HomeOutlet';
 import { useEffect } from "react";
-import { fetchUser, isAuthed, status } from "../features/authedUser/authedUserSlice";
+import { 
+  fetchUser,
+  status,
+  loginError,
+ } from "../features/authedUser/authedUserSlice";
 import { useAppDispatch, useAppSelector } from "../app/hooks";
 import LeaderboardPage from '../pages/LeaderboardPage';
 import ROUTES from '../constants/routes';
@@ -36,22 +40,19 @@ const router = createBrowserRouter([
 function App() {
 
   const authedUserStatus = useAppSelector(status);
-  const isLoggedIn = useAppSelector(isAuthed);
+  const isLoginError = useAppSelector(loginError);
   const dispatch = useAppDispatch();
-
-  // todo: delete isLoggedIn from here
-  // it will be handled the login status in the future in App component
-  // to logout from other pagers other than HomePage
-  // printing console.log to avoid unused variable warning
-  console.log('isLoggedIn', isLoggedIn);
 
   useEffect(() => {
     dispatch(fetchUser());
   }, [dispatch]);
 
-  if (authedUserStatus === 'loading') { return <HomeLoader /> }
+  if (authedUserStatus === 'loading') { 
+    return <HomeLoader />
+  }
 
-  if (authedUserStatus === 'failed') {
+  if (authedUserStatus === 'failed' && !isLoginError) {
+    // perform logout if the user doesn't exist and isn't a login error
     return <div>Error loading user</div> // add global error handling page on App router
   }
 
