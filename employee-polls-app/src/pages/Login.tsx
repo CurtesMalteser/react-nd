@@ -1,4 +1,4 @@
-import React, { useState, useEffect, ChangeEvent } from 'react';
+import React, { useState, useEffect, ChangeEvent, useMemo } from 'react';
 import { Link, Navigate, useLocation, useNavigate } from "react-router-dom";
 import { useAppSelector, useAppDispatch } from '../app/hooks';
 import { allUsers, fetchUsers } from '../features/users/usersSlice';
@@ -6,6 +6,7 @@ import {
     isAuthed,
     logIn,
     status as loginStatus,
+    clearLoginError,
 } from '../features/authedUser/authedUserSlice';
 import User from '../utils/user';
 import Form from 'react-bootstrap/Form';
@@ -17,19 +18,19 @@ import Image from 'react-bootstrap/Image';
 import Logo from '../assets/img/employees_pool_logo.jpg';
 import { Alert, Button, Navbar } from 'react-bootstrap';
 
-function AlertLoginError() {
+function AlertLoginError({onDismiss}: {onDismiss: () => void}){
+
     return (
-        // todo: on close clear the loginError with new action
-        <Alert variant="danger" onClose={() => console.log('dismissed alert')} dismissible>
+        <Alert variant="danger" onClose={onDismiss} dismissible>
             <Alert.Heading>Oops! Something went wrong.</Alert.Heading>
             <p>
                 We couldn't log you in with the provided credentials. Please check your username and password and try again.
             </p>
         </Alert>
     );
-}
+};
 
-const userOptions = (users: { [key: string]: User }) => Object.values(users)
+const mapUserOptions = (users: { [key: string]: User }) => Object.values(users)
     .map(user => { return <option key={user.id} value={user.id}>{user.name}</option> });
 
 function LoginPage() {
@@ -45,6 +46,8 @@ function LoginPage() {
     const [password, setPassword] = useState('');
 
     const { state } = useLocation()
+
+    const userOptions = useMemo(() => mapUserOptions(users), [users]);
 
     useEffect(() => {
         dispatch(fetchUsers())
@@ -77,7 +80,7 @@ function LoginPage() {
                     <Navbar.Toggle aria-controls="basic-navbar-nav" />
                 </Container>
             </Navbar>
-            {status === 'failed' && <AlertLoginError />}
+            {status === 'failed' && <AlertLoginError onDismiss={() => dispatch(clearLoginError())}/>}
             <Container className="md-8">
                 <Col>
                     <Row className='d-flex justify-content-center'>
@@ -97,7 +100,7 @@ function LoginPage() {
                             <Form.Label>Username:</Form.Label>
                             <Form.Select onChange={handleUsernameChange} >
                                 <option value="">Select a user...</option>
-                                {userOptions(users)}
+                                {userOptions}
                             </Form.Select>
                             <Form.Group className="mb-3" controlId="exampleForm.ControlTextarea1">
                                 <Form.Label>Password:</Form.Label>

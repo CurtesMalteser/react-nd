@@ -53,7 +53,12 @@ export const logOut = createAsyncThunk(
 export const authedUserSlice = createSlice({
     name: 'authedUser',
     initialState,
-    reducers: {},
+    reducers: {
+        clearLoginError: (state) => {
+            state.loginError = false;
+            state.status = 'idle';
+        },
+    },
     extraReducers: (builder) => {
         fetchUserCase(builder);
         logInCase(builder);
@@ -68,6 +73,7 @@ export const userAvatarURL = (state: RootState) => state.authedUser.user?.avatar
 export const isAuthed = (state: RootState) => state.authedUser.loggedIn;
 export const status = (state: RootState) => state.authedUser.status;
 export const loginError = (state: RootState) => state.authedUser.loginError;
+export const { clearLoginError } = authedUserSlice.actions;
 
 export default authedUserSlice.reducer;
 // #endregion Reducers
