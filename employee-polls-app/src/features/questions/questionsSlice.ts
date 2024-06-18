@@ -86,13 +86,21 @@ export const allQuestions = (state: RootState) => state.questionsState.questions
 export const newQuestions = createSelector(
     (state: RootState) => state.questionsState.questions,
     (state: RootState) => state.authedUser.user,
-    (questions, user) => questions?.filter((question) => !didAuthedUserVoted(question, user?.id)),
+    (questions, user) => {
+        return user ?
+        questions?.filter((question) => !didAuthedUserVoted(question, user?.id))
+        : questions?.filter((question) => !didQuestionWasAnswered(question))
+    },
 );
 
 export const answeredQuestions = createSelector(
     (state: RootState) => state.questionsState.questions,
     (state: RootState) => state.authedUser.user,
-    (questions, user) => questions?.filter((question) => didAuthedUserVoted(question, user?.id)),
+    (questions, user) => {
+        return user ?
+        questions?.filter((question) => didAuthedUserVoted(question, user?.id))
+        : questions?.filter((question) => didQuestionWasAnswered(question))
+    }
 );
 
 export const getQuestionByID = (state: RootState, questionID: string) => state.questionsState.questions
@@ -102,8 +110,13 @@ export default questionsSlice.reducer;
 
 
 // #region Utils
-function didAuthedUserVoted(question: Question, userId: string | undefined): boolean {
+function didAuthedUserVoted(question: Question, userId: string): boolean {
     const mergedVotes = [...question.optionOne.votes, ...question.optionTwo.votes]
-    return mergedVotes.includes(userId ?? "")
+    return mergedVotes.includes(userId)
+}
+
+function didQuestionWasAnswered(question: Question): boolean {
+    const mergedVotes = [...question.optionOne.votes, ...question.optionTwo.votes]
+    return mergedVotes.length > 0
 }
 // #endregion Utils

@@ -14,7 +14,6 @@ describe('newPollQuestionSlice', () => {
     it('should handle initial state', () => {
         expect(newPollQuestionReducer(undefined, { type: 'unknown' })).toEqual(
             {
-                question: { optionOne: '', optionTwo: '', author: '' },
                 status: 'idle',
             }
         );
