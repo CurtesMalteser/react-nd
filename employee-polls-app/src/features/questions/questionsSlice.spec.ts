@@ -3,6 +3,7 @@ import questionsReducer, {
     QuestionsState,
     fetchQuestions,
     answeredQuestions,
+    newQuestions,
 } from './questionsSlice';
 import Question from '../../utils/question';
 import getDefaultState from '../testUtils';
@@ -62,7 +63,7 @@ const mockQuestionsPayload: Question[] = [
     },
 ];
 
-describe('newPollQuestionSlice', () => {
+describe('questionsSlice', () => {
 
     const initialState: QuestionsState = {
         questions: [],
@@ -114,7 +115,7 @@ describe('newPollQuestionSlice', () => {
     // #endregion fetchQuestions
 
     // #region fetch answered questions
-    it('answeredQuestions returns only questions that contains answers, while logged out', () => {
+    it('answeredQuestions returns all questions that contains answers', () => {
         const mockStateOverrides = getDefaultState({
             authedUser: {
                 user: null,
@@ -168,5 +169,84 @@ describe('newPollQuestionSlice', () => {
     });
     // #endregion fetch answered questions
 
+    // #region fetch new questions
+    it('answeredQuestions returns all new unanswered questions', () => {
+        const mockStateOverrides = getDefaultState({
+            authedUser: {
+                user: null,
+                loggedIn: false,
+                status: 'idle',
+                loginError: false,
+            },
+            questionsState: {
+                questions: mockQuestionsPayload,
+                status: 'idle',
+            },
+        });
+
+        const actualAnsweredQuestions = newQuestions(mockStateOverrides);
+
+        expect(actualAnsweredQuestions).toEqual([
+            {
+                id: 'xj352vofupe1dqz9emx13r',
+                author: 'johndoe',
+                timestamp: 1493579767190,
+                optionOne: {
+                    votes: [],
+                    text: 'write JavaScript',
+                },
+                optionTwo: {
+                    votes: [],
+                    text: 'write Swift'
+                }
+            }]);
+    });
+
+    it('answeredQuestions returns only new questions unanswered by the logged in user', () => {
+
+        const mockStateOverrides = getDefaultState({
+            authedUser: {
+                user: loggedInUser,
+                loggedIn: true,
+                status: 'idle',
+                loginError: false,
+            },
+            questionsState: {
+                questions: mockQuestionsPayload,
+                status: 'idle',
+            },
+        });
+
+        const actualAnsweredQuestions = newQuestions(mockStateOverrides);
+
+        expect(actualAnsweredQuestions).toEqual([
+            {
+                id: 'xj352vofupe1dqz9emx13r',
+                author: 'johndoe',
+                timestamp: 1493579767190,
+                optionOne: {
+                    votes: [],
+                    text: 'write JavaScript',
+                },
+                optionTwo: {
+                    votes: [],
+                    text: 'write Swift'
+                }
+            },
+            {
+                id: 'am8ehyc8byjqgar0jgpub9',
+                author: 'sarahedo',
+                timestamp: 1488579767190,
+                optionOne: {
+                    votes: [],
+                    text: 'be telekinetic',
+                },
+                optionTwo: {
+                    votes: ['sarahedo'],
+                    text: 'be telepathic'
+                }
+            }]);
+    });
+    // #endregion fetch new questions
 
 });
