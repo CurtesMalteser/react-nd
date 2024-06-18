@@ -4,8 +4,12 @@ import LeaderboardTable from '../components/LeaderboardTable';
 import { useEffect } from 'react';
 import Container from 'react-bootstrap/esm/Container';
 import ComponentLoader from '../components/loader/ComponentLoader';
+import useRequireAuth from '../hooks/useRequireAuth';
 
 function LeaderboardPage() {
+
+    useRequireAuth();
+
     const dispatch = useAppDispatch();
     const users = useAppSelector(sortedUsersForLeadearboad);
     const status = useAppSelector(fetchUsersStatus);
