@@ -1,4 +1,5 @@
-import { Col, Row } from "react-bootstrap";
+import Col from "react-bootstrap/esm/Col";
+import Row from "react-bootstrap/esm/Row";
 import Lottie from "lottie-react";
 import animationData from '../../assets/lotties/loader.json';
 
