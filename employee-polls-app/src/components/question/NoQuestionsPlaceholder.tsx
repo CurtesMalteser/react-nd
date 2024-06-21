@@ -1,5 +1,3 @@
-import Row from "react-bootstrap/esm/Row";
-import Col from "react-bootstrap/esm/Col";
 import Button from "react-bootstrap/esm/Button";
 import Card from 'react-bootstrap/Card';
 import Lottie, { LottieRefCurrentProps } from "lottie-react";
@@ -36,7 +34,7 @@ function NoQuestionsPlaceholder() {
             <Card.Body>
                 <Card.Title>There are no questions here...</Card.Title>
                 <Card.Text>Why don't you create a new poll?</Card.Text>
-                <Button className="w-100" variant="success" onClick={navigateToNewPool}>New Poll</Button>
+                <Button variant="success" onClick={navigateToNewPool}>New Poll</Button>
             </Card.Body>
         </Card>
     )

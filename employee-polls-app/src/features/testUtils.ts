@@ -19,6 +19,7 @@ function getDefaultState(overrides: Partial<RootState> = {}): RootState {
         questionsState: {
             questions: [],
             status: 'idle' as const,
+            filter: 'all' as const,
         },
         answerState: {
             status: 'idle' as const,

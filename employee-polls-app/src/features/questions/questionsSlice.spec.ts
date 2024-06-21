@@ -68,6 +68,7 @@ describe('questionsSlice', () => {
     const initialState: QuestionsState = {
         questions: [],
         status: 'idle',
+        filter: 'all',
     };
 
     it('should handle initial state', () => {
@@ -75,6 +76,7 @@ describe('questionsSlice', () => {
             {
                 questions: [],
                 status: 'idle',
+                filter: 'all',
             }
         );
     });
@@ -126,6 +128,7 @@ describe('questionsSlice', () => {
             questionsState: {
                 questions: mockQuestionsPayload,
                 status: 'idle',
+                filter: 'all',
             },
         });
 
@@ -160,6 +163,7 @@ describe('questionsSlice', () => {
             questionsState: {
                 questions: mockQuestionsPayload,
                 status: 'idle',
+                filter: 'answered',
             },
         });
 
@@ -181,6 +185,7 @@ describe('questionsSlice', () => {
             questionsState: {
                 questions: mockQuestionsPayload,
                 status: 'idle',
+                filter: 'all',
             },
         });
 
@@ -214,6 +219,7 @@ describe('questionsSlice', () => {
             questionsState: {
                 questions: mockQuestionsPayload,
                 status: 'idle',
+                filter: 'all',
             },
         });
 
