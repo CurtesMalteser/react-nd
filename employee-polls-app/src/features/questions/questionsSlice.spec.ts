@@ -68,17 +68,11 @@ describe('questionsSlice', () => {
     const initialState: QuestionsState = {
         questions: [],
         status: 'idle',
-        filter: 'all',
+        filter: 'new',
     };
 
     it('should handle initial state', () => {
-        expect(questionsReducer(undefined, { type: 'unknown' })).toEqual(
-            {
-                questions: [],
-                status: 'idle',
-                filter: 'all',
-            }
-        );
+        expect(questionsReducer(undefined, { type: 'unknown' })).toEqual(initialState);
     });
 
     // #region fetchQuestions
