@@ -1,4 +1,4 @@
-import { ActionReducerMapBuilder, PayloadAction, createAsyncThunk, createSlice } from '@reduxjs/toolkit';
+import { ActionReducerMapBuilder, PayloadAction, createAsyncThunk, createSelector, createSlice } from '@reduxjs/toolkit';
 import { RootState } from '../../app/store';
 import { _getUsers } from '../../utils/_DATA';
 import User from '../../utils/user';
@@ -73,7 +73,12 @@ export const userAvatarURL = (state: RootState) => state.authedUser.user?.avatar
 export const isAuthed = (state: RootState) => state.authedUser.loggedIn;
 export const status = (state: RootState) => state.authedUser.status;
 export const loginError = (state: RootState) => state.authedUser.loginError;
-export const { clearLoginError } = authedUserSlice.actions;
+export const clearLoginError = authedUserSlice.actions.clearLoginError;
+export const answer = (state: RootState, answerID: string) => {
+    const answer = state.authedUser.user?.answers[answerID];
+    return answer === 'optionOne' || answer === 'optionTwo' ? answer : undefined;
+}
+
 
 export default authedUserSlice.reducer;
 // #endregion Reducers
@@ -94,33 +99,30 @@ function onLoggedOut(state: AuthedUserState) {
 
 function fetchUserCase(builder: ActionReducerMapBuilder<AuthedUserState>) {
     builder.addCase(fetchUser.pending, (state) => {
-            state.status = 'loading';
-        })
-        .addCase(fetchUser.fulfilled, (state, action: PayloadAction<User | null>) => {
-            if (action.payload !== null) {
-                const userAction = action as PayloadAction<User>;
-                onLoggedIn(state, userAction);
-            } else {
-                onLoggedOut(state);
-            }
-            state.status = 'idle';
-        })
-        .addCase(fetchUser.rejected, (state) => {
-            state.status = 'failed';
-        });
+        state.status = 'loading';
+    }).addCase(fetchUser.fulfilled, (state, action: PayloadAction<User | null>) => {
+        if (action.payload !== null) {
+            const userAction = action as PayloadAction<User>;
+            onLoggedIn(state, userAction);
+        } else {
+            onLoggedOut(state);
+        }
+        state.status = 'idle';
+    }).addCase(fetchUser.rejected, (state) => {
+        state.status = 'failed';
+    });
 }
 
 function logInCase(builder: ActionReducerMapBuilder<AuthedUserState>) {
     builder.addCase(logIn.pending, (state) => {
         state.status = 'loading';
+    }).addCase(logIn.fulfilled, (state, action: PayloadAction<User>) => {
+        localStorage.setItem(AUTHED_USER, action.payload.id);
+        onLoggedIn(state, action);
+    }).addCase(logIn.rejected, (state) => {
+        state.status = 'failed';
+        state.loginError = true;
     })
-        .addCase(logIn.fulfilled, (state, action: PayloadAction<User>) => {
-            localStorage.setItem(AUTHED_USER, action.payload.id);
-            onLoggedIn(state, action);
-        }).addCase(logIn.rejected, (state) => {
-            state.status = 'failed';
-            state.loginError = true;
-        })
 }
 
 function logOutCase(builder: ActionReducerMapBuilder<AuthedUserState>) {

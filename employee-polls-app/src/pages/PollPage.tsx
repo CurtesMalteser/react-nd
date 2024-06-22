@@ -16,7 +16,10 @@ import { useEffect } from "react";
 import Option from "../utils/option";
 import ComponentLoader from "../components/loader/ComponentLoader";
 import { postAnswer } from "../features/questions/answerQuestionSlice";
-import { authedUser as authedUserSelector } from "../features/authedUser/authedUserSlice";
+import {
+    authedUser as authedUserSelector,
+    answer as answerSelector,
+} from "../features/authedUser/authedUserSlice";
 import Answer from "../utils/answer";
 import User from "../utils/user";
 import useRequireAuth from "../hooks/useRequireAuth";
@@ -24,13 +27,14 @@ import NoQuestionFound404 from "../components/NoQuestionFound404";
 
 const safeOption: Option = { text: "Safe option", votes: [] };
 
-function PollOption({ option, clickHandler }: { option: Option, clickHandler: () => void }) {
+function PollOption({ option, isSelected, clickHandler }: { option: Option, isSelected: boolean, clickHandler: () => void }) {
+    console.log(`votes: ${option.votes}`);
     return (
         <Col >
             <Card border="success">
                 <Card.Body>
                     <Card.Title className="d-flex justify-content-center">{option.text}</Card.Title>
-                    <Button className="w-100" variant="success" onClick={clickHandler}>Click</Button>
+                    <Button className="w-100" variant="success" onClick={clickHandler}>{isSelected && <b>{'\u2713'} </b>}Click</Button>
                 </Card.Body>
             </Card>
         </Col>
@@ -46,6 +50,7 @@ function PollPage() {
     const dispatch = useAppDispatch();
 
     const question = useAppSelector((state) => getQuestionByID(state, id as string));
+    const answer = useAppSelector(answerSelector(id as string));
     const questionStatus = useAppSelector(fetchQuestionsStatus);
     const authedUser = useAppSelector(authedUserSelector);
 
@@ -79,10 +84,12 @@ function PollPage() {
                     <PollOption
                         clickHandler={() => handleOptionClick({ [id as string]: 'optionOne' }, authedUser)}
                         option={question?.optionOne ?? safeOption}
+                        isSelected={answer === 'optionOne'}
                     />
                     <PollOption
                         clickHandler={() => handleOptionClick({ [id as string]: 'optionTwo' }, authedUser)}
                         option={question?.optionTwo ?? safeOption}
+                        isSelected={answer === 'optionTwo'}
                     />
                 </Row>
             </Col>

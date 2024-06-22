@@ -31,7 +31,7 @@ function QuestionBoardFilter() {
                 setCurrentFilter("New");
                 break;
             case "answered":
-                setCurrentFilter("Done");
+                setCurrentFilter("Answered");
                 break;
             default:
                 setCurrentFilter("All");
@@ -47,7 +47,7 @@ function QuestionBoardFilter() {
                         title={currentFilter}>
                         <Dropdown.Item onClick={() => dispatchFilter("all")}>All</Dropdown.Item>
                         <Dropdown.Item onClick={() => dispatchFilter("new")}>New</Dropdown.Item>
-                        <Dropdown.Item onClick={() => dispatchFilter("answered")}>Done</Dropdown.Item>
+                        <Dropdown.Item onClick={() => dispatchFilter("answered")}>Answered</Dropdown.Item>
                     </SplitButton>
                 </Col>
             </Row>

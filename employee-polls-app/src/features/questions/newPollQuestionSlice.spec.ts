@@ -12,11 +12,7 @@ describe('newPollQuestionSlice', () => {
     };
 
     it('should handle initial state', () => {
-        expect(newPollQuestionReducer(undefined, { type: 'unknown' })).toEqual(
-            {
-                status: 'idle',
-            }
-        );
+        expect(newPollQuestionReducer(undefined, { type: 'unknown' })).toEqual(initialState);
     });
 
     // #region postNewPoll

@@ -1,4 +1,3 @@
-.leaderboard-header th {
-    background-color: var(--bs-teal);
-    color: black;
-}
+.leaderboard-header th{
+    background-color: var(--bs-teal) !important;
+}   
