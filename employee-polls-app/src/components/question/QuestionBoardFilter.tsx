@@ -1,10 +1,15 @@
+import './QuestionBoardFilter.css';
 import { useEffect, useState } from "react";
 import { useAppDispatch, useAppSelector } from "../../app/hooks";
+import Dropdown from 'react-bootstrap/Dropdown';
+import SplitButton from 'react-bootstrap/SplitButton';
+import Container from "react-bootstrap/esm/Container";
+import Row from "react-bootstrap/esm/Row";
+import Col from "react-bootstrap/esm/Col";
 import {
     questionsFilter as questionsFilterSelector,
     setFilter,
 } from "../../features/questions/questionsSlice";
-import Dropdown from 'react-bootstrap/Dropdown';
 
 function QuestionBoardFilter() {
 
@@ -34,17 +39,19 @@ function QuestionBoardFilter() {
     }, [questionFilter]);
 
     return (
-        <Dropdown>
-            <Dropdown.Toggle variant="success" id="dropdown-basic">
-                {currentFilter}
-            </Dropdown.Toggle>
-
-            <Dropdown.Menu>
-                <Dropdown.Item onClick={() => dispatchFilter("all")}>All</Dropdown.Item>
-                <Dropdown.Item onClick={() => dispatchFilter("new")}>New</Dropdown.Item>
-                <Dropdown.Item onClick={() => dispatchFilter("answered")}>Done</Dropdown.Item>
-            </Dropdown.Menu>
-        </Dropdown>
+        <Container className="filter-container border border-success rounded">
+            <Row>
+                <Col sm={'auto'}><h4 className='filter-label'>Filter Questions</h4></Col>
+                <Col>
+                    <SplitButton variant="success" id="dropdown-basic"
+                        title={currentFilter}>
+                        <Dropdown.Item onClick={() => dispatchFilter("all")}>All</Dropdown.Item>
+                        <Dropdown.Item onClick={() => dispatchFilter("new")}>New</Dropdown.Item>
+                        <Dropdown.Item onClick={() => dispatchFilter("answered")}>Done</Dropdown.Item>
+                    </SplitButton>
+                </Col>
+            </Row>
+        </Container>
     );
 }
 

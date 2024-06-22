@@ -1,0 +1,10 @@
+.filter-container {
+    padding: 1rem;
+    margin-bottom: 2rem;
+}
+
+.filter-label {
+    display: flex;
+    align-items: center;
+    height: 100%;
+}

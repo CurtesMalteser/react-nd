@@ -14,7 +14,7 @@ function NoQuestionsPlaceholder() {
     const playAnimation = () => (lottieRef.current) && lottieRef.current.goToAndPlay(0);
 
     return (
-        <Card border="success" style={{ marginTop: '20px', display: 'flex', flexDirection: 'row' }}>
+        <Card border="success" style={{ marginLeft:'1rem', display: 'flex', flexDirection: 'row' }}>
             <div onMouseEnter={playAnimation} >
                 <Lottie
                     lottieRef={lottieRef}
