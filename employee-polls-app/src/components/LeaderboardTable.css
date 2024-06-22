@@ -1,0 +1,4 @@
+.leaderboard-header th {
+    background-color: var(--bs-teal);
+    color: black;
+}

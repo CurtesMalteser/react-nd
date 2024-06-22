@@ -17,7 +17,7 @@ export interface QuestionsState {
 const initialState: QuestionsState = {
     questions: [],
     status: 'idle',
-    filter: 'all',
+    filter: 'new',
 };
 
 // The function below is called a thunk and allows us to perform async logic. It

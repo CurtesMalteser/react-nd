@@ -1,3 +1,4 @@
+import './LeaderboardTable.css';
 import Table from 'react-bootstrap/Table';
 import Image from 'react-bootstrap/Image';
 import User from '../utils/user';
@@ -5,7 +6,7 @@ import getAvatarImage from '../utils/avatar';
 
 function LeaderboardTable({ users }: { users: User[] }) {
     return (
-        <Table bordered hover>
+        <Table bordered hover className='border border-success leaderboard-header'>
             <thead>
                 <tr>
                     <th >Users</th>
@@ -16,7 +17,7 @@ function LeaderboardTable({ users }: { users: User[] }) {
             <tbody>
                 {users.map((user) => (
                     <tr key={user.id}>
-                        <td style={{ display: 'flex', alignItems: 'center' }}>
+                        <td style={{ display: 'flex', alignItems: 'center', border: '0', borderColor: 'transparent' }}>
                             <Image style={{ width: '50px', height: '50px', marginRight: '10px' }}
                                 src={getAvatarImage(user.avatarURL)}
                                 alt={'Profile Picture'}

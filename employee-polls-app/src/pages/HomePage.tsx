@@ -30,7 +30,7 @@ export default function HomePage() {
         <Container>
             <QuestionBoardFilter />
             { (questionFilter === 'all' || questionFilter === 'new' ) &&  <QuestionsBoard title="New Questions" questions={newQuestions} />}
-            { (questionFilter === 'all' || questionFilter === 'answered' ) && <QuestionsBoard title="Done" questions={doneQuestions} /> }
+            { (questionFilter === 'all' || questionFilter === 'answered' ) && <QuestionsBoard title="Answered" questions={doneQuestions} /> }
         </Container>
     );
 }
