@@ -1,9 +1,10 @@
-import User from "./user";
+import User, { UserServer } from "./user";
 import Question from "./question";
 
-let users: { [key: string]: User } = {
+let users: { [key: string]: UserServer } = {
   sarahedo: {
     id: 'sarahedo',
+    password: 'password123',
     name: 'Sarah Edo',
     avatarURL: 'sarahedo.jpg',
     answers: {
@@ -16,6 +17,7 @@ let users: { [key: string]: User } = {
   },
   tylermcginnis: {
     id: 'tylermcginnis',
+    password: 'abc321',
     name: 'Tyler McGinnis',
     avatarURL: 'tylermcginnis.jpg',
     answers: {
@@ -26,8 +28,21 @@ let users: { [key: string]: User } = {
   },
   johndoe: {
     id: 'johndoe',
+    password: 'xyz123',
     name: 'John Doe',
     avatarURL: 'johndoe.jpg',
+    answers: {
+      "xj352vofupe1dqz9emx13r": 'optionOne',
+      "vthrdm985a262al8qx3do": 'optionTwo',
+      "6ni6ok3ym7mf1p33lnez": 'optionOne'
+    },
+    questions: ['6ni6ok3ym7mf1p33lnez', 'xj352vofupe1dqz9emx13r'],
+  },
+  mtsamis: {
+    id: 'mtsamis',
+    password:'xyz123',
+    name: 'Mike Tsamis',
+    avatarURL: null,
     answers: {
       "xj352vofupe1dqz9emx13r": 'optionOne',
       "vthrdm985a262al8qx3do": 'optionTwo',
@@ -118,13 +133,22 @@ let questions: { [key: string]: Question } = {
   },
 }
 
+const mapUserServerToUser = (user: UserServer) => user as User
+
 function generateUID() {
   return Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15)
 }
 
 export function _getUsers() {
   return new Promise<{ users: { [key: string]: User } }>((resolve) => {
-    setTimeout(() => resolve({ users: { ...users } }), 1000)
+    setTimeout(() => {
+      const mappedUsers = Object.keys(users).reduce((acc, key) => {
+          acc[key] = mapUserServerToUser(users[key]);
+          return acc;
+      }, {} as { [key: string]: User });
+
+      resolve({ users: mappedUsers });
+  }, 1000);
   })
 }
 
@@ -152,7 +176,7 @@ function formatQuestion({ optionOne, optionTwo, author }: { optionOne: string, o
 
 export function _saveQuestion(question: { optionOne: string | null, optionTwo: string | null, author: string | null }) {
   return new Promise((resolve, reject) => {
-    if (question.optionOne === null || question.optionTwo === null || !question.author === null) {
+    if (question.optionOne === null || question.optionTwo === null || question.author === null) {
       reject("Please provide optionOneText, optionTwoText, and author");
       return;
     }
@@ -195,7 +219,6 @@ export function _saveQuestionAnswer({ authedUser, qid, answer }: { authedUser: s
 
     setTimeout(() => {
       try {
-
         users = {
           ...users,
           [authedUser]: {
