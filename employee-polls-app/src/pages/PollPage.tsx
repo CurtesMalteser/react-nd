@@ -50,7 +50,7 @@ function PollPage() {
     const dispatch = useAppDispatch();
 
     const question = useAppSelector((state) => getQuestionByID(state, id as string));
-    const answer = useAppSelector(answerSelector(id as string));
+    const answer = useAppSelector((state) => answerSelector(state, id as string));
     const questionStatus = useAppSelector(fetchQuestionsStatus);
     const authedUser = useAppSelector(authedUserSelector);
 
