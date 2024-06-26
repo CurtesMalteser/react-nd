@@ -40,7 +40,7 @@ let users: { [key: string]: UserServer } = {
   },
   mtsamis: {
     id: 'mtsamis',
-    password:'xyz123',
+    password: 'xyz123',
     name: 'Mike Tsamis',
     avatarURL: null,
     answers: {
@@ -143,12 +143,27 @@ export function _getUsers() {
   return new Promise<{ users: { [key: string]: User } }>((resolve) => {
     setTimeout(() => {
       const mappedUsers = Object.keys(users).reduce((acc, key) => {
-          acc[key] = mapUserServerToUser(users[key]);
-          return acc;
+        acc[key] = mapUserServerToUser(users[key]);
+        return acc;
       }, {} as { [key: string]: User });
 
       resolve({ users: mappedUsers });
-  }, 1000);
+    }, 1000);
+  })
+}
+
+export function _performLogin(id: string, password: string) {
+  return new Promise<User>((resolve, reject) => {
+    setTimeout(() => {
+      const user = users[id];
+      if (user.password === password) {
+        mapUserServerToUser(users[id])
+        resolve(mapUserServerToUser(users[id]))
+      } else {
+        reject(new Error('Invalid password'))
+      }
+    }, 1000)
+
   })
 }
 

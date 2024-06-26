@@ -88,4 +88,10 @@ describe('_DATA', () => {
             .toThrow(errorMatcher);
     });
     // #endregion _saveQuestionAnswer
+
+    // #region _performLogin
+    // Test perform login
+    // Test not wrong password
+    // Test not wrong user
+    // #endregion _performLogin
 });

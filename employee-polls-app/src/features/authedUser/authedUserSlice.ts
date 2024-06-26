@@ -5,7 +5,7 @@ import {
     createSlice,
 } from '@reduxjs/toolkit';
 import { RootState } from '../../app/store';
-import { _getUsers } from '../../utils/_DATA';
+import { _getUsers, _performLogin } from '../../utils/_DATA';
 import User from '../../utils/user';
 import Answer from '../../utils/answer';
 
@@ -40,10 +40,10 @@ export const fetchUser = createAsyncThunk(
 
 export const logIn = createAsyncThunk(
     'authedUser/logIn',
-    async (id: string) => {
-        const response = await _getUsers();
-        localStorage.setItem(AUTHED_USER, response.users[id].id);
-        return response.users[id];
+    async ({username: id, password}: {username: string, password: string}) => {
+        const response = await _performLogin(id, password);
+        localStorage.setItem(AUTHED_USER, response.id);
+        return response;
     }
 );
 

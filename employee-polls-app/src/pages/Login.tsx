@@ -18,7 +18,7 @@ import Image from 'react-bootstrap/Image';
 import Logo from '../assets/img/employees_pool_logo.jpg';
 import { Alert, Button, Navbar } from 'react-bootstrap';
 
-function AlertLoginError({onDismiss}: {onDismiss: () => void}){
+function AlertLoginError({ onDismiss }: { onDismiss: () => void }) {
 
     return (
         <Alert variant="danger" onClose={onDismiss} dismissible>
@@ -64,7 +64,7 @@ function LoginPage() {
 
     const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
-        dispatch(logIn(username));
+        dispatch(logIn({ username, password }));
     };
 
     if (isLoggedIn) {
@@ -80,8 +80,8 @@ function LoginPage() {
                     <Navbar.Toggle aria-controls="basic-navbar-nav" />
                 </Container>
             </Navbar>
-            {status === 'failed' && <AlertLoginError onDismiss={() => dispatch(clearLoginError())}/>}
             <Container className="md-8">
+                {status === 'failed' && <AlertLoginError onDismiss={() => dispatch(clearLoginError())} />}
                 <Col>
                     <Row className='d-flex justify-content-center'>
                         <Image
