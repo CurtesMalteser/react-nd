@@ -1,4 +1,3 @@
-import Answer from "./answer";
 import User from "./user";
 import Question from "./question";
 
@@ -152,23 +151,22 @@ function formatQuestion({ optionOne, optionTwo, author }: { optionOne: string, o
 }
 
 export function _saveQuestion(question: { optionOne: string | null, optionTwo: string | null, author: string | null }) {
-  return new Promise((res, reject) => {
-
-    if (!question.optionOne || !question.optionTwo || !question.author) {
+  return new Promise((resolve, reject) => {
+    if (question.optionOne === null || question.optionTwo === null || !question.author === null) {
       reject("Please provide optionOneText, optionTwoText, and author");
+      return;
     }
 
     if (!users[question.author!!]) {
-      reject(`Author not found: ${question.author}`)
+      reject(new Error("The author is not an existing user"));
+      return;
     }
 
-    const questionSave: { optionOne: string, optionTwo: string, author: string } = {
-      author: question.author!!,
-      optionOne: question.optionOne!!,
-      optionTwo: question.optionTwo!!
-    }
-
-    const formattedQuestion = formatQuestion(questionSave)
+    const formattedQuestion = formatQuestion({
+      author: question.author as string,
+      optionOne: question.optionOne as string,
+      optionTwo: question.optionTwo as string,
+    })
 
     setTimeout(() => {
       questions = {
@@ -176,7 +174,7 @@ export function _saveQuestion(question: { optionOne: string | null, optionTwo: s
         [formattedQuestion.id]: formattedQuestion
       }
 
-      res(formattedQuestion)
+      resolve(formattedQuestion)
     }, 1000)
   })
 }
@@ -186,7 +184,7 @@ export function _saveQuestionAnswer({ authedUser, qid, answer }: { authedUser: s
   const isValidQID = (): boolean => typeof qid === 'string';
   const isValidOption = (): boolean => answer === 'optionOne' || answer === 'optionTwo';
 
-  return new Promise<boolean>((res, reject) => {
+  return new Promise<boolean>((resolve, reject) => {
 
     if (!authedUser || !isValidQID() || !isValidOption()) {
       reject('Please provide authedUser, qid, and answer');
@@ -208,7 +206,7 @@ export function _saveQuestionAnswer({ authedUser, qid, answer }: { authedUser: s
             }
           }
         }
-  
+
         questions = {
           ...questions,
           [questionID]: {
@@ -220,7 +218,7 @@ export function _saveQuestionAnswer({ authedUser, qid, answer }: { authedUser: s
           }
         }
 
-        res(true)
+        resolve(true)
       } catch (error) {
         reject(new Error(`There was an error saving the answer for user ${authedUser} and question ${qid}. Error: ${error}`))
       }
