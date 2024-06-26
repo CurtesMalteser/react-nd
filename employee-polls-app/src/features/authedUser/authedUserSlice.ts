@@ -1,7 +1,13 @@
-import { ActionReducerMapBuilder, PayloadAction, createAsyncThunk, createSelector, createSlice } from '@reduxjs/toolkit';
+import {
+    ActionReducerMapBuilder,
+    PayloadAction,
+    createAsyncThunk,
+    createSlice,
+} from '@reduxjs/toolkit';
 import { RootState } from '../../app/store';
 import { _getUsers } from '../../utils/_DATA';
 import User from '../../utils/user';
+import Answer from '../../utils/answer';
 
 const AUTHED_USER = 'user'
 
@@ -58,6 +64,11 @@ export const authedUserSlice = createSlice({
             state.loginError = false;
             state.status = 'idle';
         },
+        updateUserAnswer: (state, action: PayloadAction<Answer>) => {
+            if (state.user !== null) {
+                state.user.answers = {...state.user.answers, ...action.payload};
+            }
+        },
     },
     extraReducers: (builder) => {
         fetchUserCase(builder);
@@ -74,6 +85,7 @@ export const isAuthed = (state: RootState) => state.authedUser.loggedIn;
 export const status = (state: RootState) => state.authedUser.status;
 export const loginError = (state: RootState) => state.authedUser.loginError;
 export const clearLoginError = authedUserSlice.actions.clearLoginError;
+export const updateUserAnswer = authedUserSlice.actions.updateUserAnswer;
 export const answer = (state: RootState, answerID: string) => {
     const answer = state.authedUser.user?.answers[answerID];
     return answer === 'optionOne' || answer === 'optionTwo' ? answer : undefined;

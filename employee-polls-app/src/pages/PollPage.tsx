@@ -15,13 +15,16 @@ import {
 import { useEffect } from "react";
 import Option from "../utils/option";
 import ComponentLoader from "../components/loader/ComponentLoader";
-import { postAnswer } from "../features/questions/answerQuestionSlice";
 import {
-    authedUser as authedUserSelector,
+    postAnswer,
+    status as postAnswerStatus,
+} from "../features/questions/answerQuestionSlice";
+import {
+    userID as authedUserIDSelector,
     answer as answerSelector,
+    updateUserAnswer,
 } from "../features/authedUser/authedUserSlice";
 import Answer from "../utils/answer";
-import User from "../utils/user";
 import useRequireAuth from "../hooks/useRequireAuth";
 import NoQuestionFound404 from "../components/NoQuestionFound404";
 
@@ -52,15 +55,18 @@ function PollPage() {
     const question = useAppSelector((state) => getQuestionByID(state, id as string));
     const answer = useAppSelector((state) => answerSelector(state, id as string));
     const questionStatus = useAppSelector(fetchQuestionsStatus);
-    const authedUser = useAppSelector(authedUserSelector);
+    const answerStatus = useAppSelector(postAnswerStatus);
+    const authedUser = useAppSelector(authedUserIDSelector);
+
 
     useEffect(() => { dispatch(fetchQuestionByID(id as string)) }, [dispatch, id]);
 
-    const handleOptionClick = (answer: Answer, authedUser: User | null) => {
-        authedUser && dispatch(postAnswer({ authedUser, answer, }));
+    const handleOptionClick = async (answer: Answer, authedUser: string | undefined) => {
+        authedUser && dispatch(postAnswer({ userID: authedUser, answer }))
+            .then((response) => response.payload && dispatch(updateUserAnswer(answer)));
     }
 
-    if (questionStatus === 'loading') { return <ComponentLoader /> }
+    if (questionStatus === 'loading' || answerStatus === 'loading') { return <ComponentLoader /> }
 
     if (questionStatus === 'failed') { return <NoQuestionFound404 /> }
 
