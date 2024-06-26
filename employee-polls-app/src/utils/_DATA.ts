@@ -186,7 +186,7 @@ export function _saveQuestionAnswer({ authedUser, qid, answer }: { authedUser: s
 
   return new Promise<boolean>((resolve, reject) => {
 
-    if (!authedUser || !isValidQID() || !isValidOption()) {
+    if (authedUser === null || !isValidQID() || !isValidOption()) {
       reject('Please provide authedUser, qid, and answer');
     }
 
@@ -211,12 +211,14 @@ export function _saveQuestionAnswer({ authedUser, qid, answer }: { authedUser: s
           ...questions,
           [questionID]: {
             ...questions[questionID],
-            [questionID]: {
+            [option]: {
               ...questions[questionID][option],
               votes: questions[questionID][option].votes.concat([authedUser])
             }
           }
         }
+
+
 
         resolve(true)
       } catch (error) {
