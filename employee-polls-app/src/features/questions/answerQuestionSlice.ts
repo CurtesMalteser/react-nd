@@ -17,8 +17,9 @@ const initialState: AnswerQuestionState = {
 
 export const postAnswer = createAsyncThunk(
     'answer/post',
-    async ({ authedUser, answer }: { authedUser: User, answer: Answer }) => {
-        const response = await _saveQuestionAnswer({ authedUser: authedUser.id, answer });
+    async ({ authedUser, answer: answerObj }: { authedUser: User, answer: Answer }) => {
+        const [qid, answer] = Object.entries(answerObj)[0];
+        const response = await _saveQuestionAnswer({ authedUser: authedUser.id, qid, answer });
         return response;
     }
 );

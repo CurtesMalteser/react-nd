@@ -135,7 +135,7 @@ export function _getQuestions() {
   })
 }
 
-function formatQuestion({ optionOne, optionTwo, author }: { optionOne:string, optionTwo:string, author:string }) : Question{
+function formatQuestion({ optionOne, optionTwo, author }: { optionOne: string, optionTwo: string, author: string }): Question {
   return {
     id: generateUID(),
     timestamp: Date.now(),
@@ -146,23 +146,23 @@ function formatQuestion({ optionOne, optionTwo, author }: { optionOne:string, op
     },
     optionTwo: {
       votes: [],
-       text: optionTwo,
+      text: optionTwo,
     }
   }
 }
 
-export function _saveQuestion(question: { optionOne:string | null, optionTwo:string | null, author:string | null}) {
+export function _saveQuestion(question: { optionOne: string | null, optionTwo: string | null, author: string | null }) {
   return new Promise((res, reject) => {
 
     if (!question.optionOne || !question.optionTwo || !question.author) {
       reject("Please provide optionOneText, optionTwoText, and author");
     }
-  
-    if(!users[question.author!!]){
+
+    if (!users[question.author!!]) {
       reject(`Author not found: ${question.author}`)
     }
 
-    const questionSave:  { optionOne:string, optionTwo:string, author:string} = {
+    const questionSave: { optionOne: string, optionTwo: string, author: string } = {
       author: question.author!!,
       optionOne: question.optionOne!!,
       optionTwo: question.optionTwo!!
@@ -181,35 +181,49 @@ export function _saveQuestion(question: { optionOne:string | null, optionTwo:str
   })
 }
 
-export function _saveQuestionAnswer({ authedUser, answer }: { authedUser: string, answer: Answer }) {
+export function _saveQuestionAnswer({ authedUser, qid, answer }: { authedUser: string, qid: string | null, answer: string | null }) {
 
-  const [qid, option] = Object.entries(answer)[0];
+  const isValidQID = (): boolean => typeof qid === 'string';
+  const isValidOption = (): boolean => answer === 'optionOne' || answer === 'optionTwo';
 
-  return new Promise<void>((res, rej) => {
+  return new Promise<boolean>((res, reject) => {
+
+    if (!authedUser || !isValidQID() || !isValidOption()) {
+      reject('Please provide authedUser, qid, and answer');
+    }
+
+    const questionID = qid as string;
+    const option = answer === 'optionOne' ? 'optionOne' : 'optionTwo'
+
     setTimeout(() => {
-      users = {
-        ...users,
-        [authedUser]: {
-          ...users[authedUser],
-          answers: {
-            ...users[authedUser].answers,
-            [qid]: option,
+      try {
+
+        users = {
+          ...users,
+          [authedUser]: {
+            ...users[authedUser],
+            answers: {
+              ...users[authedUser].answers,
+              [questionID]: option
+            }
           }
         }
-      }
-
-      questions = {
-        ...questions,
-        [qid]: {
-          ...questions[qid],
-          [option]: {
-            ...questions[qid][option],
-            votes: questions[qid][option].votes.concat([authedUser])
+  
+        questions = {
+          ...questions,
+          [questionID]: {
+            ...questions[questionID],
+            [questionID]: {
+              ...questions[questionID][option],
+              votes: questions[questionID][option].votes.concat([authedUser])
+            }
           }
         }
-      }
 
-      res()
+        res(true)
+      } catch (error) {
+        reject(new Error(`There was an error saving the answer for user ${authedUser} and question ${qid}. Error: ${error}`))
+      }
     }, 500)
   })
 }
