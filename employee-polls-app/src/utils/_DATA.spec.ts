@@ -3,8 +3,10 @@ import {
     _getUsers,
     _saveQuestion,
     _saveQuestionAnswer,
+    _performLogin,
 } from './_DATA';
 import Question from './question';
+
 
 describe('_DATA', () => {
 
@@ -91,7 +93,24 @@ describe('_DATA', () => {
 
     // #region _performLogin
     // Test perform login
-    // Test not wrong password
-    // Test not wrong user
+    it('should return interface User when login succeeds', async () => {
+        const response = await _performLogin('johndoe', 'xyz123');
+
+        expect(response.id).toEqual('johndoe');
+        expect(response.name).toEqual('John Doe');
+        expect(response.avatarURL).toEqual('johndoe.jpg');
+        expect(response).toHaveProperty('answers');
+        expect(response).toHaveProperty('questions');
+    });
+
+    it('should return reject when password is incorrect', async () => {
+         await expect(_performLogin('johndoe', 'password'))
+         .rejects.toThrow('Invalid password!');
+    });
+
+    it('should return reject when password is incorrect', async () => {
+        await expect(_performLogin('unknown', 'xyz123'))
+        .rejects.toThrow('No user found!');
+   });
     // #endregion _performLogin
 });

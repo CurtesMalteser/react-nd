@@ -155,13 +155,22 @@ export function _getUsers() {
 export function _performLogin(id: string, password: string) {
   return new Promise<User>((resolve, reject) => {
     setTimeout(() => {
+
       const user = users[id];
-      if (user.password === password) {
-        mapUserServerToUser(users[id])
-        resolve(mapUserServerToUser(users[id]))
-      } else {
-        reject(new Error('Invalid password'))
+
+      if (!user) {
+        reject(new Error('No user found!'))
+        return;
       }
+      
+      if (user.password !== password) {
+        reject(new Error('Invalid password!'))
+        return;
+      }
+
+      mapUserServerToUser(users[id])
+      resolve(mapUserServerToUser(users[id]))
+
     }, 1000)
 
   })
