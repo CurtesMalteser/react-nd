@@ -88,6 +88,37 @@ describe('_DATA', () => {
             .rejects
             .toThrow(errorMatcher);
     });
+
+    // Note: not what I would usually do, but for the sake of the this mocked backend, the _Data.ts file behaves as a singleton and many unexpected behaviors can happen.:
+    it('should validate that after _saveQuestionAnswer, _getQuestions and filter by id the number of answers is correct and match the expected number of votes', async () => {
+
+        const expectedQuestion = {
+            author: 'johndoe',
+            optionOne: 'Be a superhero',
+            optionTwo: 'Be a supervillain',
+        };
+
+        const questionResponse = await _saveQuestion(expectedQuestion) as Question;
+
+        const qid = questionResponse.id;
+
+        await _saveQuestionAnswer({ authedUser: 'johndoe', qid, answer: 'optionOne' });
+        await _saveQuestionAnswer({ authedUser: 'sarahedo', qid, answer: 'optionOne' });
+        await _saveQuestionAnswer({ authedUser: 'mtsamis', qid, answer: 'optionTwo' });
+        await _saveQuestionAnswer({ authedUser: 'johndoe', qid, answer: 'optionTwo' });
+        await _saveQuestionAnswer({ authedUser: 'tylermcginnis', qid, answer: 'optionTwo' });
+
+        const questions = await _getQuestions();
+        const question = questions.questions[qid];
+
+        const optionOneVotes = question.optionOne.votes.length;
+        const optionTwoVotes = question.optionTwo.votes.length;
+
+        expect(optionOneVotes).toBe(1);
+        expect(question.optionOne.votes).toContain('sarahedo');
+        expect(optionTwoVotes).toBe(3);
+        expect(optionOneVotes + optionTwoVotes).toBe(4);
+    });
     // #endregion _saveQuestionAnswer
 
     // #region _performLogin
@@ -103,13 +134,13 @@ describe('_DATA', () => {
     });
 
     it('should return reject when password is incorrect', async () => {
-         await expect(_performLogin('johndoe', 'password'))
-         .rejects.toThrow('Invalid password!');
+        await expect(_performLogin('johndoe', 'password'))
+            .rejects.toThrow('Invalid password!');
     });
 
     it('should return reject when password is incorrect', async () => {
         await expect(_performLogin('unknown', 'xyz123'))
-        .rejects.toThrow('No user found!');
-   });
+            .rejects.toThrow('No user found!');
+    });
     // #endregion _performLogin
 });

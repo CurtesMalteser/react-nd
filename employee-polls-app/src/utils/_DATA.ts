@@ -34,7 +34,7 @@ let users: { [key: string]: UserServer } = {
     answers: {
       "xj352vofupe1dqz9emx13r": 'optionOne',
       "vthrdm985a262al8qx3do": 'optionTwo',
-      "6ni6ok3ym7mf1p33lnez": 'optionOne'
+      "6ni6ok3ym7mf1p33lnez": 'optionTwo'
     },
     questions: ['6ni6ok3ym7mf1p33lnez', 'xj352vofupe1dqz9emx13r'],
   },
@@ -240,9 +240,27 @@ export function _saveQuestionAnswer({ authedUser, qid, answer }: { authedUser: s
 
     const questionID = qid as string;
     const option = answer === 'optionOne' ? 'optionOne' : 'optionTwo'
+    const otherOption = answer === 'optionOne' ? 'optionTwo' : 'optionOne'
 
     setTimeout(() => {
       try {
+
+        const hasVotedForOtherOption = questions[questionID][otherOption].votes.includes(authedUser);
+
+        if (hasVotedForOtherOption) {
+          questions = {
+            ...questions,
+            [questionID]: {
+              ...questions[questionID],
+              [otherOption]: {
+                ...questions[questionID][otherOption],
+                votes: questions[questionID][otherOption].votes.filter(user => user !== authedUser)
+              }
+            }
+          };
+        }
+
+
         users = {
           ...users,
           [authedUser]: {

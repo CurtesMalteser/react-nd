@@ -1,18 +1,16 @@
 import Container from "react-bootstrap/Container";
 import Col from "react-bootstrap/Col";
 import Row from "react-bootstrap/Row";
-import Card from "react-bootstrap/Card";
 import Image from "react-bootstrap/Image";
 import { useAppDispatch, useAppSelector } from "../app/hooks";
 import getAvatarImage from "../utils/avatar";
 import { useParams } from "react-router-dom";
-import Button from 'react-bootstrap/Button';
 import {
     getQuestionByID,
     status as fetchQuestionsStatus,
     fetchQuestionByID,
 } from "../features/questions/questionsSlice";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import Option from "../utils/option";
 import ComponentLoader from "../components/loader/ComponentLoader";
 import {
@@ -27,21 +25,20 @@ import {
 import Answer from "../utils/answer";
 import useRequireAuth from "../hooks/useRequireAuth";
 import NoQuestionFound404 from "../components/NoQuestionFound404";
+import PollOption from "../components/poll/PollOption";
+import Question from "../utils/question";
 
 const safeOption: Option = { text: "Safe option", votes: [] };
 
-function PollOption({ option, isSelected, clickHandler }: { option: Option, isSelected: boolean, clickHandler: () => void }) {
-    console.log(`votes: ${option.votes}`);
-    return (
-        <Col >
-            <Card border="success">
-                <Card.Body>
-                    <Card.Title className="d-flex justify-content-center">{option.text}</Card.Title>
-                    <Button className="w-100" variant="success" onClick={clickHandler}>{isSelected && <b>{'\u2713'} </b>}Click</Button>
-                </Card.Body>
-            </Card>
-        </Col>
-    );
+const getVotes = (question: Question | undefined): {
+    votesOptionOne: number,
+    votesOptionTwo: number,
+    totalVotes: number,
+} => {
+    const votesOptionOne = question?.optionOne.votes.length ?? 0;
+    const votesOptionTwo = question?.optionTwo.votes.length ?? 0;
+    const totalVotes = votesOptionOne + votesOptionTwo;
+    return { votesOptionOne, votesOptionTwo, totalVotes };
 }
 
 function PollPage() {
@@ -58,12 +55,24 @@ function PollPage() {
     const answerStatus = useAppSelector(postAnswerStatus);
     const authedUser = useAppSelector(authedUserIDSelector);
 
+    const [votes, setVotes] = useState({ votesOptionOne: 0, votesOptionTwo: 0, totalVotes: 0 });
+   
 
-    useEffect(() => { dispatch(fetchQuestionByID(id as string)) }, [dispatch, id]);
 
+    const fetchQuestionAsyncByID = async () => {
+        dispatch(fetchQuestionByID(id as string))
+            .then((response) => {
+                response.payload && setVotes(getVotes(response.payload as Question));
+            });
+    }
+    
+    useEffect(() => { fetchQuestionAsyncByID() }, [dispatch, id]);
+
+    
     const handleOptionClick = async (answer: Answer, authedUser: string | undefined) => {
         authedUser && dispatch(postAnswer({ userID: authedUser, answer }))
-            .then((response) => response.payload && dispatch(updateUserAnswer(answer)));
+            .then((response) => response.payload && dispatch(updateUserAnswer(answer)))
+            .then(() => fetchQuestionAsyncByID());
     }
 
     if (questionStatus === 'loading' || answerStatus === 'loading') { return <ComponentLoader /> }
@@ -91,11 +100,13 @@ function PollPage() {
                         clickHandler={() => handleOptionClick({ [id as string]: 'optionOne' }, authedUser)}
                         option={question?.optionOne ?? safeOption}
                         isSelected={answer === 'optionOne'}
+                        votes={{ optionVotes: votes.votesOptionOne, totalVotes: votes.totalVotes }}
                     />
                     <PollOption
                         clickHandler={() => handleOptionClick({ [id as string]: 'optionTwo' }, authedUser)}
                         option={question?.optionTwo ?? safeOption}
                         isSelected={answer === 'optionTwo'}
+                        votes={{ optionVotes: votes.votesOptionTwo, totalVotes: votes.totalVotes }}
                     />
                 </Row>
             </Col>

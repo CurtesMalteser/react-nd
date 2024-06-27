@@ -11,7 +11,7 @@ import Question from '../../utils/question';
 export interface QuestionsState {
     questions: Question[];
     status: 'idle' | 'loading' | 'failed';
-    filter: 'all'| 'answered' | 'new';
+    filter: 'all' | 'answered' | 'new';
 }
 
 const initialState: QuestionsState = {
@@ -46,7 +46,7 @@ export const fetchQuestionByID = createAsyncThunk(
 
         if (question === undefined) { throw new Error('Question not found') }
 
-        return questions;
+        return question;
     }
 );
 
@@ -76,9 +76,14 @@ export const questionsSlice = createSlice({
             .addCase(fetchQuestionByID.pending, (state) => {
                 state.status = 'loading';
             })
-            .addCase(fetchQuestionByID.fulfilled, (state, action: PayloadAction<Question[]>) => {
+            .addCase(fetchQuestionByID.fulfilled, (state, action: PayloadAction<Question>) => {
                 state.status = 'idle';
-                state.questions = action.payload;
+                const index = state.questions.findIndex(q => q.id === action.payload.id);
+                if (index !== -1) {
+                    state.questions[index] = action.payload;
+                } else {
+                    state.questions.push(action.payload);
+                }
             })
             .addCase(fetchQuestionByID.rejected, (state) => {
                 state.status = 'failed';
@@ -96,8 +101,8 @@ export const newQuestions = createSelector(
     (state: RootState) => state.authedUser.user,
     (questions, user) => {
         const filteredQuestions = user ?
-        questions?.filter((question) => !didAuthedUserVoted(question, user?.id))
-        : questions?.filter((question) => !didQuestionWasAnswered(question))
+            questions?.filter((question) => !didAuthedUserVoted(question, user?.id))
+            : questions?.filter((question) => !didQuestionWasAnswered(question))
 
         return filteredQuestions.sort((a: Question, b: Question) => b.timestamp - a.timestamp)
     },
@@ -107,9 +112,9 @@ export const answeredQuestions = createSelector(
     (state: RootState) => state.questionsState.questions,
     (state: RootState) => state.authedUser.user,
     (questions, user) => {
-        const filteredQuestions =  user ?
-        questions?.filter((question) => didAuthedUserVoted(question, user?.id))
-        : questions?.filter((question) => didQuestionWasAnswered(question))
+        const filteredQuestions = user ?
+            questions?.filter((question) => didAuthedUserVoted(question, user?.id))
+            : questions?.filter((question) => didQuestionWasAnswered(question))
 
         return filteredQuestions.sort((a: Question, b: Question) => b.timestamp - a.timestamp)
     }
