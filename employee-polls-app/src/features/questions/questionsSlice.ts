@@ -95,9 +95,11 @@ export const newQuestions = createSelector(
     (state: RootState) => state.questionsState.questions,
     (state: RootState) => state.authedUser.user,
     (questions, user) => {
-        return user ?
+        const filteredQuestions = user ?
         questions?.filter((question) => !didAuthedUserVoted(question, user?.id))
         : questions?.filter((question) => !didQuestionWasAnswered(question))
+
+        return filteredQuestions.sort((a: Question, b: Question) => b.timestamp - a.timestamp)
     },
 );
 
@@ -105,9 +107,11 @@ export const answeredQuestions = createSelector(
     (state: RootState) => state.questionsState.questions,
     (state: RootState) => state.authedUser.user,
     (questions, user) => {
-        return user ?
+        const filteredQuestions =  user ?
         questions?.filter((question) => didAuthedUserVoted(question, user?.id))
         : questions?.filter((question) => didQuestionWasAnswered(question))
+
+        return filteredQuestions.sort((a: Question, b: Question) => b.timestamp - a.timestamp)
     }
 );
 

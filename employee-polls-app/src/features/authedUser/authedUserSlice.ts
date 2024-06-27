@@ -40,7 +40,7 @@ export const fetchUser = createAsyncThunk(
 
 export const logIn = createAsyncThunk(
     'authedUser/logIn',
-    async ({username: id, password}: {username: string, password: string}) => {
+    async ({ username: id, password }: { username: string, password: string }) => {
         const response = await _performLogin(id, password);
         localStorage.setItem(AUTHED_USER, response.id);
         return response;
@@ -66,7 +66,7 @@ export const authedUserSlice = createSlice({
         },
         updateUserAnswer: (state, action: PayloadAction<Answer>) => {
             if (state.user !== null) {
-                state.user.answers = {...state.user.answers, ...action.payload};
+                state.user.answers = { ...state.user.answers, ...action.payload };
             }
         },
     },

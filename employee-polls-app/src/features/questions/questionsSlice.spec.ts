@@ -129,7 +129,6 @@ describe('questionsSlice', () => {
         const actualAnsweredQuestions = answeredQuestions(mockStateOverrides);
 
         expect(actualAnsweredQuestions).toEqual([
-            loggedInUserAnsweredQuestion,
             {
                 id: 'am8ehyc8byjqgar0jgpub9',
                 author: 'sarahedo',
@@ -142,7 +141,9 @@ describe('questionsSlice', () => {
                     votes: ['sarahedo'],
                     text: 'be telepathic'
                 }
-            },]);
+            },
+            loggedInUserAnsweredQuestion,
+        ]);
     });
 
     it('answeredQuestions returns only questions answered by the logged in user', () => {
@@ -164,6 +165,50 @@ describe('questionsSlice', () => {
         const actualAnsweredQuestions = answeredQuestions(mockStateOverrides);
 
         expect(actualAnsweredQuestions).toEqual([loggedInUserAnsweredQuestion]);
+    });
+
+    it('answeredQuestions returns all new unanswered questions sorted new to old correctly', () => {
+        const mockQuestionsPayload: Question[] = [
+            {
+                id: 'a',
+                author: 'a',
+                timestamp: 1,
+                optionOne: {
+                    votes: [],
+                    text: 'one',
+                },
+                optionTwo: {
+                    votes: ['b'],
+                    text: 'two'
+                }
+            },
+            {
+                id: 'b',
+                author: 'b',
+                timestamp: 2,
+                optionOne: {
+                    votes: ['a'],
+                    text: 'one',
+                },
+                optionTwo: {
+                    votes: [],
+                    text: 'two'
+                }
+            },
+        ];
+
+        const mockStateOverrides = getDefaultState({
+            questionsState: {
+                questions: mockQuestionsPayload,
+                status: 'idle',
+                filter: 'all',
+            },
+        });
+
+        const actualAnsweredQuestions = answeredQuestions(mockStateOverrides);
+
+        expect(actualAnsweredQuestions[0].timestamp).toEqual(2);
+        expect(actualAnsweredQuestions[actualAnsweredQuestions.length - 1].timestamp).toEqual(1);
     });
     // #endregion fetch answered questions
 
@@ -246,6 +291,50 @@ describe('questionsSlice', () => {
                     text: 'be telepathic'
                 }
             }]);
+    });
+
+    it('answeredQuestions returns all new unanswered questions sorted new to old correctly', () => {
+        const mockQuestionsPayload: Question[] = [
+            {
+                id: 'a',
+                author: 'a',
+                timestamp: 1,
+                optionOne: {
+                    votes: [],
+                    text: 'one',
+                },
+                optionTwo: {
+                    votes: [],
+                    text: 'two'
+                }
+            },
+            {
+                id: 'b',
+                author: 'b',
+                timestamp: 2,
+                optionOne: {
+                    votes: [],
+                    text: 'one',
+                },
+                optionTwo: {
+                    votes: [],
+                    text: 'two'
+                }
+            },
+        ];
+
+        const mockStateOverrides = getDefaultState({
+            questionsState: {
+                questions: mockQuestionsPayload,
+                status: 'idle',
+                filter: 'all',
+            },
+        });
+
+        const actualAnsweredQuestions = newQuestions(mockStateOverrides);
+
+        expect(actualAnsweredQuestions[0].timestamp).toEqual(2);
+        expect(actualAnsweredQuestions[actualAnsweredQuestions.length - 1].timestamp).toEqual(1);
     });
     // #endregion fetch new questions
 
