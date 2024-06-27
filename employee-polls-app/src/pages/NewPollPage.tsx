@@ -84,8 +84,8 @@ function NewPollPage() {
         <Container className="md-6" style={{ marginTop: 20, marginBottom: 20, marginLeft: "auto", marginRight: "auto" }}>
             <Col>
                 <Row style={{ marginBottom: "48px" }}>
-                    <h2 className="d-flex justify-content-center">Would you rather</h2>
-                    <p className="d-flex justify-content-center">Would you rather</p>
+                    <h2 className="d-flex justify-content-center" style={{marginBottom:"20px"}}>Would you rather</h2>
+                    <h4 className="d-flex justify-content-center">Create your own poll</h4>
                 </Row>
                 <Row>
                     <Form validated={validated} onSubmit={handleSubmit}>
@@ -99,7 +99,7 @@ function NewPollPage() {
                             placeholder="Option Two"
                             optionRef={optionTwoRef}
                         />
-                        <Button type="submit" variant="primary">Submit</Button>
+                        <Button type="submit" variant="success">Submit</Button>
                     </Form>
                 </Row>
             </Col>

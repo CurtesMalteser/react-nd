@@ -7,7 +7,6 @@ import {
 } from './_DATA';
 import Question from './question';
 
-
 describe('_DATA', () => {
 
     // #region _saveQuestion
