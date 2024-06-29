@@ -7,7 +7,7 @@ import {
     status as fetchQuestionsStatus,
     questionsFilter as questionsFilterSelector,
 } from "../features/questions/questionsSlice";
-import QuestionsBoard from "../components/QestionsBoard";
+import QuestionsBoard from "../components/question/QestionsBoard";
 import { Container } from "react-bootstrap";
 import ComponentLoader from "../components/loader/ComponentLoader";
 import QuestionBoardFilter from "../components/question/QuestionBoardFilter";
