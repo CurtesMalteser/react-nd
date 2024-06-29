@@ -10,7 +10,7 @@ import {
     status as fetchQuestionsStatus,
     fetchQuestionByID,
 } from "../features/questions/questionsSlice";
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import Option from "../utils/option";
 import ComponentLoader from "../components/loader/ComponentLoader";
 import {
@@ -56,19 +56,18 @@ function PollPage() {
     const authedUser = useAppSelector(authedUserIDSelector);
 
     const [votes, setVotes] = useState({ votesOptionOne: 0, votesOptionTwo: 0, totalVotes: 0 });
-   
 
 
-    const fetchQuestionAsyncByID = async () => {
+    const fetchQuestionAsyncByID = useCallback(async () => {
         dispatch(fetchQuestionByID(id as string))
             .then((response) => {
                 response.payload && setVotes(getVotes(response.payload as Question));
             });
-    }
-    
-    useEffect(() => { fetchQuestionAsyncByID() });
+    }, []);
 
-    
+    useEffect(() => { fetchQuestionAsyncByID() }, [dispatch, id, fetchQuestionAsyncByID]);
+
+
     const handleOptionClick = async (answer: Answer, authedUser: string | undefined) => {
         authedUser && dispatch(postAnswer({ userID: authedUser, answer }))
             .then((response) => response.payload && dispatch(updateUserAnswer(answer)))
