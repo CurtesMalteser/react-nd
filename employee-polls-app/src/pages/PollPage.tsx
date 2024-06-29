@@ -65,7 +65,7 @@ function PollPage() {
             });
     }, []);
 
-    useEffect(() => { fetchQuestionAsyncByID() }, [dispatch, id, fetchQuestionAsyncByID]);
+    useEffect(() => { fetchQuestionAsyncByID() }, [fetchQuestionAsyncByID]);
 
 
     const handleOptionClick = async (answer: Answer, authedUser: string | undefined) => {

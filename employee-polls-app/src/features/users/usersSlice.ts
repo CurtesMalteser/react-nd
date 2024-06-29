@@ -40,9 +40,6 @@ export const usersSlice = createSlice({
             })
             .addCase(fetchUsers.fulfilled, (state, action: PayloadAction<{ [key: string]: User }>) => {
                 state.status = 'idle';
-                Object.values(action.payload).forEach((user) => {
-                    console.log(`User: ${user.name}`);
-                });
                 state.users = action.payload;
             })
             .addCase(fetchUsers.rejected, (state) => {
