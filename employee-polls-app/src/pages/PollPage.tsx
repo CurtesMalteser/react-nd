@@ -24,7 +24,7 @@ import {
 } from "../features/authedUser/authedUserSlice";
 import Answer from "../utils/answer";
 import useRequireAuth from "../hooks/useRequireAuth";
-import NoQuestionFound404 from "../components/NoQuestionFound404";
+import NoQuestionFound404 from "../components/poll/NoQuestionFound404";
 import PollOption from "../components/poll/PollOption";
 import Question from "../utils/question";
 
