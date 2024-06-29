@@ -1,9 +1,9 @@
 import Button from 'react-bootstrap/Button';
 import Card from 'react-bootstrap/Card';
-import getAvatarImage from "../utils/avatar";
+import getAvatarImage from "../../utils/avatar";
 import { useNavigate } from 'react-router-dom';
-import ROUTES from '../constants/routes';
-import toPollDateFormat from '../utils/date';
+import ROUTES from '../../constants/routes';
+import toPollDateFormat from '../../utils/date';
 
 
 function QuestionCard({ questionId, author, timestamp }: { questionId: string, author: string, timestamp: number }) {

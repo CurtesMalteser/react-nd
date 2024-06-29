@@ -1,7 +1,7 @@
 import Row from "react-bootstrap/esm/Row";
 import Col from "react-bootstrap/esm/Col";
 import Question from "../utils/question";
-import QuestionCard from "./QuestionCard";
+import QuestionCard from "./question/QuestionCard";
 import NoQuestionsPlaceholder from "./question/NoQuestionsPlaceholder";
 
 function QuestionsBoard({ title, questions }: { title: string, questions: Question[] }) {

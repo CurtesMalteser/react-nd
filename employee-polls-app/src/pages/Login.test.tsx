@@ -6,7 +6,6 @@ import { store } from '../app/store';
 
 describe('LoginPage', () => {
     it('matches the snapshot', async () => {
-        // Mock any dynamic values or asynchronous data here
     
         const { asFragment } = render(
           <Provider store={store}>
@@ -15,8 +14,7 @@ describe('LoginPage', () => {
             </Router>
           </Provider>
         );
-    
-        // Use waitFor for components that have asynchronous operations
+
         await waitFor(() => {
           expect(asFragment()).toMatchSnapshot();
         });
