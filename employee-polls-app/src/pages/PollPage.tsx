@@ -24,9 +24,9 @@ import {
 } from "../features/authedUser/authedUserSlice";
 import Answer from "../utils/answer";
 import useRequireAuth from "../hooks/useRequireAuth";
-import NoQuestionFound404 from "../components/poll/NoQuestionFound404";
 import PollOption from "../components/poll/PollOption";
 import Question from "../utils/question";
+import ErrorComponent from "../components/error/ErrorComponent";
 
 const safeOption: Option = { text: "Safe option", votes: [] };
 
@@ -65,7 +65,7 @@ function PollPage() {
             });
     }, []);
 
-    useEffect(() => { fetchQuestionAsyncByID() }, [fetchQuestionAsyncByID]);
+    useEffect(() => { fetchQuestionAsyncByID() }, [fetchQuestionAsyncByID, dispatch, id]);
 
 
     const handleOptionClick = async (answer: Answer, authedUser: string | undefined) => {
@@ -76,7 +76,7 @@ function PollPage() {
 
     if (questionStatus === 'loading' || answerStatus === 'loading') { return <ComponentLoader /> }
 
-    if (questionStatus === 'failed') { return <NoQuestionFound404 /> }
+    if (questionStatus === 'failed') { return <ErrorComponent label= "404: Question not found" />; }
 
     return (
         <Container className="md-6" style={{ marginTop: 20, marginBottom: 20, marginLeft: "auto", marginRight: "auto" }} >
