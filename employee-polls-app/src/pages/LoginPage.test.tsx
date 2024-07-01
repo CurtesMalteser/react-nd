@@ -1,7 +1,7 @@
 import { render, waitFor, fireEvent, cleanup, } from '@testing-library/react';
 import { BrowserRouter as Router } from 'react-router-dom';
 import userEvent from '@testing-library/user-event';
-import LoginPage from './Login';
+import LoginPage from './LoginPage';
 import { Provider } from 'react-redux';
 import { AnyAction, Store, configureStore } from '@reduxjs/toolkit';
 import counterReducer from '../features/counter/counterSlice';

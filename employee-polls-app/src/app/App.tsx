@@ -3,7 +3,7 @@ import {
   RouterProvider,
 } from 'react-router-dom';
 import { Outlet } from 'react-router-dom';
-import LoginPage from "../pages/Login";
+import LoginPage from "../pages/LoginPage";
 import HomePage from "../pages/HomePage";
 import HomeOutlet from '../pages/HomeOutlet';
 import { useEffect } from "react";
