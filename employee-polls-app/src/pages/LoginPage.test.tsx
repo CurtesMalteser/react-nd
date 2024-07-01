@@ -35,7 +35,6 @@ describe('LoginPage', () => {
   });
 
   afterEach(() => {
-    // Perform any cleanup actions after each test, if necessary
     _store = null;
     cleanup();
   });
