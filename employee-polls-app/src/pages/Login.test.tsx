@@ -12,6 +12,7 @@ import answerQuestionReducer from '../features/questions/answerQuestionSlice';
 import newPollQuestionSlice from '../features/questions/newPollQuestionSlice';
 
 describe('LoginPage', () => {
+
   let _store: Store<unknown, AnyAction> | null;
   let store = () => {
     if (_store === null) {
@@ -90,7 +91,41 @@ describe('LoginPage', () => {
     });
   });
 
-  it('alert not renders if the user is not selected, proofs is not possible submit form without users', async () => {
+  it('alert does not render if the user is not selected, proving it is not possible to submit the form without selecting a user', async () => {
+    const { getByRole, getByPlaceholderText, getAllByRole, queryByRole } = render(
+      <Provider store={store()}>
+        <Router>
+          <LoginPage />
+        </Router>
+      </Provider>
+    );
+
+    const dropdown = getByRole('combobox');
+    const passwordInput = getByPlaceholderText('Random password');
+    const buttonLogin = getByRole('button', { name: 'Login' });
+    const buttonCancel = getByRole('button', { name: 'Cancel' });
+
+    expect(buttonCancel).toBeInTheDocument();
+    expect(buttonLogin).toBeInTheDocument();
+
+    await waitFor(() => {
+      const options = getAllByRole('option');
+      expect(options).toHaveLength(5);
+    });
+
+    await userEvent.selectOptions(dropdown, 'johndoe');
+
+    await userEvent.type(passwordInput, 'short');
+
+    await userEvent.click(buttonLogin);
+
+    await waitFor(() => {
+      const alert = queryByRole('alert')
+      expect(alert).not.toBeInTheDocument();
+    });
+  });
+
+  it('alert does not render if the password is not valid, proving it is not possible to submit the form without selecting inserting a password minimun six chars', async () => {
     const { getByRole, getByPlaceholderText, queryByRole } = render(
       <Provider store={store()}>
         <Router>
