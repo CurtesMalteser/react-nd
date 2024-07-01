@@ -153,7 +153,7 @@ function LoginPage() {
                             <Form.Group className="mb-3" controlId="exampleForm.ControlTextarea1">
                                 <Form.Label>Password:</Form.Label>
                                 <Form.Control type="password"
-                                    placeholder="Random password"
+                                    placeholder="You can find your password in the README file."
                                     value={password}
                                     onChange={handlePasswordChange}
                                     autoComplete='off'

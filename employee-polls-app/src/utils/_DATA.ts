@@ -28,7 +28,7 @@ let users: { [key: string]: UserServer } = {
   },
   johndoe: {
     id: 'johndoe',
-    password: 'xyz123',
+    password: 'xyz321',
     name: 'John Doe',
     avatarURL: 'johndoe.jpg',
     answers: {

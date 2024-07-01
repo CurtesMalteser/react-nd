@@ -26,13 +26,34 @@ The name of the logged in user is visible on the page, as well as the user avata
 If the user is logged out, the app logo and the login button are visible.  
 In case the avatar is not available, a default avatar is shown (the app logo).
 The user can navigate to the leaderboard, and if logged out has to login.  
-The user can navigate to the form that allows the user to create a new poll, and if logged out has to login.  
+The user can navigate to the form that allows the user to create a new poll, and if logged out has to login.   
 
 ### Home `/`
 
 The answered and unanswered polls are both available at the root.
 The user can alternate between viewing answered and unanswered polls, or both.
 The unanswered questions are shown by default.
+
+## Login `/login`
+
+The login page is displayed when the user clicks the Login button.  
+The login page also appears when the user attempts to access a page that requires authentication.  
+This page includes a form for logging in, featuring a dropdown menu to select a user from the list of existing users.  
+It has a Login button that initiates the login process if the form is valid.  
+There is a Cancel button that redirects the user to the home page.  
+After logging in, the user is redirected to the page they were trying to access.  
+The session is stored in the local storage, so the user remains logged in even if the page is refreshed.
+An alert is shown if the user tries to log in with invalid credentials.
+The login page includes a password input field that obscures the password.  
+The passwords are as follows:
+
+| Name           | Password    |
+|----------------|-------------|
+| Sarah Edo      | password123 |
+| Tyler McGinnis | abc321      |
+| John Doe       | xyz321      |
+| Mike Tsamis    | xyz123      |
+
 
 ### Leaderboard `/leaderboard`
 
@@ -61,6 +82,10 @@ For answered polls, each of the two options contains the following:
 When the user is logged in, the details of the poll are shown. If the user is logged out, he/she is asked to log in before before being able to access the poll.
 
 The application asks the user to sign in and shows a 404 page if that poll does not exist. (In other words, if a user creates a poll and then the same or another user tries to access that poll by its url, the user should be asked to sign in and then be shown a 404 page. Please keep in mind that new polls will not be accessible at their url because of the way the backend is set up in this application.)
+
+## General Error
+
+If the user inserts a wrong URL, the application shows a error page which allows return to home.
 
 ## Thanks and Credits:
 Thank you to React, React Bootstrap, Redux, and React Router for making this project possible.
