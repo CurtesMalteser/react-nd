@@ -9,14 +9,17 @@ import {
     clearLoginError,
 } from '../features/authedUser/authedUserSlice';
 import User from '../utils/user';
-import Form from 'react-bootstrap/Form';
-import Container from 'react-bootstrap/Container';
-import Row from 'react-bootstrap/Row';
-import Col from 'react-bootstrap/Col';
+import Form from 'react-bootstrap/esm/Form';
+import Container from 'react-bootstrap/esm/Container';
+import Row from 'react-bootstrap/esm/Row';
+import Col from 'react-bootstrap/esm/Col';
+import Alert from 'react-bootstrap/esm/Alert';
+import Navbar from 'react-bootstrap/esm/Navbar';
+import Button from 'react-bootstrap/esm/Button';
 import ROUTES from '../constants/routes';
 import Image from 'react-bootstrap/Image';
 import Logo from '../assets/img/employees_pool_logo.jpg';
-import { Alert, Button, Navbar } from 'react-bootstrap';
+
 
 function AlertLoginError({ onDismiss }: { onDismiss: () => void }) {
 
@@ -33,6 +36,8 @@ function AlertLoginError({ onDismiss }: { onDismiss: () => void }) {
 const mapUserOptions = (users: { [key: string]: User }) => Object.values(users)
     .map(user => { return <option key={user.id} value={user.id}>{user.name}</option> });
 
+const validatePassword = (value: string): boolean => value.length >= 6 && !value.includes(' ');
+
 function LoginPage() {
 
     const navigate = useNavigate();
@@ -43,7 +48,9 @@ function LoginPage() {
     const status = useAppSelector(loginStatus);
 
     const [username, setUsername] = useState('');
+    const [isValidUsername, setIsValidUsername] = useState<boolean | null>(null);
     const [password, setPassword] = useState('');
+    const [isValidPassword, setIsValidPassword] = useState<boolean | null>(null);
 
     const { state } = useLocation()
 
@@ -54,16 +61,39 @@ function LoginPage() {
     }, [dispatch]);
 
     const handleUsernameChange = (event: ChangeEvent<HTMLSelectElement>) => {
-        setUsername(event.target.value);
+        setUsername((prevUsername) => {
+            if (prevUsername !== '' && event.target.value === '') {
+                setIsValidUsername(false);
+            } else {
+                setIsValidUsername(true);
+            }
+            return event.target.value;
+        });
     };
 
     const handlePasswordChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-        event.preventDefault();
-        setPassword(event.target.value);
+
+        const value = event.target.value;
+        const isValidPassword = validatePassword(value)
+
+        setPassword((prevPassword) => {
+            if (prevPassword !== '' && isValidPassword === false) {
+                setIsValidPassword(false);
+            } else {
+                setIsValidPassword(true);
+            }
+            return value;
+        });
     };
 
     const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+
         event.preventDefault();
+
+        if (!isValidPassword || !isValidUsername) {
+            return;
+        }
+
         dispatch(logIn({ username, password }));
     };
 
@@ -97,11 +127,22 @@ function LoginPage() {
                     </Row>
                     <Row>
                         <Form onSubmit={handleSubmit}>
-                            <Form.Label>Username:</Form.Label>
-                            <Form.Select onChange={handleUsernameChange} >
-                                <option value="">Select a user...</option>
-                                {userOptions}
-                            </Form.Select>
+
+                            <Form.Group className="mb-3">
+                                <Form.Label>Username:</Form.Label>
+                                <Form.Select
+                                onChange={handleUsernameChange}
+                                isInvalid={isValidUsername === false}
+                                isValid={isValidUsername === true}
+                                >
+                                    <option value="">Select a user...</option>
+                                    {userOptions}
+                                </Form.Select>
+                                <Form.Control.Feedback type="invalid">Please select an user.</Form.Control.Feedback>
+                                <Form.Control.Feedback type="valid">Great! you selected {username} id.</Form.Control.Feedback>
+                            </Form.Group>
+
+
                             <Form.Group className="mb-3" controlId="exampleForm.ControlTextarea1">
                                 <Form.Label>Password:</Form.Label>
                                 <Form.Control type="password"
@@ -110,7 +151,15 @@ function LoginPage() {
                                     onChange={handlePasswordChange}
                                     autoComplete='off'
                                     required
+                                    isInvalid={isValidPassword === false}
+                                    isValid={isValidPassword === true}
                                 />
+                                <Form.Control.Feedback type="invalid">
+                                    Please insert a valid password.<br />
+                                    Password must be at least 6 characters long and it cannot contain blank spaces.<br />
+                                    You can find your password in the README file.
+                                </Form.Control.Feedback>
+                                <Form.Control.Feedback type="valid">Great! Your password looks valid.</Form.Control.Feedback>
                             </Form.Group>
                             <>
                                 <Button as="input" type="submit" variant="success" value="Login" />{' '}
