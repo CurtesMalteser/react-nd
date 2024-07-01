@@ -63,9 +63,9 @@ function PollPage() {
             .then((response) => {
                 response.payload && setVotes(getVotes(response.payload as Question));
             });
-    }, []);
+    }, [dispatch, id]);
 
-    useEffect(() => { fetchQuestionAsyncByID() }, [fetchQuestionAsyncByID, dispatch, id]);
+    useEffect(() => { fetchQuestionAsyncByID() }, [fetchQuestionAsyncByID]);
 
 
     const handleOptionClick = async (answer: Answer, authedUser: string | undefined) => {

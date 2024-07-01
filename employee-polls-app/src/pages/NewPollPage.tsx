@@ -57,6 +57,21 @@ function NewPollPage() {
         previousStatus.current = status;
     }, [status, navigate]);
 
+    const dispatchNewPoll = () => {
+
+        dispatch(postNewPoll({
+            optionOne: optionOneRef?.current?.value ?? 'it is null one',
+            optionTwo: optionTwoRef?.current?.value ?? 'it is null two',
+            author: userID as string,
+        })).then(() => {
+            setValidated(false);
+            optionOneRef.current!.value = '';
+            optionTwoRef.current!.value = '';
+            navigate(ROUTES.HOME);
+        });
+
+    };
+
     const handleSubmit = (event: {
         currentTarget: any;
         preventDefault: () => void;
@@ -70,11 +85,7 @@ function NewPollPage() {
             setValidated(false);
         } else {
             setValidated(true);
-            dispatch(postNewPoll({
-                optionOne: optionOneRef?.current?.value ?? 'it is null one',
-                optionTwo: optionTwoRef?.current?.value ?? 'it is null two',
-                author: userID as string,
-            }))
+            dispatchNewPoll();
         };
     }
 
@@ -84,7 +95,7 @@ function NewPollPage() {
         <Container className="md-6" style={{ marginTop: 20, marginBottom: 20, marginLeft: "auto", marginRight: "auto" }}>
             <Col>
                 <Row style={{ marginBottom: "48px" }}>
-                    <h2 className="d-flex justify-content-center" style={{marginBottom:"20px"}}>Would you rather</h2>
+                    <h2 className="d-flex justify-content-center" style={{ marginBottom: "20px" }}>Would you rather</h2>
                     <h4 className="d-flex justify-content-center">Create your own poll</h4>
                 </Row>
                 <Row>
