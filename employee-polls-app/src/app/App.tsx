@@ -18,11 +18,13 @@ import ROUTES from '../constants/routes';
 import NewPollPage from '../pages/NewPollPage';
 import HomeLoader from '../components/loader/HomeLoader';
 import PollPage from '../pages/PollPage';
+import GlobalErrorPage from '../pages/GlobalErrorPage';
 
 const router = createBrowserRouter([
   {
     path: ROUTES.HOME,
     element: <Outlet />,
+    errorElement: <GlobalErrorPage />,
     children: [
       {
         path: ROUTES.HOME, element: <HomeOutlet />, children: [
