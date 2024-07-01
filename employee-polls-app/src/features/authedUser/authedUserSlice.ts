@@ -91,7 +91,6 @@ export const answer = (state: RootState, answerID: string) => {
     return answer === 'optionOne' || answer === 'optionTwo' ? answer : undefined;
 }
 
-
 export default authedUserSlice.reducer;
 // #endregion Reducers
 

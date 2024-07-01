@@ -37,7 +37,7 @@ function AppNavBar() {
     const location = useLocation();
     const navigate = useNavigate();
     const dispatch = useAppDispatch();
-    const handleLogOut = () => dispatch(logOut());
+    const handleLogOut = () => dispatch(logOut()).then(() => navigate(ROUTES.HOME));
     const handleLogIn = () => navigate(ROUTES.LOGIN, { state: { from: location } });
 
     return (

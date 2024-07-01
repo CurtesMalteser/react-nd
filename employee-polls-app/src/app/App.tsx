@@ -54,8 +54,7 @@ function App() {
   }
 
   if (authedUserStatus === 'failed' && !isLoginError) {
-    // perform logout if the user doesn't exist and isn't a login error
-    return <div>Error loading user</div> // add global error handling page on App router
+    return <GlobalErrorPage />
   }
 
   return (
