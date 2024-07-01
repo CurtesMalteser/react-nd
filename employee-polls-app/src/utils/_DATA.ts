@@ -44,11 +44,12 @@ let users: { [key: string]: UserServer } = {
     name: 'Mike Tsamis',
     avatarURL: null,
     answers: {
-      "xj352vofupe1dqz9emx13r": 'optionOne',
+      "xj352vofupe1dqz9emx14r": 'optionTwo',
       "vthrdm985a262al8qx3do": 'optionTwo',
-      "6ni6ok3ym7mf1p33lnez": 'optionOne'
+      "6ni6ok3ym7mf1p34lnez": 'optionOne',
+      "8xf0y6ziyjabvozdd253nd": 'optionOne'
     },
-    questions: ['6ni6ok3ym7mf1p33lnez', 'xj352vofupe1dqz9emx13r'],
+    questions: ['6ni6ok3ym7mf1p34lnez', 'xj352vofupe1dqz9emx14r'],
   }
 }
 
@@ -58,7 +59,7 @@ let questions: { [key: string]: Question } = {
     author: 'sarahedo',
     timestamp: 1467166872634,
     optionOne: {
-      votes: ['sarahedo'],
+      votes: ['sarahedo', 'mtsamis'],
       text: 'have horrible short term memory',
     },
     optionTwo: {
@@ -77,6 +78,19 @@ let questions: { [key: string]: Question } = {
     optionTwo: {
       votes: ['johndoe', 'sarahedo'],
       text: 'become a supervillian'
+    }
+  },
+  "6ni6ok3ym7mf1p34lnez": {
+    id: '6ni6ok3ym7mf1p34lnez',
+    author: 'mtsamis',
+    timestamp: 1468479767190,
+    optionOne: {
+      votes: ['tylermcginnis', 'mtsamis'],
+      text: 'become a Java developer',
+    },
+    optionTwo: {
+      votes: ['johnDoe', 'sarahedo'],
+      text: 'become a Kotlin developer'
     }
   },
   "am8ehyc8byjqgar0jgpub9": {
@@ -114,14 +128,14 @@ let questions: { [key: string]: Question } = {
       text: 'find $50 yourself',
     },
     optionTwo: {
-      votes: ['johndoe'],
+      votes: ['johndoe', 'mtsamis'],
       text: 'have your best friend find $500'
     }
   },
   "xj352vofupe1dqz9emx13r": {
     id: 'xj352vofupe1dqz9emx13r',
     author: 'johndoe',
-    timestamp: 1493579767190,
+    timestamp: 1493579767190,  
     optionOne: {
       votes: ['johndoe'],
       text: 'write JavaScript',
@@ -129,6 +143,19 @@ let questions: { [key: string]: Question } = {
     optionTwo: {
       votes: ['tylermcginnis'],
       text: 'write Swift'
+    }
+  },
+  "xj352vofupe1dqz9emx14r": {
+    id: 'xj352vofupe1dqz9emx14r',
+    author: 'mtsamis',
+    timestamp: 1719857995449,
+    optionOne: {
+      votes: ['johndoe'],
+      text: 'use GitHub Copilot',
+    },
+    optionTwo: {
+      votes: ['mtsamis'],
+      text: 'use Gemini Code Assist'
     }
   },
 }
