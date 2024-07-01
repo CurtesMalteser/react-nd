@@ -49,20 +49,34 @@ exports[`LoginPage matches the snapshot 1`] = `
         <form
           class=""
         >
-          <label
-            class="form-label"
+          <div
+            class="mb-3"
           >
-            Username:
-          </label>
-          <select
-            class="form-select"
-          >
-            <option
-              value=""
+            <label
+              class="form-label"
             >
-              Select a user...
-            </option>
-          </select>
+              Username:
+            </label>
+            <select
+              class="form-select"
+            >
+              <option
+                value=""
+              >
+                Select a user...
+              </option>
+            </select>
+            <div
+              class="invalid-feedback"
+            >
+              Please select an user.
+            </div>
+            <div
+              class="valid-feedback"
+            >
+              Great! you selected  id.
+            </div>
+          </div>
           <div
             class="mb-3"
           >
@@ -81,6 +95,20 @@ exports[`LoginPage matches the snapshot 1`] = `
               type="password"
               value=""
             />
+            <div
+              class="invalid-feedback"
+            >
+              Please insert a valid password.
+              <br />
+              Password must be at least 6 characters long and it cannot contain blank spaces.
+              <br />
+              You can find your password in the README file.
+            </div>
+            <div
+              class="valid-feedback"
+            >
+              Great! Your password looks valid.
+            </div>
           </div>
           <input
             class="btn btn-success"

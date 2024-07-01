@@ -74,12 +74,13 @@ function LoginPage() {
     const handlePasswordChange = (event: React.ChangeEvent<HTMLInputElement>) => {
 
         const value = event.target.value;
-        const isValidPassword = validatePassword(value)
 
-        setPassword((prevPassword) => {
-            if (prevPassword !== '' && isValidPassword === false) {
+        setPassword(() => {
+            if (validatePassword(value) === false) {
+                console.log('invalid password')
                 setIsValidPassword(false);
             } else {
+                console.log('valid password')
                 setIsValidPassword(true);
             }
             return value;
@@ -89,6 +90,14 @@ function LoginPage() {
     const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
 
         event.preventDefault();
+
+        if (!validatePassword(password)) {
+            setIsValidPassword(false);
+        }
+
+        if (username === '') {
+            setIsValidUsername(false);
+        }
 
         if (!isValidPassword || !isValidUsername) {
             return;
@@ -131,9 +140,9 @@ function LoginPage() {
                             <Form.Group className="mb-3">
                                 <Form.Label>Username:</Form.Label>
                                 <Form.Select
-                                onChange={handleUsernameChange}
-                                isInvalid={isValidUsername === false}
-                                isValid={isValidUsername === true}
+                                    onChange={handleUsernameChange}
+                                    isInvalid={isValidUsername === false}
+                                    isValid={isValidUsername === true}
                                 >
                                     <option value="">Select a user...</option>
                                     {userOptions}
@@ -153,6 +162,8 @@ function LoginPage() {
                                     required
                                     isInvalid={isValidPassword === false}
                                     isValid={isValidPassword === true}
+                                    onInvalid={(e) => { e.currentTarget.setCustomValidity('Please insert your password.') }}
+                                    onInput={(e) => { e.currentTarget.setCustomValidity('') }}
                                 />
                                 <Form.Control.Feedback type="invalid">
                                     Please insert a valid password.<br />
