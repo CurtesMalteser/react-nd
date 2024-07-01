@@ -77,10 +77,8 @@ function LoginPage() {
 
         setPassword(() => {
             if (validatePassword(value) === false) {
-                console.log('invalid password')
                 setIsValidPassword(false);
             } else {
-                console.log('valid password')
                 setIsValidPassword(true);
             }
             return value;
