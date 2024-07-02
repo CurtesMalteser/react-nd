@@ -124,7 +124,7 @@ describe('_DATA', () => {
     // #region _performLogin
     // Test perform login
     it('should return interface User when login succeeds', async () => {
-        const response = await _performLogin('johndoe', 'xyz123');
+        const response = await _performLogin('johndoe', 'xyz321');
 
         expect(response.id).toEqual('johndoe');
         expect(response.name).toEqual('John Doe');

@@ -63,7 +63,7 @@ describe('LoginPage', () => {
     );
 
     const dropdown = getByRole('combobox');
-    const passwordInput = getByPlaceholderText('Random password');
+    const passwordInput = getByPlaceholderText('You can find your password in the README file.');
     const buttonLogin = getByRole('button', { name: 'Login' });
     const buttonCancel = getByRole('button', { name: 'Cancel' });
 
@@ -100,7 +100,7 @@ describe('LoginPage', () => {
     );
 
     const dropdown = getByRole('combobox');
-    const passwordInput = getByPlaceholderText('Random password');
+    const passwordInput = getByPlaceholderText('You can find your password in the README file.');
     const buttonLogin = getByRole('button', { name: 'Login' });
     const buttonCancel = getByRole('button', { name: 'Cancel' });
 
@@ -134,7 +134,7 @@ describe('LoginPage', () => {
     );
 
 
-    const passwordInput = getByPlaceholderText('Random password');
+    const passwordInput = getByPlaceholderText('You can find your password in the README file.');
     const buttonLogin = getByRole('button', { name: 'Login' });
     const buttonCancel = getByRole('button', { name: 'Cancel' });
 
@@ -162,7 +162,7 @@ describe('LoginPage', () => {
       </Provider>
     );
 
-    const passwordInput = getByPlaceholderText('Random password');
+    const passwordInput = getByPlaceholderText('You can find your password in the README file.');
 
     await waitFor(() => {
       expect(passwordInput).not.toHaveClass('is-valid' || 'is-invalid');
@@ -178,7 +178,7 @@ describe('LoginPage', () => {
       </Provider>
     );
 
-    const passwordInput = getByPlaceholderText('Random password');
+    const passwordInput = getByPlaceholderText('You can find your password in the README file.');
 
     fireEvent.change(passwordInput, { target: { value: 's' } });
     fireEvent.change(passwordInput, { target: { value: 'short' } });
@@ -198,7 +198,7 @@ describe('LoginPage', () => {
       </Provider>
     );
 
-    const passwordInput = getByPlaceholderText('Random password');
+    const passwordInput = getByPlaceholderText('You can find your password in the README file.');
 
     fireEvent.change(passwordInput, { target: { value: 'valid' } });
     fireEvent.change(passwordInput, { target: { value: 'valid-password' } });
