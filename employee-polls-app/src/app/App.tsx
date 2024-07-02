@@ -7,11 +7,11 @@ import LoginPage from "../pages/LoginPage";
 import HomePage from "../pages/HomePage";
 import HomeOutlet from '../pages/HomeOutlet';
 import { useEffect } from "react";
-import { 
+import {
   fetchUser,
   status,
   loginError,
- } from "../features/authedUser/authedUserSlice";
+} from "../features/authedUser/authedUserSlice";
 import { useAppDispatch, useAppSelector } from "../app/hooks";
 import LeaderboardPage from '../pages/LeaderboardPage';
 import ROUTES from '../constants/routes';
@@ -19,7 +19,7 @@ import NewPollPage from '../pages/NewPollPage';
 import HomeLoader from '../components/loader/HomeLoader';
 import PollPage from '../pages/PollPage';
 import GlobalErrorPage from '../pages/GlobalErrorPage';
-import RequireAuth from '../hooks/useRequireAuth';
+import RequireAuth from '../components/RequireAuth';
 
 const router = createBrowserRouter([
   {
@@ -50,7 +50,7 @@ function App() {
     dispatch(fetchUser());
   }, [dispatch]);
 
-  if (authedUserStatus === 'loading') { 
+  if (authedUserStatus === 'loading') {
     return <HomeLoader />
   }
 
