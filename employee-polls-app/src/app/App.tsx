@@ -19,6 +19,7 @@ import NewPollPage from '../pages/NewPollPage';
 import HomeLoader from '../components/loader/HomeLoader';
 import PollPage from '../pages/PollPage';
 import GlobalErrorPage from '../pages/GlobalErrorPage';
+import RequireAuth from '../hooks/useRequireAuth';
 
 const router = createBrowserRouter([
   {
@@ -29,9 +30,9 @@ const router = createBrowserRouter([
       {
         path: ROUTES.HOME, element: <HomeOutlet />, children: [
           { path: ROUTES.HOME, element: <HomePage /> },
-          { path: ROUTES.LEADERBOARD, element: <LeaderboardPage /> },
-          { path: ROUTES.NEW_QUESTION, element: <NewPollPage /> },
-          { path: ROUTES.ANSWER_POOL, element: <PollPage /> },
+          { path: ROUTES.LEADERBOARD, element: <RequireAuth><LeaderboardPage /></RequireAuth> },
+          { path: ROUTES.NEW_QUESTION, element: <RequireAuth><NewPollPage /></RequireAuth> },
+          { path: ROUTES.ANSWER_POOL, element: <RequireAuth><PollPage /></RequireAuth> },
         ],
       },
       { path: ROUTES.LOGIN, element: <LoginPage /> },

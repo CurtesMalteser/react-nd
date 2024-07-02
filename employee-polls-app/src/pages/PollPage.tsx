@@ -23,7 +23,6 @@ import {
     updateUserAnswer,
 } from "../features/authedUser/authedUserSlice";
 import Answer from "../utils/answer";
-import useRequireAuth from "../hooks/useRequireAuth";
 import PollOption from "../components/poll/PollOption";
 import Question from "../utils/question";
 import ErrorComponent from "../components/error/ErrorComponent";
@@ -44,8 +43,6 @@ const getVotes = (question: Question | undefined): {
 function PollPage() {
 
     const { id } = useParams<{ id: string }>();
-
-    useRequireAuth();
 
     const dispatch = useAppDispatch();
 
