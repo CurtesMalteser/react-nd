@@ -12,7 +12,7 @@ function GlobalErrorPage() {
     return (
         <>
             <AppNavBar />
-            <ErrorComponent label="We coudn't find the path you're looking for." />
+            <ErrorComponent />
             <div style={{ display: 'flex', justifyContent: 'center' }}>
                 <Button variant="success" onClick={() => navigate(ROUTES.HOME)}><HouseUpFill size={24} style={{ marginRight: '10px' }} />Go Home</Button>
             </div>

@@ -5,7 +5,7 @@ import Row from 'react-bootstrap/esm/Row';
 import Image from 'react-bootstrap/esm/Image';
 import Logo from '../../assets/img/employees_pool_logo.jpg'
 
-function ErrorComponent({label}:{label: string}) {
+function ErrorComponent() {
 
     return (
         <Container className="md-6" style={{ marginTop: 20, marginBottom: 20, marginLeft: "auto", marginRight: "auto" }} >
@@ -26,7 +26,7 @@ function ErrorComponent({label}:{label: string}) {
                     <h1 className="d-flex justify-content-center">Oops! Somenthing went wrong...</h1>
                 </Row>
                 <Row style={{ marginBottom: "48px" }}>
-                    <h2 className="d-flex justify-content-center">{label}</h2>
+                    <h2 className="d-flex justify-content-center">404: We coudn't find the path you're looking for.</h2>
                 </Row>
             </Col>
         </Container>

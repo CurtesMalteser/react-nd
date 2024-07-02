@@ -17,7 +17,7 @@ import LeaderboardPage from '../pages/LeaderboardPage';
 import ROUTES from '../constants/routes';
 import NewPollPage from '../pages/NewPollPage';
 import HomeLoader from '../components/loader/HomeLoader';
-import PollPage from '../pages/PollPage';
+import PollPage, { loader as poolLoader } from '../pages/PollPage';
 import GlobalErrorPage from '../pages/GlobalErrorPage';
 import RequireAuth from '../components/RequireAuth';
 
@@ -32,7 +32,11 @@ const router = createBrowserRouter([
           { path: ROUTES.HOME, element: <HomePage /> },
           { path: ROUTES.LEADERBOARD, element: <RequireAuth><LeaderboardPage /></RequireAuth> },
           { path: ROUTES.NEW_QUESTION, element: <RequireAuth><NewPollPage /></RequireAuth> },
-          { path: ROUTES.ANSWER_POOL, element: <RequireAuth><PollPage /></RequireAuth> },
+          {
+            path: ROUTES.ANSWER_POOL,
+            element: <RequireAuth><PollPage /></RequireAuth>,
+            loader: poolLoader,
+          },
         ],
       },
       { path: ROUTES.LOGIN, element: <LoginPage /> },

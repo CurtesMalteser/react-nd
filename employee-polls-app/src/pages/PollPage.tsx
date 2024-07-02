@@ -26,6 +26,7 @@ import Answer from "../utils/answer";
 import PollOption from "../components/poll/PollOption";
 import Question from "../utils/question";
 import ErrorComponent from "../components/error/ErrorComponent";
+import { store } from "../app/store";
 
 const safeOption: Option = { text: "Safe option", votes: [] };
 
@@ -73,7 +74,7 @@ function PollPage() {
 
     if (questionStatus === 'loading' || answerStatus === 'loading') { return <ComponentLoader /> }
 
-    if (questionStatus === 'failed') { return <ErrorComponent label= "404: Question not found" />; }
+    if (questionStatus === 'failed') { return <ErrorComponent />; }
 
     return (
         <Container className="md-6" style={{ marginTop: 20, marginBottom: 20, marginLeft: "auto", marginRight: "auto" }} >
@@ -111,3 +112,11 @@ function PollPage() {
 }
 
 export default PollPage;
+
+export async function loader({ params }: { params: any }) {    
+    return store.dispatch(fetchQuestionByID(params.id)).then(() => {
+        const question = getQuestionByID(store.getState(), params.id);
+        // !! is used to assert that question is not undefined, on error it should show the error page
+        return  question!!.id;
+    });
+}

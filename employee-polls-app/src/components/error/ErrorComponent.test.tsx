@@ -3,7 +3,7 @@ import ErrorComponent from './ErrorComponent';
 
 describe('ErrorComponent', () => {
   it('should match the snapshot ErrorComponent', () => {
-    const { asFragment } = render(<ErrorComponent label='404: Question not found'/>);
+    const { asFragment } = render(<ErrorComponent />);
     expect(asFragment()).toMatchSnapshot();
   });
 });
