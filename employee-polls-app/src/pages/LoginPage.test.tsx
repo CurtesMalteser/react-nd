@@ -4,7 +4,6 @@ import userEvent from '@testing-library/user-event';
 import LoginPage from './LoginPage';
 import { Provider } from 'react-redux';
 import { AnyAction, Store, configureStore } from '@reduxjs/toolkit';
-import counterReducer from '../features/counter/counterSlice';
 import usersReducer from '../features/users/usersSlice';
 import authedUserReducer from '../features/authedUser/authedUserSlice';
 import questionsReducer from '../features/questions/questionsSlice';
@@ -24,7 +23,6 @@ describe('LoginPage', () => {
   beforeEach(() => {
     _store = configureStore({
       reducer: {
-        counter: counterReducer,
         users: usersReducer,
         authedUser: authedUserReducer,
         questionsState: questionsReducer,

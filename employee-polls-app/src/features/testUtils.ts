@@ -2,10 +2,6 @@ import { RootState } from "../app/store";
 
 function getDefaultState(overrides: Partial<RootState> = {}): RootState {
     return {
-        counter: {
-            value: 0,
-            status: 'idle' as const,
-        },
         users: {
             users: {},
             status: 'idle' as const,
